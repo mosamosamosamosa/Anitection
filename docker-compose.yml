@@ -21,20 +21,17 @@ services:
       - ./cms:/app
     ports:
       - 1337:1337
-    command: >
-      sh -c "
-        apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev &&
-        yarn remove sharp &&
-        yarn add sharp &&
-        yarn &&
-        yarn develop
-      "
     environment:
       APP_KEYS: "Hw/GTizb/GKmedUOiitj5w==,vl+DYd36WGZkZsAsJHyoBw==,ed1dYJ/1RjYjn8udEXdGTw==,3a2g3pgIExLfMYsVYKi+iQ=="
       API_TOKEN_SALT: "1Cp7bA94NSN7DxOqkfQtdg=="
       ADMIN_JWT_SECRET: "1SVLxA3vdLYI/nOTQuiPpA=="
       TRANSFER_TOKEN_SALT: "1qGqWVk/GLIEO1W+dTSWVg=="
       JWT_SECRET: "6vXZUWshfJtc2LwcyahuIA=="
+    command: >
+      sh -c "
+        yarn &&
+        yarn develop
+      "
 
   db:
     image: mysql:5.7
