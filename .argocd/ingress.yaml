@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: anitection-strapi-ingress
+  namespace: anitection
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: anitection-strapi.yumekiti.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: anitection-cms
+            port:
+              number: 1337

@@ -15,7 +15,8 @@ services:
       "
 
   cms:
-    image: node:18.18.2-alpine
+    build:
+      context: ./cms
     working_dir: /app
     volumes:
       - ./cms:/app
