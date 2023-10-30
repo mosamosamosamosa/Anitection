@@ -26,7 +26,10 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
           padding: EdgeInsets.all(16),
           child: StrokeText(
             text: "あにまる保護施設",
-            textStyle: TextStyle(fontSize: 24),
+            textStyle: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
             strokeWidth: 4,
             strokeColor: Colors.white,
             textColor: Color(0xFF573F1B),
