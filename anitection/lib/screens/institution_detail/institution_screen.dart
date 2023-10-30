@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 import '../../components/animal_pad_background.dart';
 
 class InstitutionScreen extends ConsumerStatefulWidget {
@@ -50,23 +49,57 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
           ),
         ),
       ),
-      body: const Stack(
+      body: Stack(
         children: [
           AnimalPadBackground(),
           // ここに他のウィジェットを追加
           SingleChildScrollView(
+              child: Padding(
+            padding: EdgeInsets.all(16),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: InstitutionImage(
-                    url: "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
-                  )
+                InstitutionImage(
+                  url:
+                  "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
                 ),
-                InstitutionLabel(label: "所在地"),
+                const SizedBox(height: 32,),
+                const InstitutionLabel(label: "所在地"),
+                const SizedBox(height: 8,),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                          "大阪府大阪市旭区高殿2-21-11-5",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+
+                        },
+                        child: const Icon(
+                            Icons.copy,
+                          color: Color(0xFFC3EB89),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+
               ],
             ),
-          )
+          ))
         ],
       ),
     );
@@ -98,6 +131,7 @@ class InstitutionImage extends StatelessWidget {
 
 class InstitutionLabel extends StatelessWidget {
   const InstitutionLabel({super.key, required this.label});
+
   final String label;
 
   @override
@@ -109,11 +143,10 @@ class InstitutionLabel extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: StrokeText(
-          text: label,
+        text: label,
         textColor: const Color(0xFF444444),
         strokeColor: Colors.white,
         strokeWidth: 4,
-
       ),
     );
   }
@@ -127,8 +160,15 @@ class StrokeText extends StatelessWidget {
   final TextStyle? textStyle;
   final List<Shadow>? shadows;
 
-
-  const StrokeText({Key? key, required this.text,this.strokeWidth = 1,this.strokeColor =Colors.black,this.textColor = Colors.white ,this.textStyle, this.shadows }) : super(key: key);
+  const StrokeText(
+      {Key? key,
+      required this.text,
+      this.strokeWidth = 1,
+      this.strokeColor = Colors.black,
+      this.textColor = Colors.white,
+      this.textStyle,
+      this.shadows})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,9 +186,8 @@ class StrokeText extends StatelessWidget {
         ),
         Text(
           text,
-          style:  TextStyle(
-              color: textColor,
-
+          style: TextStyle(
+            color: textColor,
           ).merge(textStyle),
         ),
       ],
