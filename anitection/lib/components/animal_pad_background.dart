@@ -30,7 +30,7 @@ class AnimalPadBackground extends StatelessWidget {
             'assets/svg/img_animal_pad.svg',
             width: dotSize,
             height: dotSize,
-            color: const Color(0xFFE8E1CC),
+            color: const Color(0xFFF5EED8),
           ),
         );
       }),
