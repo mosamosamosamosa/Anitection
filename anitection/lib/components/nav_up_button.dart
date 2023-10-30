@@ -20,7 +20,6 @@ class NavUpButtonState extends State<NavUpButton> with SingleTickerProviderState
 
   late Animation<double> _animationTween;
 
-
   @override
   void initState() {
     _animationController = AnimationController(
@@ -33,12 +32,7 @@ class NavUpButtonState extends State<NavUpButton> with SingleTickerProviderState
         curve: Curves.easeInOut,
       ),
     )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _animationController.reverse();
-      }
-      setState(() {
-
-      });
+      setState(() {});
     });
     super.initState();
   }
@@ -46,18 +40,23 @@ class NavUpButtonState extends State<NavUpButton> with SingleTickerProviderState
   @override
   void dispose() {
     _animationController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final animation = Tween<double>(begin: 2, end: 1).animate(animationController).value;
-    log("animation elevation value: ${_animationTween.value}");
     return GestureDetector(
       onTap: () {
-        _animationController.forward(from: 0);
         widget.onPressed();
+      },
+      onPanDown: (_) {
+        _animationController.forward(from: 0);
+      },
+      onPanCancel: () {
+        _animationController.reverse();
+      },
+      onPanEnd: (_) {
+        _animationController.reverse();
       },
       child: Material(
         elevation: _animationTween.value,
