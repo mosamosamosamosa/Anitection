@@ -1,6 +1,9 @@
+import 'package:anitection/components/nav_up_button.dart';
+import 'package:anitection/screens/institution_detail/institution_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const InstitutionScreen(),
     );
   }
 }
@@ -115,6 +118,31 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Text(
+                  "あにまる保護施設",
+                  style: TextStyle(
+                    fontSize: 24,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 5
+                      ..color = Colors.red,
+                  ),
+                ),
+                Text(
+                  "あにまる保護施設",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xFF573F1B),
+                  ),
+                ),
+              ],
+            ),
+            NavUpButton(
+              onPressed: () {},
+            )
           ],
         ),
       ),
