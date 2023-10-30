@@ -3,7 +3,7 @@ import 'package:anitection/screens/institution_detail/institution_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -36,6 +36,9 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
+        textTheme: GoogleFonts.zenMaruGothicTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       home: const InstitutionScreen(),
     );
