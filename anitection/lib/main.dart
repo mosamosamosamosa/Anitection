@@ -1,6 +1,8 @@
+import 'package:anitection/components/nav_up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -115,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            NavUpButton(onPressed: () {},)
           ],
         ),
       ),
