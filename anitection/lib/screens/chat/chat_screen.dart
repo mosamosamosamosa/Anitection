@@ -17,6 +17,24 @@ class ChatScreen extends ConsumerStatefulWidget {
 }
 
 class ChatScreenState extends ConsumerState<ChatScreen> {
+  bool _isInputMode = false;
+  FocusNode chatTextFieldFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    chatTextFieldFocusNode.addListener(() {
+      setState(() {
+        _isInputMode = chatTextFieldFocusNode.hasFocus;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    chatTextFieldFocusNode.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,46 +62,64 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
             children: [
               Flexible(
                 flex: 1,
-                child: ListView(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                  children: const [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: InstitutionMessageBubble(
-                        text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
-                        avatarIconUrl:
-                            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: PersonMessageBubble(
-                        text: "にゃにゃにゃにゃんんんんにゃんわんぱうぱうぱうにゃんにゃにゃぱうぱう",
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: PersonMessageBubble(
-                        text: "にゃにゃにゃにゃんんんん",
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: InstitutionMessageBubble(
-                        text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
-                        avatarIconUrl:
-                            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
-                      ),
-                    )
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    chatTextFieldFocusNode.unfocus();
+                    setState(() {
+                      _isInputMode = false;
+                    });
+                  },
+                  child: const MessageList(),
                 ),
               ),
-              const InstitutionBottomMenu(),
+              if (_isInputMode)
+                // チャットの入力領域
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, -2),
+                              blurRadius: 4,
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                                child: TextField(
+                              focusNode: chatTextFieldFocusNode,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "メッセージを入力",
+
+                              ),
+                            )),
+                            IconButton(onPressed: () {
+
+                            }, icon: const Icon(Icons.send)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else
+                InstitutionBottomMenu(
+                  onKeyboardPressed: () {
+                    setState(() {
+                      _isInputMode = !_isInputMode;
+                      chatTextFieldFocusNode.requestFocus();
+                    });
+                  },
+                  onMenuPressed: () {},
+                ),
             ],
           )
         ],
@@ -92,8 +128,61 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
   }
 }
 
+class MessageList extends StatelessWidget {
+  const MessageList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding:
+      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+      children: const [
+        Padding(
+          padding:
+          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: InstitutionMessageBubble(
+            text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
+            avatarIconUrl:
+            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+          ),
+        ),
+        Padding(
+          padding:
+          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: PersonMessageBubble(
+            text: "にゃにゃにゃにゃんんんんにゃんわんぱうぱうぱうにゃんにゃにゃぱうぱう",
+          ),
+        ),
+        Padding(
+          padding:
+          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: PersonMessageBubble(
+            text: "にゃにゃにゃにゃんんんん",
+          ),
+        ),
+        Padding(
+          padding:
+          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: InstitutionMessageBubble(
+            text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
+            avatarIconUrl:
+            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class InstitutionBottomMenu extends StatelessWidget {
-  const InstitutionBottomMenu({super.key});
+  const InstitutionBottomMenu({
+    super.key,
+    required this.onMenuPressed,
+    required this.onKeyboardPressed,
+  });
+
+  final VoidCallback onMenuPressed;
+  final VoidCallback onKeyboardPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +202,7 @@ class InstitutionBottomMenu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
+            onTap: onKeyboardPressed,
             child: SvgPicture.asset(
               "assets/svg/ic_orange_keyboard.svg",
               width: 32,
@@ -122,35 +212,38 @@ class InstitutionBottomMenu extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const StrokeText(
-                    text: "メニュー",
-                    textStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    strokeWidth: 4,
-                    strokeColor: Colors.white,
-                    textColor: Color(0xFF573F1B),
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10,
-                        color: Colors.black,
-                        offset: Offset(2, 2),
+              child: GestureDetector(
+                onTap: onMenuPressed,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const StrokeText(
+                      text: "メニュー",
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
-                  const SizedBox(width: 2),
-                  CustomPaint(
-                    painter: TrianglePainter(),
-                    size: const Size(12, 12),
-                  )
-                ],
+                      strokeWidth: 4,
+                      strokeColor: Colors.white,
+                      textColor: Color(0xFF573F1B),
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10,
+                          color: Colors.black,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 2),
+                    CustomPaint(
+                      painter: TrianglePainter(),
+                      size: const Size(12, 12),
+                    )
+                  ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
