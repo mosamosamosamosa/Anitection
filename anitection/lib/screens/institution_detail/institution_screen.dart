@@ -1,5 +1,7 @@
+import 'package:anitection/components/institution_title.dart';
 import 'package:anitection/components/nav_up_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/screens/chat/chat_screen.dart';
 import 'package:anitection/screens/institution_detail/chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,27 +24,11 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
       backgroundColor: const Color(0xFFFFF8E0),
       appBar: AppBar(
         centerTitle: true,
-        elevation: 0,
+        elevation: 4,
         backgroundColor: const Color(0xFFC3EB89),
         title: const Padding(
           padding: EdgeInsets.all(16),
-          child: StrokeText(
-            text: "あにまる保護施設",
-            textStyle: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-            strokeWidth: 4,
-            strokeColor: Colors.white,
-            textColor: Color(0xFF573F1B),
-            shadows: [
-              Shadow(
-                blurRadius: 10,
-                color: Colors.black,
-                offset: Offset(2, 2),
-              ),
-            ],
-          ),
+          child: InstitutionTitle(title: "あにまる保護施設"),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(8),
@@ -121,7 +107,11 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
           )
         ],
       ),
-      floatingActionButton: ChatButton(onPressed: () {},),
+      floatingActionButton: ChatButton(onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const ChatScreen()),
+        );
+      },),
     );
   }
 }

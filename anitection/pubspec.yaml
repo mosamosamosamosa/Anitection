@@ -44,6 +44,7 @@ dependencies:
   riverpod_annotation: ^2.3.0
   flutter_svg: ^2.0.8
   google_fonts: ^6.1.0
+  flutter_chat_bubble: ^2.0.2
 
 dev_dependencies:
   flutter_test:
