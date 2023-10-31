@@ -45,7 +45,7 @@ class ChatButtonState extends State<ChatButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onPanStart: (_) {
+      onPanDown: (_) {
         _animationController.forward(from: 0);
       },
       onPanCancel: () {
@@ -53,6 +53,9 @@ class ChatButtonState extends State<ChatButton>
       },
       onPanEnd: (_) {
         _animationController.reverse();
+      },
+      onTap: () {
+        widget.onPressed();
       },
       child: Stack(
         clipBehavior: Clip.none,
