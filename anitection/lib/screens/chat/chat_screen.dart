@@ -4,6 +4,7 @@ import 'package:anitection/components/nav_up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key});
@@ -134,18 +135,31 @@ class PersonMessageBubble extends StatelessWidget {
         ChatBubble(
           clipper: ChatBubbleClipper1(type: BubbleType.sendBubble),
           backGroundColor: const Color(0xFFF7FDEF),
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
-            child: Text(
-              text,
-              style: const TextStyle(color: Color(0xFF444444)),
-            ),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 4,
+                  left: 4,
+                  right: 30,
+                  bottom: 4,
+                ),
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                ),
+                child: Text(
+                  text,
+                  style: const TextStyle(color: Color(0xFF444444)),
+                ),
+              ),
+              SvgPicture.asset("assets/svg/img_chat_animal_pad.svg"),
+            ],
           ),
         )
       ],
     );
   }
 }
+
+// SvgPicture.asset("assets/svg/img_chat_animal_pad.svg"),
