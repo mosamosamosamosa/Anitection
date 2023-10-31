@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    image: node:18.18.2-alpine
+    working_dir: /app
+    volumes:
+      - ./web:/app
+    ports:
+      - '3000:3000'
+    command: >
+      sh -c "
+        yarn &&
+        yarn start
+      "
+
+  cms:
+    build:
+      context: ./cms
+    working_dir: /app
+    volumes:
+      - ./cms:/app
+    ports:
+      - 1337:1337
+    environment:
+      APP_KEYS: "Hw/GTizb/GKmedUOiitj5w==,vl+DYd36WGZkZsAsJHyoBw==,ed1dYJ/1RjYjn8udEXdGTw==,3a2g3pgIExLfMYsVYKi+iQ=="
+      API_TOKEN_SALT: "1Cp7bA94NSN7DxOqkfQtdg=="
+      ADMIN_JWT_SECRET: "1SVLxA3vdLYI/nOTQuiPpA=="
+      TRANSFER_TOKEN_SALT: "1qGqWVk/GLIEO1W+dTSWVg=="
+      JWT_SECRET: "6vXZUWshfJtc2LwcyahuIA=="
+    command: >
+      sh -c "
+        yarn &&
+        yarn develop
+      "
+
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:
