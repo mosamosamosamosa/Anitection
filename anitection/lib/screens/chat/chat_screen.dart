@@ -113,7 +113,11 @@ class InstitutionBottomMenu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            child: SvgPicture.asset("assets/svg/ic_orange_keyboard.svg"),
+            child: SvgPicture.asset(
+              "assets/svg/ic_orange_keyboard.svg",
+              width: 32,
+              height: 32,
+            ),
           ),
           Flexible(
             flex: 1,
@@ -182,6 +186,7 @@ class TrianglePainter extends CustomPainter {
     return false;
   }
 }
+
 class InstitutionMessageBubble extends StatelessWidget {
   const InstitutionMessageBubble(
       {super.key, required this.text, this.avatarIconUrl});
