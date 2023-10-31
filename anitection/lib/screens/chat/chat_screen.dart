@@ -1,6 +1,7 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/institution_title.dart';
 import 'package:anitection/components/nav_up_button.dart';
+import 'package:anitection/components/stroke_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,36 +40,50 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
       body: Stack(
         children: [
           const AnimalPadBackground(),
-          ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-            children: const [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: InstitutionMessageBubble(
-                  text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
-                  avatarIconUrl:
-                      "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+          Column(
+            children: [
+              Flexible(
+                flex: 1,
+                child: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                  children: const [
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: InstitutionMessageBubble(
+                        text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
+                        avatarIconUrl:
+                            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: PersonMessageBubble(
+                        text: "にゃにゃにゃにゃんんんんにゃんわんぱうぱうぱうにゃんにゃにゃぱうぱう",
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: PersonMessageBubble(
+                        text: "にゃにゃにゃにゃんんんん",
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: InstitutionMessageBubble(
+                        text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
+                        avatarIconUrl:
+                            "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: PersonMessageBubble(
-                  text: "にゃにゃにゃにゃんんんんにゃんわんぱうぱうぱうにゃんにゃにゃぱうぱう",
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: PersonMessageBubble(
-                  text: "にゃにゃにゃにゃんんんん",
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: InstitutionMessageBubble(
-                    text: "ご連絡ありがとうございますあいうえおかきくけおこさしすれこ\n\n松本",
-                  avatarIconUrl: "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
-                ),
-              )
+              const InstitutionBottomMenu(),
             ],
           )
         ],
@@ -77,6 +92,96 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
   }
 }
 
+class InstitutionBottomMenu extends StatelessWidget {
+  const InstitutionBottomMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0, -2),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            child: SvgPicture.asset("assets/svg/ic_orange_keyboard.svg"),
+          ),
+          Flexible(
+            flex: 1,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const StrokeText(
+                    text: "メニュー",
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    strokeWidth: 4,
+                    strokeColor: Colors.white,
+                    textColor: Color(0xFF573F1B),
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10,
+                        color: Colors.black,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 2),
+                  CustomPaint(
+                    painter: TrianglePainter(),
+                    size: const Size(12, 12),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class TrianglePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var path = Path();
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    var paint = Paint()
+      ..color = Colors.brown
+      ..style = PaintingStyle.fill;
+
+    canvas.drawShadow(path, Colors.black, 5, true);
+    canvas.drawPath(path, paint);
+
+    var borderPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    canvas.drawPath(path, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
+}
 class InstitutionMessageBubble extends StatelessWidget {
   const InstitutionMessageBubble(
       {super.key, required this.text, this.avatarIconUrl});
