@@ -12,3 +12,17 @@ spec:
       port: 1337
       targetPort: 1337
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: anitection
+spec:
+  selector:
+    app: db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: NodePort
