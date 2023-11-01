@@ -60,4 +60,4 @@ spec:
             claimName: mysql-pv-claim
         - name: mysql-configmap-volume
           configMap:
-            name: cocoroiki-mysql-configmap
+            name: anitection-mysql-configmap
