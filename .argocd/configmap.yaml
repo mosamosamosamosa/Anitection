@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: anitection-mysql-configmap
+  name: mysql-configmap
   namespace: anitection
 data:
   mysql.cnf: |
