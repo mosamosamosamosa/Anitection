@@ -6,7 +6,7 @@ metadata:
   namespace: anitection
 spec:
   capacity:
-    storage: 3Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
