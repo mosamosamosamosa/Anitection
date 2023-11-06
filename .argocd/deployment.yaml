@@ -37,27 +37,20 @@ spec:
     spec:
       containers:
         - name: anitection-db
-          image: liupeng0518/mysql:5.7-arm64
+          image: postgres:16.0-alpine
           ports:
-            - containerPort: 3306
+            - containerPort: 5432
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
-            - name: MYSQL_DATABASE
+            - name: POSTGRES_DB
               value: anitection
-            - name: MYSQL_USER
+            - name: POSTGRES_USER
               value: user
-            - name: MYSQL_PASSWORD
+            - name: POSTGRES_PASSWORD
               value: password
           volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-            - name: mysql-configmap-volume
-              mountPath: /etc/mysql/conf.d
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgresql/data
       volumes:
-        - name: mysql-persistent-storage
+        - name: postgres-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
-        - name: mysql-configmap-volume
-          configMap:
-            name: mysql-configmap
+            claimName: postgres-pv-claim

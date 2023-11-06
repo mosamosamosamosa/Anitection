@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-volume
+  name: postgres-pv-volume
   namespace: anitection
 spec:
   capacity:
@@ -12,12 +12,12 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
-    path: "/mnt/data/mysql"
+    path: "/mnt/data/postgres"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: postgres-pv-claim
   namespace: anitection
 spec:
   accessModes:
