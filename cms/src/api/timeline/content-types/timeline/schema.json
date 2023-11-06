@@ -4,7 +4,8 @@
   "info": {
     "singularName": "timeline",
     "pluralName": "timelines",
-    "displayName": "Timeline"
+    "displayName": "Timeline",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,14 +13,15 @@
   "pluginOptions": {},
   "attributes": {
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "content": {
       "type": "text"
