@@ -37,6 +37,7 @@ services:
       DATABASE_SSL: "false"
     command: >
       sh -c "
+        yarn &&
         yarn develop
       "
 
