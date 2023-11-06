@@ -4,7 +4,8 @@
   "info": {
     "singularName": "task",
     "pluralName": "tasks",
-    "displayName": "task"
+    "displayName": "Task",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true

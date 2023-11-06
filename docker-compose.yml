@@ -28,22 +28,26 @@ services:
       ADMIN_JWT_SECRET: "1SVLxA3vdLYI/nOTQuiPpA=="
       TRANSFER_TOKEN_SALT: "1qGqWVk/GLIEO1W+dTSWVg=="
       JWT_SECRET: "6vXZUWshfJtc2LwcyahuIA=="
+      DATABASE_CLIENT: "postgres"
+      DATABASE_HOST: "db"
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: "anitection"
+      DATABASE_USERNAME: "user"
+      DATABASE_PASSWORD: "password"
+      DATABASE_SSL: "false"
     command: >
       sh -c "
-        yarn &&
         yarn develop
       "
 
   db:
-    image: mysql:5.7
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    image: postgres:16.0-alpine
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: anitection
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: anitection
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/postgresql/data
 
 volumes:
   db:
