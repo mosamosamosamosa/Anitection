@@ -50,5 +50,13 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
+  bff:
+    build:
+      context: ./bff
+    volumes:
+      - ./bff:/go/src/app
+    ports:
+      - 8080:8080
+
 volumes:
   db:
