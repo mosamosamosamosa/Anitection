@@ -26,3 +26,17 @@ spec:
       port: 5432
       targetPort: 5432
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bff
+  namespace: anitection
+spec:
+  selector:
+    app: bff
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
