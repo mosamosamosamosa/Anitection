@@ -54,3 +54,24 @@ spec:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
             claimName: postgres-pv-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff
+  namespace: anitection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bff
+  template:
+    metadata:
+      labels:
+        app: bff
+    spec:
+      containers:
+        - name: anitection-bff
+          image: yumekiti/anitection-bff:latest
+          ports:
+            - containerPort: 8080
