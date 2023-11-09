@@ -40,13 +40,30 @@ Map<String, dynamic> _$SingleDataToJson<T>(
       'data': toJsonT(instance.data),
     };
 
+PagingData<T> _$PagingDataFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    PagingData<T>(
+      data: (json['data'] as List<dynamic>).map(fromJsonT).toList(),
+      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$PagingDataToJson<T>(
+  PagingData<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
+    <String, dynamic>{
+      'data': instance.data.map(toJsonT).toList(),
+      'meta': instance.meta,
+    };
+
 ArrayData<T> _$ArrayDataFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
     ArrayData<T>(
       data: (json['data'] as List<dynamic>).map(fromJsonT).toList(),
-      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ArrayDataToJson<T>(
@@ -55,7 +72,6 @@ Map<String, dynamic> _$ArrayDataToJson<T>(
 ) =>
     <String, dynamic>{
       'data': instance.data.map(toJsonT).toList(),
-      'meta': instance.meta,
     };
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(

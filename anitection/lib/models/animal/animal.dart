@@ -1,4 +1,5 @@
 import 'package:anitection/models/base.dart';
+import 'package:anitection/models/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'animal.g.dart';
@@ -26,7 +27,7 @@ class AnimalAttributes {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  final ArrayData<dynamic>? images;
+  final ArrayData<MediaAttributes>? images;
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);

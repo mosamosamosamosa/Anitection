@@ -36,11 +36,27 @@ class SingleData<T> {
 }
 
 @JsonSerializable(genericArgumentFactories: true)
-class ArrayData<T> {
+class PagingData<T> {
   final List<T> data;
   final Meta meta;
 
-  ArrayData({required this.data, required this.meta});
+  PagingData({required this.data, required this.meta});
+
+  factory PagingData.fromJson(Map<String, dynamic> json,
+      T Function(Object? json) fromJsonT) {
+    return _$PagingDataFromJson(json, fromJsonT);
+  }
+
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) {
+    return _$PagingDataToJson(this, toJsonT);
+  }
+}
+
+@JsonSerializable(genericArgumentFactories: true)
+class ArrayData<T> {
+  final List<T> data;
+
+  ArrayData({required this.data});
 
   factory ArrayData.fromJson(Map<String, dynamic> json,
       T Function(Object? json) fromJsonT) {

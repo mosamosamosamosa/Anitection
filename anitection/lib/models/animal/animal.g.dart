@@ -22,8 +22,10 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
       images: json['images'] == null
           ? null
-          : ArrayData<dynamic>.fromJson(
-              json['images'] as Map<String, dynamic>, (value) => value),
+          : ArrayData<MediaAttributes>.fromJson(
+              json['images'] as Map<String, dynamic>,
+              (value) =>
+                  MediaAttributes.fromJson(value as Map<String, dynamic>)),
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>

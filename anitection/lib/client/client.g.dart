@@ -13,7 +13,7 @@ class _AnitectionClient implements AnitectionClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://anitection-strapi.yumekiti.net';
+    baseUrl ??= 'https://anitection-api.yumekiti.net';
   }
 
   final Dio _dio;
@@ -21,20 +21,20 @@ class _AnitectionClient implements AnitectionClient {
   String? baseUrl;
 
   @override
-  Future<ArrayData<Model<AnimalAttributes>>> getAnimals() async {
+  Future<PagingData<Model<AnimalAttributes>>> getAnimals() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayData<Model<AnimalAttributes>>>(Options(
+        _setStreamType<PagingData<Model<AnimalAttributes>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/animals?populate=*',
+              '/api/animals',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +43,40 @@ class _AnitectionClient implements AnitectionClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ArrayData<Model<AnimalAttributes>>.fromJson(
+    final value = PagingData<Model<AnimalAttributes>>.fromJson(
+      _result.data!,
+      (json) => Model<AnimalAttributes>.fromJson(
+        json as Map<String, dynamic>,
+        (json) => AnimalAttributes.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return value;
+  }
+
+  @override
+  Future<SingleData<Model<AnimalAttributes>>> getAnimal(int id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SingleData<Model<AnimalAttributes>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/animals/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = SingleData<Model<AnimalAttributes>>.fromJson(
       _result.data!,
       (json) => Model<AnimalAttributes>.fromJson(
         json as Map<String, dynamic>,
