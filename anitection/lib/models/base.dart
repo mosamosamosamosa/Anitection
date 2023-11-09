@@ -18,3 +18,35 @@ class Model<T> {
     return _$ModelToJson(this, toJsonT);
   }
 }
+
+@JsonSerializable(genericArgumentFactories: true)
+class SingleData<T> {
+  final T data;
+
+  SingleData({required this.data});
+
+  factory SingleData.fromJson(Map<String, dynamic> json,
+      T Function(Object? json) fromJsonT) {
+    return _$SingleDataFromJson(json, fromJsonT);
+  }
+
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) {
+    return _$SingleDataToJson(this, toJsonT);
+  }
+}
+
+@JsonSerializable(genericArgumentFactories: true)
+class ArrayData<T> {
+  final List<T> data;
+
+  ArrayData({required this.data});
+
+  factory ArrayData.fromJson(Map<String, dynamic> json,
+      T Function(Object? json) fromJsonT) {
+    return _$ArrayDataFromJson(json, fromJsonT);
+  }
+
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) {
+    return _$ArrayDataToJson(this, toJsonT);
+  }
+}
