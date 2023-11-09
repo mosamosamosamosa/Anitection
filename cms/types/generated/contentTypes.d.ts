@@ -682,7 +682,7 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
   info: {
     singularName: 'animal';
     pluralName: 'animals';
-    displayName: 'animal';
+    displayName: 'Animal';
     description: '';
   };
   options: {
@@ -790,7 +790,8 @@ export interface ApiEmployeeEmployee extends Schema.CollectionType {
   info: {
     singularName: 'employee';
     pluralName: 'employees';
-    displayName: 'employee';
+    displayName: 'Employee';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -829,7 +830,7 @@ export interface ApiFavoriteFavorite extends Schema.CollectionType {
   info: {
     singularName: 'favorite';
     pluralName: 'favorites';
-    displayName: 'favorite';
+    displayName: 'Favorite';
     description: '';
   };
   options: {
@@ -869,7 +870,8 @@ export interface ApiInstitutionInstitution extends Schema.CollectionType {
   info: {
     singularName: 'institution';
     pluralName: 'institutions';
-    displayName: 'institution';
+    displayName: 'Institution';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -904,7 +906,8 @@ export interface ApiMessageMessage extends Schema.CollectionType {
   info: {
     singularName: 'message';
     pluralName: 'messages';
-    displayName: 'message';
+    displayName: 'Message';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -944,7 +947,8 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
   info: {
     singularName: 'notification';
     pluralName: 'notifications';
-    displayName: 'notification';
+    displayName: 'Notification';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -979,7 +983,8 @@ export interface ApiTaskTask extends Schema.CollectionType {
   info: {
     singularName: 'task';
     pluralName: 'tasks';
-    displayName: 'task';
+    displayName: 'Task';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1013,6 +1018,7 @@ export interface ApiTimelineTimeline extends Schema.CollectionType {
     singularName: 'timeline';
     pluralName: 'timelines';
     displayName: 'Timeline';
+    description: '';
   };
   options: {
     draftAndPublish: true;

@@ -23,6 +23,6 @@ spec:
     app: db
   ports:
     - protocol: TCP
-      port: 3306
-      targetPort: 3306
+      port: 5432
+      targetPort: 5432
   type: NodePort
