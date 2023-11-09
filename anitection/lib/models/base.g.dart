@@ -46,6 +46,7 @@ ArrayData<T> _$ArrayDataFromJson<T>(
 ) =>
     ArrayData<T>(
       data: (json['data'] as List<dynamic>).map(fromJsonT).toList(),
+      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ArrayDataToJson<T>(
@@ -54,4 +55,27 @@ Map<String, dynamic> _$ArrayDataToJson<T>(
 ) =>
     <String, dynamic>{
       'data': instance.data.map(toJsonT).toList(),
+      'meta': instance.meta,
+    };
+
+Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
+      total: json['total'] as int,
+      limit: json['limit'] as int,
+      offset: json['offset'] as int,
+    );
+
+Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
+    <String, dynamic>{
+      'total': instance.total,
+      'limit': instance.limit,
+      'offset': instance.offset,
+    };
+
+Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
+      pagination:
+          Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
+      'pagination': instance.pagination,
     };

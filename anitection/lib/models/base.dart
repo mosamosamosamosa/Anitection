@@ -38,8 +38,9 @@ class SingleData<T> {
 @JsonSerializable(genericArgumentFactories: true)
 class ArrayData<T> {
   final List<T> data;
+  final Meta meta;
 
-  ArrayData({required this.data});
+  ArrayData({required this.data, required this.meta});
 
   factory ArrayData.fromJson(Map<String, dynamic> json,
       T Function(Object? json) fromJsonT) {
@@ -48,5 +49,36 @@ class ArrayData<T> {
 
   Map<String, dynamic> toJson(Object? Function(T value) toJsonT) {
     return _$ArrayDataToJson(this, toJsonT);
+  }
+}
+
+@JsonSerializable()
+class Pagination {
+  final int total;
+  final int limit;
+  final int offset;
+
+  Pagination({required this.total, required this.limit, required this.offset});
+
+  factory Pagination.fromJson(Map<String, dynamic> json) {
+    return _$PaginationFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$PaginationToJson(this);
+  }
+}
+
+@JsonSerializable()
+class Meta {
+  final Pagination pagination;
+  Meta({required this.pagination});
+
+  factory Meta.fromJson(Map<String, dynamic> json) {
+    return _$MetaFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$MetaToJson(this);
   }
 }

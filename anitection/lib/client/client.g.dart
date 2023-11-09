@@ -34,7 +34,7 @@ class _AnitectionClient implements AnitectionClient {
     )
             .compose(
               _dio.options,
-              '/api/animals',
+              '/api/animals?populate=*',
               queryParameters: queryParameters,
               data: _data,
             )
