@@ -54,11 +54,16 @@ class ArrayData<T> {
 
 @JsonSerializable()
 class Pagination {
+  final int page;
+  final int pageSize;
+  final int pageCount;
   final int total;
-  final int limit;
-  final int offset;
 
-  Pagination({required this.total, required this.limit, required this.offset});
+  Pagination({
+    required this.page,
+    required this.pageSize,
+    required this.pageCount,
+    required this.total,});
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return _$PaginationFromJson(json);

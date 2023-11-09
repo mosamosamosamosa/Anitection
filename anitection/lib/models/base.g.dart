@@ -59,16 +59,18 @@ Map<String, dynamic> _$ArrayDataToJson<T>(
     };
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
+      page: json['page'] as int,
+      pageSize: json['pageSize'] as int,
+      pageCount: json['pageCount'] as int,
       total: json['total'] as int,
-      limit: json['limit'] as int,
-      offset: json['offset'] as int,
     );
 
 Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
     <String, dynamic>{
+      'page': instance.page,
+      'pageSize': instance.pageSize,
+      'pageCount': instance.pageCount,
       'total': instance.total,
-      'limit': instance.limit,
-      'offset': instance.offset,
     };
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
