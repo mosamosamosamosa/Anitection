@@ -17,9 +17,9 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "animal": {
+    "animals": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::animal.animal"
     }
   }

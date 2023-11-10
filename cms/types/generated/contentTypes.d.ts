@@ -696,6 +696,16 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     personality: Attribute.Text;
     interest: Attribute.String;
     description: Attribute.Text;
+    animal_kind: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'api::animal-kind.animal-kind'
+    >;
+    animal_logs: Attribute.Relation<
+      'api::animal.animal',
+      'oneToMany',
+      'api::animal-log.animal-log'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -720,17 +730,13 @@ export interface ApiAnimalKindAnimalKind extends Schema.CollectionType {
     singularName: 'animal-kind';
     pluralName: 'animal-kinds';
     displayName: 'AnimalKind';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     name: Attribute.String;
-    animal: Attribute.Relation<
-      'api::animal-kind.animal-kind',
-      'oneToOne',
-      'api::animal.animal'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -761,11 +767,6 @@ export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    animal: Attribute.Relation<
-      'api::animal-log.animal-log',
-      'oneToOne',
-      'api::animal.animal'
-    >;
     content: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -797,15 +798,15 @@ export interface ApiEmployeeEmployee extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    user: Attribute.Relation<
-      'api::employee.employee',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     institution: Attribute.Relation<
       'api::employee.employee',
       'oneToOne',
       'api::institution.institution'
+    >;
+    users: Attribute.Relation<
+      'api::employee.employee',
+      'oneToMany',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -842,9 +843,9 @@ export interface ApiFavoriteFavorite extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    animal: Attribute.Relation<
+    animals: Attribute.Relation<
       'api::favorite.favorite',
-      'oneToOne',
+      'oneToMany',
       'api::animal.animal'
     >;
     createdAt: Attribute.DateTime;
