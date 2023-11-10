@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('tasks_institution_links_id_seq'::regclass) | false |  |  |  |
-| task_id | integer |  | true |  | [public.tasks](public.tasks.md) |  |
-| institution_id | integer |  | true |  | [public.institutions](public.institutions.md) |  |
+| Name           | Type    | Default                                             | Nullable | Children | Parents                                       | Comment |
+| -------------- | ------- | --------------------------------------------------- | -------- | -------- | --------------------------------------------- | ------- |
+| id             | integer | nextval('tasks_institution_links_id_seq'::regclass) | false    |          |                                               |         |
+| task_id        | integer |                                                     | true     |          | [public.tasks](public.tasks.md)               |         |
+| institution_id | integer |                                                     | true     |          | [public.institutions](public.institutions.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                           | Type        | Definition                                                                 |
+| ------------------------------ | ----------- | -------------------------------------------------------------------------- |
 | tasks_institution_links_inv_fk | FOREIGN KEY | FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE |
-| tasks_institution_links_fk | FOREIGN KEY | FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE |
-| tasks_institution_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| tasks_institution_links_unique | UNIQUE | UNIQUE (task_id, institution_id) |
+| tasks_institution_links_fk     | FOREIGN KEY | FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE               |
+| tasks_institution_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                           |
+| tasks_institution_links_unique | UNIQUE      | UNIQUE (task_id, institution_id)                                           |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| tasks_institution_links_pkey | CREATE UNIQUE INDEX tasks_institution_links_pkey ON public.tasks_institution_links USING btree (id) |
-| tasks_institution_links_fk | CREATE INDEX tasks_institution_links_fk ON public.tasks_institution_links USING btree (task_id) |
-| tasks_institution_links_inv_fk | CREATE INDEX tasks_institution_links_inv_fk ON public.tasks_institution_links USING btree (institution_id) |
+| Name                           | Definition                                                                                                                 |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| tasks_institution_links_pkey   | CREATE UNIQUE INDEX tasks_institution_links_pkey ON public.tasks_institution_links USING btree (id)                        |
+| tasks_institution_links_fk     | CREATE INDEX tasks_institution_links_fk ON public.tasks_institution_links USING btree (task_id)                            |
+| tasks_institution_links_inv_fk | CREATE INDEX tasks_institution_links_inv_fk ON public.tasks_institution_links USING btree (institution_id)                 |
 | tasks_institution_links_unique | CREATE UNIQUE INDEX tasks_institution_links_unique ON public.tasks_institution_links USING btree (task_id, institution_id) |
 
 ## Relations

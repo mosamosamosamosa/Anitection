@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('messages_user_links_id_seq'::regclass) | false |  |  |  |
-| message_id | integer |  | true |  | [public.messages](public.messages.md) |  |
-| user_id | integer |  | true |  | [public.up_users](public.up_users.md) |  |
+| Name       | Type    | Default                                         | Nullable | Children | Parents                               | Comment |
+| ---------- | ------- | ----------------------------------------------- | -------- | -------- | ------------------------------------- | ------- |
+| id         | integer | nextval('messages_user_links_id_seq'::regclass) | false    |          |                                       |         |
+| message_id | integer |                                                 | true     |          | [public.messages](public.messages.md) |         |
+| user_id    | integer |                                                 | true     |          | [public.up_users](public.up_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
-| messages_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE |
-| messages_user_links_fk | FOREIGN KEY | FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE |
-| messages_user_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| messages_user_links_unique | UNIQUE | UNIQUE (message_id, user_id) |
+| Name                       | Type        | Definition                                                         |
+| -------------------------- | ----------- | ------------------------------------------------------------------ |
+| messages_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE    |
+| messages_user_links_fk     | FOREIGN KEY | FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE |
+| messages_user_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                   |
+| messages_user_links_unique | UNIQUE      | UNIQUE (message_id, user_id)                                       |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| messages_user_links_pkey | CREATE UNIQUE INDEX messages_user_links_pkey ON public.messages_user_links USING btree (id) |
-| messages_user_links_fk | CREATE INDEX messages_user_links_fk ON public.messages_user_links USING btree (message_id) |
-| messages_user_links_inv_fk | CREATE INDEX messages_user_links_inv_fk ON public.messages_user_links USING btree (user_id) |
+| Name                       | Definition                                                                                                     |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| messages_user_links_pkey   | CREATE UNIQUE INDEX messages_user_links_pkey ON public.messages_user_links USING btree (id)                    |
+| messages_user_links_fk     | CREATE INDEX messages_user_links_fk ON public.messages_user_links USING btree (message_id)                     |
+| messages_user_links_inv_fk | CREATE INDEX messages_user_links_inv_fk ON public.messages_user_links USING btree (user_id)                    |
 | messages_user_links_unique | CREATE UNIQUE INDEX messages_user_links_unique ON public.messages_user_links USING btree (message_id, user_id) |
 
 ## Relations

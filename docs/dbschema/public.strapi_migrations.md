@@ -4,22 +4,22 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('strapi_migrations_id_seq'::regclass) | false |  |  |  |
-| name | varchar(255) |  | true |  |  |  |
-| time | timestamp without time zone |  | true |  |  |  |
+| Name | Type                        | Default                                       | Nullable | Children | Parents | Comment |
+| ---- | --------------------------- | --------------------------------------------- | -------- | -------- | ------- | ------- |
+| id   | integer                     | nextval('strapi_migrations_id_seq'::regclass) | false    |          |         |         |
+| name | varchar(255)                |                                               | true     |          |         |         |
+| time | timestamp without time zone |                                               | true     |          |         |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                   | Type        | Definition       |
+| ---------------------- | ----------- | ---------------- |
 | strapi_migrations_pkey | PRIMARY KEY | PRIMARY KEY (id) |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
+| Name                   | Definition                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------- |
 | strapi_migrations_pkey | CREATE UNIQUE INDEX strapi_migrations_pkey ON public.strapi_migrations USING btree (id) |
 
 ## Relations

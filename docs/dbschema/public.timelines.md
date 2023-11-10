@@ -4,30 +4,30 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('timelines_id_seq'::regclass) | false | [public.timelines_user_links](public.timelines_user_links.md) |  |  |
-| content | text |  | true |  |  |  |
-| footprints | integer |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| published_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                               | Nullable | Children                                                      | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------- | -------- | ------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('timelines_id_seq'::regclass) | false    | [public.timelines_user_links](public.timelines_user_links.md) |                                             |         |
+| content       | text                           |                                       | true     |                                                               |                                             |         |
+| footprints    | integer                        |                                       | true     |                                                               |                                             |         |
+| created_at    | timestamp(6) without time zone |                                       | true     |                                                               |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                       | true     |                                                               |                                             |         |
+| published_at  | timestamp(6) without time zone |                                       | true     |                                                               |                                             |         |
+| created_by_id | integer                        |                                       | true     |                                                               | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                       | true     |                                                               | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                       | Type        | Definition                                                                |
+| -------------------------- | ----------- | ------------------------------------------------------------------------- |
 | timelines_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | timelines_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| timelines_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| timelines_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| timelines_pkey | CREATE UNIQUE INDEX timelines_pkey ON public.timelines USING btree (id) |
+| Name                       | Definition                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------------- |
+| timelines_pkey             | CREATE UNIQUE INDEX timelines_pkey ON public.timelines USING btree (id)                 |
 | timelines_created_by_id_fk | CREATE INDEX timelines_created_by_id_fk ON public.timelines USING btree (created_by_id) |
 | timelines_updated_by_id_fk | CREATE INDEX timelines_updated_by_id_fk ON public.timelines USING btree (updated_by_id) |
 

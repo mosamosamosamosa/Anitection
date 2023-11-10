@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('employees_id_seq'::regclass) | false | [public.employees_institution_links](public.employees_institution_links.md) [public.tasks_employee_links](public.tasks_employee_links.md) [public.employees_user_links](public.employees_user_links.md) |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| published_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                               | Nullable | Children                                                                                                                                                                                                | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('employees_id_seq'::regclass) | false    | [public.employees_institution_links](public.employees_institution_links.md) [public.tasks_employee_links](public.tasks_employee_links.md) [public.employees_user_links](public.employees_user_links.md) |                                             |         |
+| created_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
+| published_at  | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
+| created_by_id | integer                        |                                       | true     |                                                                                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                       | true     |                                                                                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                       | Type        | Definition                                                                |
+| -------------------------- | ----------- | ------------------------------------------------------------------------- |
 | employees_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | employees_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| employees_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| employees_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| employees_pkey | CREATE UNIQUE INDEX employees_pkey ON public.employees USING btree (id) |
+| Name                       | Definition                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------------- |
+| employees_pkey             | CREATE UNIQUE INDEX employees_pkey ON public.employees USING btree (id)                 |
 | employees_created_by_id_fk | CREATE INDEX employees_created_by_id_fk ON public.employees USING btree (created_by_id) |
 | employees_updated_by_id_fk | CREATE INDEX employees_updated_by_id_fk ON public.employees USING btree (updated_by_id) |
 

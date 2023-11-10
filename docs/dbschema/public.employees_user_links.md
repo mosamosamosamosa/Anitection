@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('employees_user_links_id_seq'::regclass) | false |  |  |  |
-| employee_id | integer |  | true |  | [public.employees](public.employees.md) |  |
-| user_id | integer |  | true |  | [public.up_users](public.up_users.md) |  |
+| Name        | Type    | Default                                          | Nullable | Children | Parents                                 | Comment |
+| ----------- | ------- | ------------------------------------------------ | -------- | -------- | --------------------------------------- | ------- |
+| id          | integer | nextval('employees_user_links_id_seq'::regclass) | false    |          |                                         |         |
+| employee_id | integer |                                                  | true     |          | [public.employees](public.employees.md) |         |
+| user_id     | integer |                                                  | true     |          | [public.up_users](public.up_users.md)   |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
-| employees_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE |
-| employees_user_links_fk | FOREIGN KEY | FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE |
-| employees_user_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| employees_user_links_unique | UNIQUE | UNIQUE (employee_id, user_id) |
+| Name                        | Type        | Definition                                                           |
+| --------------------------- | ----------- | -------------------------------------------------------------------- |
+| employees_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE      |
+| employees_user_links_fk     | FOREIGN KEY | FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE |
+| employees_user_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                     |
+| employees_user_links_unique | UNIQUE      | UNIQUE (employee_id, user_id)                                        |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| employees_user_links_pkey | CREATE UNIQUE INDEX employees_user_links_pkey ON public.employees_user_links USING btree (id) |
-| employees_user_links_fk | CREATE INDEX employees_user_links_fk ON public.employees_user_links USING btree (employee_id) |
-| employees_user_links_inv_fk | CREATE INDEX employees_user_links_inv_fk ON public.employees_user_links USING btree (user_id) |
+| Name                        | Definition                                                                                                        |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| employees_user_links_pkey   | CREATE UNIQUE INDEX employees_user_links_pkey ON public.employees_user_links USING btree (id)                     |
+| employees_user_links_fk     | CREATE INDEX employees_user_links_fk ON public.employees_user_links USING btree (employee_id)                     |
+| employees_user_links_inv_fk | CREATE INDEX employees_user_links_inv_fk ON public.employees_user_links USING btree (user_id)                     |
 | employees_user_links_unique | CREATE UNIQUE INDEX employees_user_links_unique ON public.employees_user_links USING btree (employee_id, user_id) |
 
 ## Relations

@@ -4,34 +4,34 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('institutions_id_seq'::regclass) | false | [public.employees_institution_links](public.employees_institution_links.md) [public.messages_institution_links](public.messages_institution_links.md) [public.tasks_institution_links](public.tasks_institution_links.md) |  |  |
-| name | varchar(255) |  | true |  |  |  |
-| address | varchar(255) |  | true |  |  |  |
-| phone | varchar(255) |  | true |  |  |  |
-| website_url | varchar(255) |  | true |  |  |  |
-| needs_url | varchar(255) |  | true |  |  |  |
-| description | text |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| published_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                                  | Nullable | Children                                                                                                                                                                                                                  | Parents                                     | Comment |
+| ------------- | ------------------------------ | ---------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('institutions_id_seq'::regclass) | false    | [public.employees_institution_links](public.employees_institution_links.md) [public.messages_institution_links](public.messages_institution_links.md) [public.tasks_institution_links](public.tasks_institution_links.md) |                                             |         |
+| name          | varchar(255)                   |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| address       | varchar(255)                   |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| phone         | varchar(255)                   |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| website_url   | varchar(255)                   |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| needs_url     | varchar(255)                   |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| description   | text                           |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| created_at    | timestamp(6) without time zone |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| published_at  | timestamp(6) without time zone |                                          | true     |                                                                                                                                                                                                                           |                                             |         |
+| created_by_id | integer                        |                                          | true     |                                                                                                                                                                                                                           | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                          | true     |                                                                                                                                                                                                                           | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                          | Type        | Definition                                                                |
+| ----------------------------- | ----------- | ------------------------------------------------------------------------- |
 | institutions_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | institutions_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| institutions_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| institutions_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| institutions_pkey | CREATE UNIQUE INDEX institutions_pkey ON public.institutions USING btree (id) |
+| Name                          | Definition                                                                                    |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| institutions_pkey             | CREATE UNIQUE INDEX institutions_pkey ON public.institutions USING btree (id)                 |
 | institutions_created_by_id_fk | CREATE INDEX institutions_created_by_id_fk ON public.institutions USING btree (created_by_id) |
 | institutions_updated_by_id_fk | CREATE INDEX institutions_updated_by_id_fk ON public.institutions USING btree (updated_by_id) |
 

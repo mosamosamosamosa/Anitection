@@ -4,30 +4,30 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('up_roles_id_seq'::regclass) | false | [public.up_permissions_role_links](public.up_permissions_role_links.md) [public.up_users_role_links](public.up_users_role_links.md) |  |  |
-| name | varchar(255) |  | true |  |  |  |
-| description | varchar(255) |  | true |  |  |  |
-| type | varchar(255) |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                              | Nullable | Children                                                                                                                            | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('up_roles_id_seq'::regclass) | false    | [public.up_permissions_role_links](public.up_permissions_role_links.md) [public.up_users_role_links](public.up_users_role_links.md) |                                             |         |
+| name          | varchar(255)                   |                                      | true     |                                                                                                                                     |                                             |         |
+| description   | varchar(255)                   |                                      | true     |                                                                                                                                     |                                             |         |
+| type          | varchar(255)                   |                                      | true     |                                                                                                                                     |                                             |         |
+| created_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                     |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                     |                                             |         |
+| created_by_id | integer                        |                                      | true     |                                                                                                                                     | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                      | true     |                                                                                                                                     | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                      | Type        | Definition                                                                |
+| ------------------------- | ----------- | ------------------------------------------------------------------------- |
 | up_roles_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | up_roles_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| up_roles_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| up_roles_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| up_roles_pkey | CREATE UNIQUE INDEX up_roles_pkey ON public.up_roles USING btree (id) |
+| Name                      | Definition                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| up_roles_pkey             | CREATE UNIQUE INDEX up_roles_pkey ON public.up_roles USING btree (id)                 |
 | up_roles_created_by_id_fk | CREATE INDEX up_roles_created_by_id_fk ON public.up_roles USING btree (created_by_id) |
 | up_roles_updated_by_id_fk | CREATE INDEX up_roles_updated_by_id_fk ON public.up_roles USING btree (updated_by_id) |
 

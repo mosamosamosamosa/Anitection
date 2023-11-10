@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('messages_institution_links_id_seq'::regclass) | false |  |  |  |
-| message_id | integer |  | true |  | [public.messages](public.messages.md) |  |
-| institution_id | integer |  | true |  | [public.institutions](public.institutions.md) |  |
+| Name           | Type    | Default                                                | Nullable | Children | Parents                                       | Comment |
+| -------------- | ------- | ------------------------------------------------------ | -------- | -------- | --------------------------------------------- | ------- |
+| id             | integer | nextval('messages_institution_links_id_seq'::regclass) | false    |          |                                               |         |
+| message_id     | integer |                                                        | true     |          | [public.messages](public.messages.md)         |         |
+| institution_id | integer |                                                        | true     |          | [public.institutions](public.institutions.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                              | Type        | Definition                                                                 |
+| --------------------------------- | ----------- | -------------------------------------------------------------------------- |
 | messages_institution_links_inv_fk | FOREIGN KEY | FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE |
-| messages_institution_links_fk | FOREIGN KEY | FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE |
-| messages_institution_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| messages_institution_links_unique | UNIQUE | UNIQUE (message_id, institution_id) |
+| messages_institution_links_fk     | FOREIGN KEY | FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE         |
+| messages_institution_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                           |
+| messages_institution_links_unique | UNIQUE      | UNIQUE (message_id, institution_id)                                        |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| messages_institution_links_pkey | CREATE UNIQUE INDEX messages_institution_links_pkey ON public.messages_institution_links USING btree (id) |
-| messages_institution_links_fk | CREATE INDEX messages_institution_links_fk ON public.messages_institution_links USING btree (message_id) |
-| messages_institution_links_inv_fk | CREATE INDEX messages_institution_links_inv_fk ON public.messages_institution_links USING btree (institution_id) |
+| Name                              | Definition                                                                                                                          |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| messages_institution_links_pkey   | CREATE UNIQUE INDEX messages_institution_links_pkey ON public.messages_institution_links USING btree (id)                           |
+| messages_institution_links_fk     | CREATE INDEX messages_institution_links_fk ON public.messages_institution_links USING btree (message_id)                            |
+| messages_institution_links_inv_fk | CREATE INDEX messages_institution_links_inv_fk ON public.messages_institution_links USING btree (institution_id)                    |
 | messages_institution_links_unique | CREATE UNIQUE INDEX messages_institution_links_unique ON public.messages_institution_links USING btree (message_id, institution_id) |
 
 ## Relations

@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('timelines_user_links_id_seq'::regclass) | false |  |  |  |
-| timeline_id | integer |  | true |  | [public.timelines](public.timelines.md) |  |
-| user_id | integer |  | true |  | [public.up_users](public.up_users.md) |  |
+| Name        | Type    | Default                                          | Nullable | Children | Parents                                 | Comment |
+| ----------- | ------- | ------------------------------------------------ | -------- | -------- | --------------------------------------- | ------- |
+| id          | integer | nextval('timelines_user_links_id_seq'::regclass) | false    |          |                                         |         |
+| timeline_id | integer |                                                  | true     |          | [public.timelines](public.timelines.md) |         |
+| user_id     | integer |                                                  | true     |          | [public.up_users](public.up_users.md)   |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
-| timelines_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE |
-| timelines_user_links_fk | FOREIGN KEY | FOREIGN KEY (timeline_id) REFERENCES timelines(id) ON DELETE CASCADE |
-| timelines_user_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| timelines_user_links_unique | UNIQUE | UNIQUE (timeline_id, user_id) |
+| Name                        | Type        | Definition                                                           |
+| --------------------------- | ----------- | -------------------------------------------------------------------- |
+| timelines_user_links_inv_fk | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE      |
+| timelines_user_links_fk     | FOREIGN KEY | FOREIGN KEY (timeline_id) REFERENCES timelines(id) ON DELETE CASCADE |
+| timelines_user_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                     |
+| timelines_user_links_unique | UNIQUE      | UNIQUE (timeline_id, user_id)                                        |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| timelines_user_links_pkey | CREATE UNIQUE INDEX timelines_user_links_pkey ON public.timelines_user_links USING btree (id) |
-| timelines_user_links_fk | CREATE INDEX timelines_user_links_fk ON public.timelines_user_links USING btree (timeline_id) |
-| timelines_user_links_inv_fk | CREATE INDEX timelines_user_links_inv_fk ON public.timelines_user_links USING btree (user_id) |
+| Name                        | Definition                                                                                                        |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| timelines_user_links_pkey   | CREATE UNIQUE INDEX timelines_user_links_pkey ON public.timelines_user_links USING btree (id)                     |
+| timelines_user_links_fk     | CREATE INDEX timelines_user_links_fk ON public.timelines_user_links USING btree (timeline_id)                     |
+| timelines_user_links_inv_fk | CREATE INDEX timelines_user_links_inv_fk ON public.timelines_user_links USING btree (user_id)                     |
 | timelines_user_links_unique | CREATE UNIQUE INDEX timelines_user_links_unique ON public.timelines_user_links USING btree (timeline_id, user_id) |
 
 ## Relations

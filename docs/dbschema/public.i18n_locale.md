@@ -4,29 +4,29 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('i18n_locale_id_seq'::regclass) | false |  |  |  |
-| name | varchar(255) |  | true |  |  |  |
-| code | varchar(255) |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                                 | Nullable | Children | Parents                                     | Comment |
+| ------------- | ------------------------------ | --------------------------------------- | -------- | -------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('i18n_locale_id_seq'::regclass) | false    |          |                                             |         |
+| name          | varchar(255)                   |                                         | true     |          |                                             |         |
+| code          | varchar(255)                   |                                         | true     |          |                                             |         |
+| created_at    | timestamp(6) without time zone |                                         | true     |          |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                         | true     |          |                                             |         |
+| created_by_id | integer                        |                                         | true     |          | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                         | true     |          | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                         | Type        | Definition                                                                |
+| ---------------------------- | ----------- | ------------------------------------------------------------------------- |
 | i18n_locale_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | i18n_locale_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| i18n_locale_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| i18n_locale_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| i18n_locale_pkey | CREATE UNIQUE INDEX i18n_locale_pkey ON public.i18n_locale USING btree (id) |
+| Name                         | Definition                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------- |
+| i18n_locale_pkey             | CREATE UNIQUE INDEX i18n_locale_pkey ON public.i18n_locale USING btree (id)                 |
 | i18n_locale_created_by_id_fk | CREATE INDEX i18n_locale_created_by_id_fk ON public.i18n_locale USING btree (created_by_id) |
 | i18n_locale_updated_by_id_fk | CREATE INDEX i18n_locale_updated_by_id_fk ON public.i18n_locale USING btree (updated_by_id) |
 

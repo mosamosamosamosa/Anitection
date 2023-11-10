@@ -4,25 +4,25 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('strapi_webhooks_id_seq'::regclass) | false |  |  |  |
-| name | varchar(255) |  | true |  |  |  |
-| url | text |  | true |  |  |  |
-| headers | jsonb |  | true |  |  |  |
-| events | jsonb |  | true |  |  |  |
-| enabled | boolean |  | true |  |  |  |
+| Name    | Type         | Default                                     | Nullable | Children | Parents | Comment |
+| ------- | ------------ | ------------------------------------------- | -------- | -------- | ------- | ------- |
+| id      | integer      | nextval('strapi_webhooks_id_seq'::regclass) | false    |          |         |         |
+| name    | varchar(255) |                                             | true     |          |         |         |
+| url     | text         |                                             | true     |          |         |         |
+| headers | jsonb        |                                             | true     |          |         |         |
+| events  | jsonb        |                                             | true     |          |         |         |
+| enabled | boolean      |                                             | true     |          |         |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                 | Type        | Definition       |
+| -------------------- | ----------- | ---------------- |
 | strapi_webhooks_pkey | PRIMARY KEY | PRIMARY KEY (id) |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
+| Name                 | Definition                                                                          |
+| -------------------- | ----------------------------------------------------------------------------------- |
 | strapi_webhooks_pkey | CREATE UNIQUE INDEX strapi_webhooks_pkey ON public.strapi_webhooks USING btree (id) |
 
 ## Relations

@@ -4,32 +4,32 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('admin_permissions_id_seq'::regclass) | false | [public.admin_permissions_role_links](public.admin_permissions_role_links.md) |  |  |
-| action | varchar(255) |  | true |  |  |  |
-| action_parameters | jsonb |  | true |  |  |  |
-| subject | varchar(255) |  | true |  |  |  |
-| properties | jsonb |  | true |  |  |  |
-| conditions | jsonb |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name              | Type                           | Default                                       | Nullable | Children                                                                      | Parents                                     | Comment |
+| ----------------- | ------------------------------ | --------------------------------------------- | -------- | ----------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id                | integer                        | nextval('admin_permissions_id_seq'::regclass) | false    | [public.admin_permissions_role_links](public.admin_permissions_role_links.md) |                                             |         |
+| action            | varchar(255)                   |                                               | true     |                                                                               |                                             |         |
+| action_parameters | jsonb                          |                                               | true     |                                                                               |                                             |         |
+| subject           | varchar(255)                   |                                               | true     |                                                                               |                                             |         |
+| properties        | jsonb                          |                                               | true     |                                                                               |                                             |         |
+| conditions        | jsonb                          |                                               | true     |                                                                               |                                             |         |
+| created_at        | timestamp(6) without time zone |                                               | true     |                                                                               |                                             |         |
+| updated_at        | timestamp(6) without time zone |                                               | true     |                                                                               |                                             |         |
+| created_by_id     | integer                        |                                               | true     |                                                                               | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id     | integer                        |                                               | true     |                                                                               | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
-| admin_permissions_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| Name                               | Type        | Definition                                                                |
+| ---------------------------------- | ----------- | ------------------------------------------------------------------------- |
+| admin_permissions_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 | admin_permissions_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | admin_permissions_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| admin_permissions_pkey | CREATE UNIQUE INDEX admin_permissions_pkey ON public.admin_permissions USING btree (id) |
+| Name                               | Definition                                                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| admin_permissions_pkey             | CREATE UNIQUE INDEX admin_permissions_pkey ON public.admin_permissions USING btree (id)                 |
 | admin_permissions_created_by_id_fk | CREATE INDEX admin_permissions_created_by_id_fk ON public.admin_permissions USING btree (created_by_id) |
 | admin_permissions_updated_by_id_fk | CREATE INDEX admin_permissions_updated_by_id_fk ON public.admin_permissions USING btree (updated_by_id) |
 

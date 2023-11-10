@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('up_permissions_id_seq'::regclass) | false | [public.up_permissions_role_links](public.up_permissions_role_links.md) |  |  |
-| action | varchar(255) |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                                    | Nullable | Children                                                                | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------------ | -------- | ----------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('up_permissions_id_seq'::regclass) | false    | [public.up_permissions_role_links](public.up_permissions_role_links.md) |                                             |         |
+| action        | varchar(255)                   |                                            | true     |                                                                         |                                             |         |
+| created_at    | timestamp(6) without time zone |                                            | true     |                                                                         |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                            | true     |                                                                         |                                             |         |
+| created_by_id | integer                        |                                            | true     |                                                                         | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                            | true     |                                                                         | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                            | Type        | Definition                                                                |
+| ------------------------------- | ----------- | ------------------------------------------------------------------------- |
 | up_permissions_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | up_permissions_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| up_permissions_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| up_permissions_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| up_permissions_pkey | CREATE UNIQUE INDEX up_permissions_pkey ON public.up_permissions USING btree (id) |
+| Name                            | Definition                                                                                        |
+| ------------------------------- | ------------------------------------------------------------------------------------------------- |
+| up_permissions_pkey             | CREATE UNIQUE INDEX up_permissions_pkey ON public.up_permissions USING btree (id)                 |
 | up_permissions_created_by_id_fk | CREATE INDEX up_permissions_created_by_id_fk ON public.up_permissions USING btree (created_by_id) |
 | up_permissions_updated_by_id_fk | CREATE INDEX up_permissions_updated_by_id_fk ON public.up_permissions USING btree (updated_by_id) |
 

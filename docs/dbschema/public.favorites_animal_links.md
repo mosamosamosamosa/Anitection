@@ -4,28 +4,28 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('favorites_animal_links_id_seq'::regclass) | false |  |  |  |
-| favorite_id | integer |  | true |  | [public.favorites](public.favorites.md) |  |
-| animal_id | integer |  | true |  | [public.animals](public.animals.md) |  |
+| Name        | Type    | Default                                            | Nullable | Children | Parents                                 | Comment |
+| ----------- | ------- | -------------------------------------------------- | -------- | -------- | --------------------------------------- | ------- |
+| id          | integer | nextval('favorites_animal_links_id_seq'::regclass) | false    |          |                                         |         |
+| favorite_id | integer |                                                    | true     |          | [public.favorites](public.favorites.md) |         |
+| animal_id   | integer |                                                    | true     |          | [public.animals](public.animals.md)     |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
-| favorites_animal_links_inv_fk | FOREIGN KEY | FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE |
-| favorites_animal_links_fk | FOREIGN KEY | FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE |
-| favorites_animal_links_pkey | PRIMARY KEY | PRIMARY KEY (id) |
-| favorites_animal_links_unique | UNIQUE | UNIQUE (favorite_id, animal_id) |
+| Name                          | Type        | Definition                                                           |
+| ----------------------------- | ----------- | -------------------------------------------------------------------- |
+| favorites_animal_links_inv_fk | FOREIGN KEY | FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE     |
+| favorites_animal_links_fk     | FOREIGN KEY | FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE |
+| favorites_animal_links_pkey   | PRIMARY KEY | PRIMARY KEY (id)                                                     |
+| favorites_animal_links_unique | UNIQUE      | UNIQUE (favorite_id, animal_id)                                      |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| favorites_animal_links_pkey | CREATE UNIQUE INDEX favorites_animal_links_pkey ON public.favorites_animal_links USING btree (id) |
-| favorites_animal_links_fk | CREATE INDEX favorites_animal_links_fk ON public.favorites_animal_links USING btree (favorite_id) |
-| favorites_animal_links_inv_fk | CREATE INDEX favorites_animal_links_inv_fk ON public.favorites_animal_links USING btree (animal_id) |
+| Name                          | Definition                                                                                                              |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| favorites_animal_links_pkey   | CREATE UNIQUE INDEX favorites_animal_links_pkey ON public.favorites_animal_links USING btree (id)                       |
+| favorites_animal_links_fk     | CREATE INDEX favorites_animal_links_fk ON public.favorites_animal_links USING btree (favorite_id)                       |
+| favorites_animal_links_inv_fk | CREATE INDEX favorites_animal_links_inv_fk ON public.favorites_animal_links USING btree (animal_id)                     |
 | favorites_animal_links_unique | CREATE UNIQUE INDEX favorites_animal_links_unique ON public.favorites_animal_links USING btree (favorite_id, animal_id) |
 
 ## Relations

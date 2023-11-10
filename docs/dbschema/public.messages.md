@@ -4,29 +4,29 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('messages_id_seq'::regclass) | false | [public.messages_institution_links](public.messages_institution_links.md) [public.messages_user_links](public.messages_user_links.md) |  |  |
-| content | text |  | true |  |  |  |
-| created_at | timestamp(6) without time zone |  | true |  |  |  |
-| updated_at | timestamp(6) without time zone |  | true |  |  |  |
-| published_at | timestamp(6) without time zone |  | true |  |  |  |
-| created_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
-| updated_by_id | integer |  | true |  | [public.admin_users](public.admin_users.md) |  |
+| Name          | Type                           | Default                              | Nullable | Children                                                                                                                              | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('messages_id_seq'::regclass) | false    | [public.messages_institution_links](public.messages_institution_links.md) [public.messages_user_links](public.messages_user_links.md) |                                             |         |
+| content       | text                           |                                      | true     |                                                                                                                                       |                                             |         |
+| created_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
+| published_at  | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
+| created_by_id | integer                        |                                      | true     |                                                                                                                                       | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                      | true     |                                                                                                                                       | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                      | Type        | Definition                                                                |
+| ------------------------- | ----------- | ------------------------------------------------------------------------- |
 | messages_created_by_id_fk | FOREIGN KEY | FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
 | messages_updated_by_id_fk | FOREIGN KEY | FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL |
-| messages_pkey | PRIMARY KEY | PRIMARY KEY (id) |
+| messages_pkey             | PRIMARY KEY | PRIMARY KEY (id)                                                          |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
-| messages_pkey | CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id) |
+| Name                      | Definition                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| messages_pkey             | CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id)                 |
 | messages_created_by_id_fk | CREATE INDEX messages_created_by_id_fk ON public.messages USING btree (created_by_id) |
 | messages_updated_by_id_fk | CREATE INDEX messages_updated_by_id_fk ON public.messages USING btree (updated_by_id) |
 

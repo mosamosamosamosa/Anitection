@@ -4,23 +4,23 @@
 
 ## Columns
 
-| Name | Type | Default | Nullable | Children | Parents | Comment |
-| ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| id | integer | nextval('strapi_database_schema_id_seq'::regclass) | false |  |  |  |
-| schema | json |  | true |  |  |  |
-| time | timestamp without time zone |  | true |  |  |  |
-| hash | varchar(255) |  | true |  |  |  |
+| Name   | Type                        | Default                                            | Nullable | Children | Parents | Comment |
+| ------ | --------------------------- | -------------------------------------------------- | -------- | -------- | ------- | ------- |
+| id     | integer                     | nextval('strapi_database_schema_id_seq'::regclass) | false    |          |         |         |
+| schema | json                        |                                                    | true     |          |         |         |
+| time   | timestamp without time zone |                                                    | true     |          |         |         |
+| hash   | varchar(255)                |                                                    | true     |          |         |         |
 
 ## Constraints
 
-| Name | Type | Definition |
-| ---- | ---- | ---------- |
+| Name                        | Type        | Definition       |
+| --------------------------- | ----------- | ---------------- |
 | strapi_database_schema_pkey | PRIMARY KEY | PRIMARY KEY (id) |
 
 ## Indexes
 
-| Name | Definition |
-| ---- | ---------- |
+| Name                        | Definition                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------- |
 | strapi_database_schema_pkey | CREATE UNIQUE INDEX strapi_database_schema_pkey ON public.strapi_database_schema USING btree (id) |
 
 ## Relations
