@@ -3,6 +3,9 @@ dc := docker-compose -f ./docker-compose.yml
 up:
 	$(dc) up -d
 
+up-debug:
+	$(dc) --profile debug up
+
 down:
 	$(dc) down
 
