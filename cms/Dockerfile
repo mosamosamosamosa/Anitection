@@ -6,9 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn
-
-RUN yarn build
+RUN yarn && yarn build
 
 EXPOSE 1337
 

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "animal-kind",
     "pluralName": "animal-kinds",
-    "displayName": "AnimalKind"
+    "displayName": "AnimalKind",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,11 +14,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "animal": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::animal.animal"
     }
   }
 }

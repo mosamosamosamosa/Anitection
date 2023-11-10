@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "animal": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::animal.animal"
-    },
     "content": {
       "type": "string"
     }
