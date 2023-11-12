@@ -701,11 +701,6 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
       'oneToOne',
       'api::animal-kind.animal-kind'
     >;
-    animal_logs: Attribute.Relation<
-      'api::animal.animal',
-      'oneToMany',
-      'api::animal-log.animal-log'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -768,6 +763,11 @@ export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
   };
   attributes: {
     content: Attribute.String;
+    animal: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToOne',
+      'api::animal.animal'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
