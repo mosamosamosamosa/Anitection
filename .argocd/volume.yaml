@@ -1,18 +1,32 @@
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-volume
+  name: pv-volume-1
   namespace: anitection
 spec:
   capacity:
-    storage: 5Gi
+    storage: 3Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
-    path: "/mnt/data/anitection"
+    path: "/mnt/data/anitection/db-data"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume-2
+  namespace: anitection
+spec:
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: "/mnt/data/anitection/cms-data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -37,5 +51,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 3Gi
   storageClassName: manual
