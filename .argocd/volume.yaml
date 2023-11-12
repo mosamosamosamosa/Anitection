@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
-    path: "/mnt/data/postgres"
+    path: "/mnt/data/anitection"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,5 +24,18 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 3Gi
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cms-pv-claim
+  namespace: anitection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
   storageClassName: manual
