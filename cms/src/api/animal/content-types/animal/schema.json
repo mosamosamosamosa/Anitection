@@ -51,11 +51,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::animal-kind.animal-kind"
-    },
-    "animal_logs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::animal-log.animal-log"
     }
   }
 }
