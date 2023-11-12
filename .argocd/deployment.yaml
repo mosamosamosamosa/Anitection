@@ -60,7 +60,7 @@ spec:
       volumes:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
-            claimName: postgres-pv-claim
+            claimName: db-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
