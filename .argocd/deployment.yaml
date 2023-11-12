@@ -19,6 +19,13 @@ spec:
           image: yumekiti/anitection-cms:latest
           ports:
             - containerPort: 1337
+          volumeMounts:
+            - name: cms-persistent-storage
+              mountPath: /app/public/uploads
+      volumes:
+        - name: cms-persistent-storage
+          persistentVolumeClaim:
+            claimName: cms-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
