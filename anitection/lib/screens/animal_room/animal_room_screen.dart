@@ -24,6 +24,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
           child: ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
+                  isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -32,53 +33,56 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                   ),
                   context: context,
                   builder: (context) {
-                    return Container(
-                      height: size.height * 0.9,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
+                    return FractionallySizedBox(
+                      heightFactor: 0.75,
+                      child: Container(
+                        height: size.height * 0.9,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                            border: Border(
+                              top: BorderSide(
+                                width: 5,
+                                color: Color(0xFFC3EB89),
+                              ),
+                              left: BorderSide(
+                                width: 5,
+                                color: Color(0xFFC3EB89),
+                              ),
+                              right: BorderSide(
+                                width: 5,
+                                color: Color(0xFFC3EB89),
+                              ),
+                              bottom: BorderSide(
+                                width: 0,
+                                color: Color(0xFFC3EB89),
+                              ),
+                            )
                         ),
-                        border: Border(
-                          top: BorderSide(
-                            width: 5,
-                            color: Color(0xFFC3EB89),
-                          ),
-                          left: BorderSide(
-                            width: 5,
-                            color: Color(0xFFC3EB89),
-                          ),
-                          right: BorderSide(
-                            width: 5,
-                            color: Color(0xFFC3EB89),
-                          ),
-                          bottom: BorderSide(
-                            width: 0,
-                            color: Color(0xFFC3EB89),
-                          ),
-                        )
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Positioned(
-                            top: -60,
-                            child: Container(
-                              height: 120,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(60),
-                                border: Border.all(
-                                  color: const Color(0xFFC3EB89),
-                                  width: 5,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Positioned(
+                              top: -60,
+                              child: Container(
+                                height: 120,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(60),
+                                  border: Border.all(
+                                    color: const Color(0xFFC3EB89),
+                                    width: 5,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
