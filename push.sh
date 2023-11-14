@@ -9,3 +9,6 @@ docker_build_push() {
 
 # cms
 docker_build_push "cms" "anitection-cms" "linux/arm64/v8"
+
+# bff
+docker_build_push "bff" "anitection-bff" "linux/arm64/v8"

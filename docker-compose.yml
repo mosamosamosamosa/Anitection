@@ -50,5 +50,22 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
+  bff:
+    build:
+      context: ./bff
+    volumes:
+      - ./bff:/go/src/app
+    ports:
+      - 8080:8080
+
+  tbls:
+    image: k1low/tbls
+    working_dir: /work
+    volumes:
+      - ./:/work
+    command: doc postgres://user:password@db:5432/anitection?sslmode=disable
+    depends_on:
+      - db
+
 volumes:
   db:
