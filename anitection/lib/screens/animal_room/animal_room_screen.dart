@@ -1,3 +1,4 @@
+import 'package:anitection/components/stroke_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,11 +35,10 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               context: context,
               builder: (context) {
                 return FractionallySizedBox(
-                  heightFactor: 0.75,
-                  child: AnimalRoomProfileDialog(
-                    height: size.height * 0.9,
-                  )
-                );
+                    heightFactor: 0.75,
+                    child: AnimalRoomProfileDialog(
+                      height: size.height * 0.9,
+                    ));
               },
             );
           },
@@ -51,7 +51,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
 
 class AnimalRoomProfileDialog extends StatelessWidget {
   const AnimalRoomProfileDialog({super.key, required this.height});
+
   final double height;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,7 +87,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Positioned(
-            top: -60,
+            top: -80,
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -120,10 +122,10 @@ class AnimalRoomProfileDialog extends StatelessWidget {
               ],
             ),
           ),
-          const Column(
+          Column(
             children: [
-              SizedBox(height: 65),
-              Row(
+              const SizedBox(height: 45),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -134,7 +136,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     "(3)",
                     style: TextStyle(
@@ -143,7 +147,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     "♂",
                     style: TextStyle(
@@ -152,8 +158,115 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-
                 ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFE39E),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const StrokeText(
+                            text: "性格",
+                            strokeWidth: 2,
+                            strokeColor: Colors.white,
+                            textColor: Color(0xFF444444),
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        const Text(
+                          "人懐っこい",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF444444),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    const Text(
+                      "/",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFFC3EB89),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFE39E),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const StrokeText(
+                            text: "すきなもの",
+                            strokeWidth: 2,
+                            strokeColor: Colors.white,
+                            textColor: Color(0xFF444444),
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 4,),
+                        // ねこじゃらし
+                        const Text(
+                          "ねこじゃらし",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF444444),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF8E0),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: const Text(
+                      "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。"),
+                ),
               ),
             ],
           ),
