@@ -12,13 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "content": {
-      "type": "string"
-    },
     "animal": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::animal.animal"
+    },
+    "logs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::log.log"
     }
   }
 }

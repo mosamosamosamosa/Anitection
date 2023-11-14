@@ -20,7 +20,12 @@
       "relation": "oneToOne",
       "target": "api::institution.institution"
     },
-    "user": {
+    "sender": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "recipient": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"

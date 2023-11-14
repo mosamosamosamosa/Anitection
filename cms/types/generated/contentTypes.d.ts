@@ -660,6 +660,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     employee: Attribute.Boolean;
+    icon: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -762,11 +763,15 @@ export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    content: Attribute.String;
     animal: Attribute.Relation<
       'api::animal-log.animal-log',
       'oneToOne',
       'api::animal.animal'
+    >;
+    logs: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToMany',
+      'api::log.log'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -902,6 +907,28 @@ export interface ApiInstitutionInstitution extends Schema.CollectionType {
   };
 }
 
+export interface ApiLogLog extends Schema.CollectionType {
+  collectionName: 'logs';
+  info: {
+    singularName: 'log';
+    pluralName: 'logs';
+    displayName: 'Log';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMessageMessage extends Schema.CollectionType {
   collectionName: 'messages';
   info: {
@@ -920,7 +947,12 @@ export interface ApiMessageMessage extends Schema.CollectionType {
       'oneToOne',
       'api::institution.institution'
     >;
-    user: Attribute.Relation<
+    sender: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    recipient: Attribute.Relation<
       'api::message.message',
       'oneToOne',
       'plugin::users-permissions.user'
@@ -1073,6 +1105,7 @@ declare module '@strapi/types' {
       'api::employee.employee': ApiEmployeeEmployee;
       'api::favorite.favorite': ApiFavoriteFavorite;
       'api::institution.institution': ApiInstitutionInstitution;
+      'api::log.log': ApiLogLog;
       'api::message.message': ApiMessageMessage;
       'api::notification.notification': ApiNotificationNotification;
       'api::task.task': ApiTaskTask;
