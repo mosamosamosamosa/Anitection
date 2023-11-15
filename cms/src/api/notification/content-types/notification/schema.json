@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "singularName": "notification",
+    "pluralName": "notifications",
+    "displayName": "Notification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

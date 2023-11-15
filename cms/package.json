@@ -11,11 +11,14 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@strapi/plugin-documentation": "^4.15.2",
     "@strapi/plugin-i18n": "4.15.0",
     "@strapi/plugin-users-permissions": "4.15.0",
     "@strapi/strapi": "4.15.0",
+    "@strapi/utils": "^4.15.0",
     "better-sqlite3": "8.6.0",
     "mysql": "^2.18.1",
+    "pg": "^8.11.3",
     "sharp": "^0.32.6"
   },
   "author": {

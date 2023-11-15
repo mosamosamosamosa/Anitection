@@ -631,7 +631,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -660,6 +659,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    employee: Attribute.Boolean;
+    icon: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -670,6 +671,411 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAnimalAnimal extends Schema.CollectionType {
+  collectionName: 'animals';
+  info: {
+    singularName: 'animal';
+    pluralName: 'animals';
+    displayName: 'Animal';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    images: Attribute.Media;
+    name: Attribute.String;
+    age: Attribute.Integer & Attribute.DefaultTo<0>;
+    gender: Attribute.Enumeration<['male', 'female', 'other']>;
+    personality: Attribute.Text;
+    interest: Attribute.String;
+    description: Attribute.Text;
+    animal_kind: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'api::animal-kind.animal-kind'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAnimalKindAnimalKind extends Schema.CollectionType {
+  collectionName: 'animal_kinds';
+  info: {
+    singularName: 'animal-kind';
+    pluralName: 'animal-kinds';
+    displayName: 'AnimalKind';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::animal-kind.animal-kind',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::animal-kind.animal-kind',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
+  collectionName: 'animal_logs';
+  info: {
+    singularName: 'animal-log';
+    pluralName: 'animal-logs';
+    displayName: 'AnimalLog';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    animal: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToOne',
+      'api::animal.animal'
+    >;
+    logs: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToMany',
+      'api::log.log'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::animal-log.animal-log',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEmployeeEmployee extends Schema.CollectionType {
+  collectionName: 'employees';
+  info: {
+    singularName: 'employee';
+    pluralName: 'employees';
+    displayName: 'Employee';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    institution: Attribute.Relation<
+      'api::employee.employee',
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    users: Attribute.Relation<
+      'api::employee.employee',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::employee.employee',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::employee.employee',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFavoriteFavorite extends Schema.CollectionType {
+  collectionName: 'favorites';
+  info: {
+    singularName: 'favorite';
+    pluralName: 'favorites';
+    displayName: 'Favorite';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    animals: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToMany',
+      'api::animal.animal'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiInstitutionInstitution extends Schema.CollectionType {
+  collectionName: 'institutions';
+  info: {
+    singularName: 'institution';
+    pluralName: 'institutions';
+    displayName: 'Institution';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    address: Attribute.String;
+    phone: Attribute.String;
+    website_url: Attribute.String;
+    needs_url: Attribute.String;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::institution.institution',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::institution.institution',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLogLog extends Schema.CollectionType {
+  collectionName: 'logs';
+  info: {
+    singularName: 'log';
+    pluralName: 'logs';
+    displayName: 'Log';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMessageMessage extends Schema.CollectionType {
+  collectionName: 'messages';
+  info: {
+    singularName: 'message';
+    pluralName: 'messages';
+    displayName: 'Message';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.Text;
+    institution: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    sender: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    recipient: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNotificationNotification extends Schema.CollectionType {
+  collectionName: 'notifications';
+  info: {
+    singularName: 'notification';
+    pluralName: 'notifications';
+    displayName: 'Notification';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.String;
+    user: Attribute.Relation<
+      'api::notification.notification',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::notification.notification',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::notification.notification',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTaskTask extends Schema.CollectionType {
+  collectionName: 'tasks';
+  info: {
+    singularName: 'task';
+    pluralName: 'tasks';
+    displayName: 'Task';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    employee: Attribute.Relation<
+      'api::task.task',
+      'oneToOne',
+      'api::employee.employee'
+    >;
+    institution: Attribute.Relation<
+      'api::task.task',
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    title: Attribute.String;
+    content: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::task.task', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::task.task', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTimelineTimeline extends Schema.CollectionType {
+  collectionName: 'timelines';
+  info: {
+    singularName: 'timeline';
+    pluralName: 'timelines';
+    displayName: 'Timeline';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    images: Attribute.Media;
+    content: Attribute.Text;
+    footprints: Attribute.Integer & Attribute.DefaultTo<0>;
+    user: Attribute.Relation<
+      'api::timeline.timeline',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::timeline.timeline',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::timeline.timeline',
       'oneToOne',
       'admin::user'
     > &
@@ -693,6 +1099,17 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::animal.animal': ApiAnimalAnimal;
+      'api::animal-kind.animal-kind': ApiAnimalKindAnimalKind;
+      'api::animal-log.animal-log': ApiAnimalLogAnimalLog;
+      'api::employee.employee': ApiEmployeeEmployee;
+      'api::favorite.favorite': ApiFavoriteFavorite;
+      'api::institution.institution': ApiInstitutionInstitution;
+      'api::log.log': ApiLogLog;
+      'api::message.message': ApiMessageMessage;
+      'api::notification.notification': ApiNotificationNotification;
+      'api::task.task': ApiTaskTask;
+      'api::timeline.timeline': ApiTimelineTimeline;
     }
   }
 }

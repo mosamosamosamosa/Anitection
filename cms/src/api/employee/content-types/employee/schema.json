@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employees",
+  "info": {
+    "singularName": "employee",
+    "pluralName": "employees",
+    "displayName": "Employee",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

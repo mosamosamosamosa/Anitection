@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animal_logs",
+  "info": {
+    "singularName": "animal-log",
+    "pluralName": "animal-logs",
+    "displayName": "AnimalLog",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "animal": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::animal.animal"
+    },
+    "logs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::log.log"
+    }
+  }
+}

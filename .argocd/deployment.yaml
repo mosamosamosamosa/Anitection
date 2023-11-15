@@ -19,6 +19,13 @@ spec:
           image: yumekiti/anitection-cms:latest
           ports:
             - containerPort: 1337
+          volumeMounts:
+            - name: cms-persistent-storage
+              mountPath: /app/public/uploads
+      volumes:
+        - name: cms-persistent-storage
+          persistentVolumeClaim:
+            claimName: cms-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,27 +44,41 @@ spec:
     spec:
       containers:
         - name: anitection-db
-          image: liupeng0518/mysql:5.7-arm64
+          image: postgres:16.0-alpine
           ports:
-            - containerPort: 3306
+            - containerPort: 5432
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
-            - name: MYSQL_DATABASE
-              value: database
-            - name: MYSQL_USER
+            - name: POSTGRES_DB
+              value: anitection
+            - name: POSTGRES_USER
               value: user
-            - name: MYSQL_PASSWORD
+            - name: POSTGRES_PASSWORD
               value: password
           volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-            - name: mysql-configmap-volume
-              mountPath: /etc/mysql/conf.d
+            - name: db-persistent-storage
+              mountPath: /var/lib/postgresql/data
       volumes:
-        - name: mysql-persistent-storage
+        - name: db-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
-        - name: mysql-configmap-volume
-          configMap:
-            name: cocoroiki-mysql-configmap
+            claimName: db-pv-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff
+  namespace: anitection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bff
+  template:
+    metadata:
+      labels:
+        app: bff
+    spec:
+      containers:
+        - name: anitection-bff
+          image: yumekiti/anitection-bff:latest
+          ports:
+            - containerPort: 8080

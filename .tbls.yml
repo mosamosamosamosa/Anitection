@@ -1,0 +1,11 @@
+dsn: postgres://user:password@db:5432/anitection?sslmode=disable
+docPath: docs/dbschema
+disableOutputSchema: true
+er:
+  format: mermaid
+
+lint:
+  requireTableComment:
+    enabled: true
+  requireColumnComment:
+    enabled: true

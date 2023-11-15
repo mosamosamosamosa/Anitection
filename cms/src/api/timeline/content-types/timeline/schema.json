@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "timelines",
+  "info": {
+    "singularName": "timeline",
+    "pluralName": "timelines",
+    "displayName": "Timeline",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "content": {
+      "type": "text"
+    },
+    "footprints": {
+      "type": "integer",
+      "default": 0
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

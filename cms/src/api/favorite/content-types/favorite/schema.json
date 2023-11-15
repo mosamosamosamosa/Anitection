@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favorites",
+  "info": {
+    "singularName": "favorite",
+    "pluralName": "favorites",
+    "displayName": "Favorite",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "animals": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::animal.animal"
+    }
+  }
+}
