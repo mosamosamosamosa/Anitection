@@ -1,7 +1,26 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
-}
+import { SWRConfig } from 'swr';
+import { fetchInstance } from './utils/fetchInstance';
+
+import Home from './components/pages/Home';
+
+const App = () => {
+  return (
+    <SWRConfig
+      value={{
+        fetcher: (resource, init) =>
+          fetchInstance()
+            .get(resource, init)
+            .then((res) => res.data),
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </SWRConfig>
+  );
+};
 
 export default App;
