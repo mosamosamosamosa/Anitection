@@ -240,7 +240,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 4,),
+                        const SizedBox(width: 4,),
                         // ねこじゃらし
                         const Text(
                           "ねこじゃらし",
@@ -265,7 +265,13 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Text(
-                      "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。"),
+                    "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF444444),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
             ],
