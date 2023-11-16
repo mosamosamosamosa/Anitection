@@ -4,15 +4,14 @@
 
 ## Columns
 
-| Name          | Type                           | Default                                 | Nullable | Children                                                              | Parents                                     | Comment |
-| ------------- | ------------------------------ | --------------------------------------- | -------- | --------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('animal_logs_id_seq'::regclass) | false    | [public.animal_logs_animal_links](public.animal_logs_animal_links.md) |                                             |         |
-| content       | varchar(255)                   |                                         | true     |                                                                       |                                             |         |
-| created_at    | timestamp(6) without time zone |                                         | true     |                                                                       |                                             |         |
-| updated_at    | timestamp(6) without time zone |                                         | true     |                                                                       |                                             |         |
-| published_at  | timestamp(6) without time zone |                                         | true     |                                                                       |                                             |         |
-| created_by_id | integer                        |                                         | true     |                                                                       | [public.admin_users](public.admin_users.md) |         |
-| updated_by_id | integer                        |                                         | true     |                                                                       | [public.admin_users](public.admin_users.md) |         |
+| Name          | Type                           | Default                                 | Nullable | Children                                                                                                                                | Parents                                     | Comment |
+| ------------- | ------------------------------ | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('animal_logs_id_seq'::regclass) | false    | [public.animal_logs_animal_links](public.animal_logs_animal_links.md) [public.animal_logs_logs_links](public.animal_logs_logs_links.md) |                                             |         |
+| created_at    | timestamp(6) without time zone |                                         | true     |                                                                                                                                         |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                         | true     |                                                                                                                                         |                                             |         |
+| published_at  | timestamp(6) without time zone |                                         | true     |                                                                                                                                         |                                             |         |
+| created_by_id | integer                        |                                         | true     |                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                         | true     |                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
@@ -36,12 +35,12 @@
 erDiagram
 
 "public.animal_logs_animal_links" }o--o| "public.animal_logs" : "FOREIGN KEY (animal_log_id) REFERENCES animal_logs(id) ON DELETE CASCADE"
+"public.animal_logs_logs_links" }o--o| "public.animal_logs" : "FOREIGN KEY (animal_log_id) REFERENCES animal_logs(id) ON DELETE CASCADE"
 "public.animal_logs" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.animal_logs" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
 "public.animal_logs" {
   integer id
-  varchar_255_ content
   timestamp_6__without_time_zone created_at
   timestamp_6__without_time_zone updated_at
   timestamp_6__without_time_zone published_at
@@ -52,6 +51,12 @@ erDiagram
   integer id
   integer animal_log_id FK
   integer animal_id FK
+}
+"public.animal_logs_logs_links" {
+  integer id
+  integer animal_log_id FK
+  integer log_id FK
+  double_precision log_order
 }
 "public.admin_users" {
   integer id

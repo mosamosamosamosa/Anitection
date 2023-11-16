@@ -6,7 +6,7 @@
 
 | Name          | Type                           | Default                                  | Nullable | Children                                                                | Parents                                     | Comment |
 | ------------- | ------------------------------ | ---------------------------------------- | -------- | ----------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('animal_kinds_id_seq'::regclass) | false    | [public.animal_kinds_animal_links](public.animal_kinds_animal_links.md) |                                             |         |
+| id            | integer                        | nextval('animal_kinds_id_seq'::regclass) | false    | [public.animals_animal_kind_links](public.animals_animal_kind_links.md) |                                             |         |
 | name          | varchar(255)                   |                                          | true     |                                                                         |                                             |         |
 | created_at    | timestamp(6) without time zone |                                          | true     |                                                                         |                                             |         |
 | updated_at    | timestamp(6) without time zone |                                          | true     |                                                                         |                                             |         |
@@ -35,7 +35,7 @@
 ```mermaid
 erDiagram
 
-"public.animal_kinds_animal_links" }o--o| "public.animal_kinds" : "FOREIGN KEY (animal_kind_id) REFERENCES animal_kinds(id) ON DELETE CASCADE"
+"public.animals_animal_kind_links" }o--o| "public.animal_kinds" : "FOREIGN KEY (animal_kind_id) REFERENCES animal_kinds(id) ON DELETE CASCADE"
 "public.animal_kinds" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.animal_kinds" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
@@ -48,10 +48,10 @@ erDiagram
   integer created_by_id FK
   integer updated_by_id FK
 }
-"public.animal_kinds_animal_links" {
+"public.animals_animal_kind_links" {
   integer id
-  integer animal_kind_id FK
   integer animal_id FK
+  integer animal_kind_id FK
 }
 "public.admin_users" {
   integer id
