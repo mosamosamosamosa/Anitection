@@ -1,6 +1,7 @@
 import 'package:anitection/components/stroke_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimalRoomScreen extends ConsumerStatefulWidget {
   const AnimalRoomScreen({super.key, required this.animalId});
@@ -240,7 +241,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 4,),
+                        const SizedBox(
+                          width: 4,
+                        ),
                         // ねこじゃらし
                         const Text(
                           "ねこじゃらし",
@@ -274,10 +277,71 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              const AnimalRoomProfileDialogDivider(),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+
+class AnimalRoomProfileDialogDivider extends StatelessWidget {
+  const AnimalRoomProfileDialogDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Flexible(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Divider(
+              height: 2,
+              thickness: 2,
+              color: Color(0xFFC3EB89),
+            ),
+          ),
+        ),
+        Transform.translate(
+          offset: const Offset(0, 4),
+          child: Transform.rotate(
+            angle: 18,
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: SvgPicture.asset(
+                "assets/svg/img_animal_pad.svg",
+                colorFilter: const ColorFilter.mode(
+                    Color(0xFFC3EB89), BlendMode.srcIn),
+              ),
+            ),
+          ),
+        ),
+        Transform.rotate(
+          angle: -18,
+          child: SizedBox(
+            width: 16,
+            height: 16,
+            child: SvgPicture.asset(
+              "assets/svg/img_animal_pad.svg",
+              colorFilter: const ColorFilter.mode(
+                  Color(0xFFC3EB89), BlendMode.srcIn),
+            ),
+          ),
+        ),
+        const Flexible(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Divider(
+              height: 2,
+              thickness: 2,
+              color: Color(0xFFC3EB89),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
