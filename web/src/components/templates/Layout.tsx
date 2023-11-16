@@ -1,22 +1,30 @@
-import React, { memo } from 'react';
+import React, { memo, FC, ReactNode } from 'react';
 
-// import Header from '../organisms/Header';
+import Header from '../organisms/Header';
+import Navigation from '../organisms/Navigation';
+import UserPanel from '../organisms/UserPanel';
+import Breadcrumbs from '../organisms/Breadcrumbs';
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const Component: React.FC<Props> = ({ children }) => {
+const Component: FC<Props> = ({ children }) => {
   return (
     <div className="App h-screen flex flex-col">
-      <header className="bg-stroke p-2 flex justify-between items-center">
-        <h1 className="py-4 text-2xl font-bold">Anitection</h1>
-        <div className="flex gap-4">
-          <a href="/login">ログイン</a>
-          <a href="/signup">新規登録</a>
+      <Header />
+      <div className="flex flex-grow">
+        <aside className="bg-main w-1/6 p-4 h-full">
+          <UserPanel />
+          <Navigation />
+        </aside>
+        <div className="flex-grow">
+          <Breadcrumbs />
+          <div className="max-w-5xl mx-auto px-4 py-8">
+            <main className="flex-grow">{children}</main>
+          </div>
         </div>
-      </header>
-      <main className="flex-grow">{children}</main>
+      </div>
     </div>
   );
 };

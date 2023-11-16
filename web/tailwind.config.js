@@ -4,18 +4,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: '#fffffe',
+        background: '#FFF8E0',
         headline: '#272343',
         paragraph: '#2d334a',
         button: '#ffd803',
-        'button-text': '#272343',
-        stroke: '#C3EB89',
-        main: '#fffffe',
-        highlight: '#ffd803',
+        'button-text': '#444444',
+        stroke: '#FFFFFE',
+        main: '#FFFFFE',
+        highlight: '#C3EB89',
         secondary: '#e3f6f5',
         tertiary: '#bae8e8',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.stroked': {
+          'text-shadow':
+            '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff',
+        },
+      };
+
+      addUtilities(newUtilities);
+    },
+  ],
 };
