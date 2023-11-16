@@ -278,6 +278,28 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                 ),
               ),
               const AnimalRoomProfileDialogDivider(),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    left: 8,
+                    right: 8,
+                  ),
+                  child: GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    children: [
+                      for (int i = 0; i < 9; i++)
+                        Container(
+                          color: Colors.black26,
+                        ),
+                    ],
+                  ),
+                )
+              )
             ],
           ),
         ],
@@ -285,7 +307,6 @@ class AnimalRoomProfileDialog extends StatelessWidget {
     );
   }
 }
-
 
 class AnimalRoomProfileDialogDivider extends StatelessWidget {
   const AnimalRoomProfileDialogDivider({super.key});
@@ -313,8 +334,8 @@ class AnimalRoomProfileDialogDivider extends StatelessWidget {
               height: 20,
               child: SvgPicture.asset(
                 "assets/svg/img_animal_pad.svg",
-                colorFilter: const ColorFilter.mode(
-                    Color(0xFFC3EB89), BlendMode.srcIn),
+                colorFilter:
+                    const ColorFilter.mode(Color(0xFFC3EB89), BlendMode.srcIn),
               ),
             ),
           ),
@@ -326,8 +347,8 @@ class AnimalRoomProfileDialogDivider extends StatelessWidget {
             height: 16,
             child: SvgPicture.asset(
               "assets/svg/img_animal_pad.svg",
-              colorFilter: const ColorFilter.mode(
-                  Color(0xFFC3EB89), BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(Color(0xFFC3EB89), BlendMode.srcIn),
             ),
           ),
         ),
