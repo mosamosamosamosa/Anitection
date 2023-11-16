@@ -1,4 +1,6 @@
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/models/animal/animal.dart';
+import 'package:anitection/models/base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,6 +41,23 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     heightFactor: 0.75,
                     child: AnimalRoomProfileDialog(
                       height: size.height * 0.9,
+                      animal: Model(
+                        id: 1,
+                        attributes: AnimalAttributes(
+                          name: "茶トラ猫",
+                          age: 3,
+                          gender: "♂",
+                          interest: "ねこじゃらし",
+                          personality: "人懐っこい",
+                          description: "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。",
+                          images: ArrayData(
+                            data: [
+                            ]
+                          ),
+                          createdAt: DateTime.now(),
+                          updatedAt: DateTime.now(),
+                        ),
+                      ),
                     ));
               },
             );
@@ -51,9 +70,11 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
 }
 
 class AnimalRoomProfileDialog extends StatelessWidget {
-  const AnimalRoomProfileDialog({super.key, required this.height});
+  const AnimalRoomProfileDialog(
+      {super.key, required this.height, required this.animal});
 
   final double height;
+  final Model<AnimalAttributes> animal;
 
   @override
   Widget build(BuildContext context) {
@@ -126,34 +147,34 @@ class AnimalRoomProfileDialog extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 45),
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "茶トラ猫",
-                    style: TextStyle(
+                    animal.attributes.name ?? "",
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Color(0xFF444444),
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    "(3)",
-                    style: TextStyle(
+                    "(${animal.attributes.age ?? 0})",
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Color(0xFF444444),
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    "♂",
-                    style: TextStyle(
+                    animal.attributes.gender ?? "",
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Color(0xFF444444),
                       fontWeight: FontWeight.w700,
@@ -195,9 +216,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                         const SizedBox(
                           width: 4,
                         ),
-                        const Text(
-                          "人懐っこい",
-                          style: TextStyle(
+                        Text(
+                          animal.attributes.personality ?? "",
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xFF444444),
                             fontWeight: FontWeight.w700,
@@ -230,12 +251,12 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                             color: const Color(0xFFFFE39E),
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const StrokeText(
-                            text: "すきなもの",
+                          child: StrokeText(
+                            text: animal.attributes.interest ?? "",
                             strokeWidth: 2,
                             strokeColor: Colors.white,
-                            textColor: Color(0xFF444444),
-                            textStyle: TextStyle(
+                            textColor: const Color(0xFF444444),
+                            textStyle: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),
@@ -267,9 +288,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                     color: const Color(0xFFFFF8E0),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: const Text(
-                    "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。",
-                    style: TextStyle(
+                  child: Text(
+                   animal.attributes.description ?? "",
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF444444),
                       fontWeight: FontWeight.w500,
@@ -278,28 +299,26 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                 ),
               ),
               const AnimalRoomProfileDialogDivider(),
-
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    left: 8,
-                    right: 8,
-                  ),
-                  child: GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                    children: [
-                      for (int i = 0; i < 9; i++)
-                        Container(
-                          color: Colors.black26,
-                        ),
-                    ],
-                  ),
-                )
-              )
+                  child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  left: 8,
+                  right: 8,
+                ),
+                child: GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  children: [
+                    for (int i = 0; i < 9; i++)
+                      Container(
+                        color: Colors.black26,
+                      ),
+                  ],
+                ),
+              ))
             ],
           ),
         ],
