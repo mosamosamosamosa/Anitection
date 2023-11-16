@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Component = () => {
   return (
@@ -17,7 +17,7 @@ const Component = () => {
         </li>
       </ol>
     </nav>
-  )
-}
+  );
+};
 
 export default Component;
