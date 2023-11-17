@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
+import 'package:anitection/models/media/media.dart';
+import 'package:anitection/providers/animal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,54 +24,56 @@ class AnimalRoomScreen extends ConsumerStatefulWidget {
 class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   @override
   Widget build(BuildContext context) {
+    final animalAsyncState = ref.watch(animalFutureProvider(widget.animalId));
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Animal Room"),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              context: context,
-              builder: (context) {
-                return FractionallySizedBox(
-                    heightFactor: 0.75,
-                    child: AnimalRoomProfileDialog(
-                      height: size.height * 0.9,
-                      animal: Model(
-                        id: 1,
-                        attributes: AnimalAttributes(
-                          name: "茶トラ猫",
-                          age: 3,
-                          gender: "♂",
-                          interest: "ねこじゃらし",
-                          personality: "人懐っこい",
-                          description: "人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。人懐っこい3歳の男の子です。",
-                          images: ArrayData(
-                            data: [
-                            ]
-                          ),
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                        ),
-                      ),
-                    ));
-              },
-            );
-          },
-          child: const Text("Button"),
-        ),
+        child: animalAsyncState.when(data: (data) {
+          return ElevatedButton(
+            onPressed: () {
+              log("data:${data.toJson((value) => value.toJson((value) => value.toJson()))}");
+              showAnimalRoomProfileDialog(context, size, data.data);
+            },
+            child: const Text("Button"),
+          );
+        }, error: (e, st) {
+          log("error", error: e, stackTrace: st);
+          return const Text("error");
+        }, loading: () {
+          return const CircularProgressIndicator();
+        }),
       ),
     );
   }
+}
+
+Future<void> showAnimalRoomProfileDialog(
+  BuildContext context,
+  Size screenSize,
+  Model<AnimalAttributes> animal,
+) {
+  return showModalBottomSheet(
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+    context: context,
+    builder: (context) {
+      return FractionallySizedBox(
+        heightFactor: 0.75,
+        child: AnimalRoomProfileDialog(
+          height: screenSize.height * 0.9,
+          animal: animal,
+        ),
+      );
+    },
+  );
 }
 
 class AnimalRoomProfileDialog extends StatelessWidget {
@@ -147,7 +154,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 45),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -289,7 +296,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
-                   animal.attributes.description ?? "",
+                    animal.attributes.description ?? "",
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF444444),
@@ -312,9 +319,13 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   children: [
-                    for (int i = 0; i < 9; i++)
+                    for (final Model<MediaAttributes> image in animal.attributes.images?.data ?? [])
                       Container(
                         color: Colors.black26,
+                        child: Image.network(
+                          AppConstants.mediaServerBaseUrl + (image.attributes.url ?? ""),
+                          fit: BoxFit.cover,
+                        )
                       ),
                   ],
                 ),

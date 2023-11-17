@@ -27,7 +27,7 @@ class AnimalAttributes {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  final ArrayData<MediaAttributes>? images;
+  final ArrayData<Model<MediaAttributes>>? images;
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);

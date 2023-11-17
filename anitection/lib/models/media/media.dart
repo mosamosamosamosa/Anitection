@@ -8,8 +8,8 @@ class MediaAttributes {
   final String? name;
   final String? alternativeText;
   final String? caption;
-  final int width;
-  final int height;
+  final int? width;
+  final int? height;
   final String? hash;
   final String? ext;
   final String? mime;
