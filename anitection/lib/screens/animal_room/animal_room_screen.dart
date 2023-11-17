@@ -6,6 +6,7 @@ import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/media/media.dart';
 import 'package:anitection/providers/animal.dart';
+import 'package:anitection/utils/gender_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -180,7 +181,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                     width: 8,
                   ),
                   Text(
-                    animal.attributes.gender ?? "",
+                    convertGenderText(animal.attributes.gender ?? ""),
                     style: const TextStyle(
                       fontSize: 20,
                       color: Color(0xFF444444),
