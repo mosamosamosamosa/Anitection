@@ -702,6 +702,11 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
       'oneToOne',
       'api::animal-kind.animal-kind'
     >;
+    institution: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'api::institution.institution'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

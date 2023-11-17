@@ -4,14 +4,14 @@
 
 ## Columns
 
-| Name          | Type                           | Default                               | Nullable | Children                                                                                                                        | Parents                                     | Comment |
-| ------------- | ------------------------------ | ------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('favorites_id_seq'::regclass) | false    | [public.favorites_user_links](public.favorites_user_links.md) [public.favorites_animal_links](public.favorites_animal_links.md) |                                             |         |
-| created_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                 |                                             |         |
-| updated_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                 |                                             |         |
-| published_at  | timestamp(6) without time zone |                                       | true     |                                                                                                                                 |                                             |         |
-| created_by_id | integer                        |                                       | true     |                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
-| updated_by_id | integer                        |                                       | true     |                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
+| Name          | Type                           | Default                               | Nullable | Children                                                                                                                          | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('favorites_id_seq'::regclass) | false    | [public.favorites_user_links](public.favorites_user_links.md) [public.favorites_animals_links](public.favorites_animals_links.md) |                                             |         |
+| created_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                   |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                   |                                             |         |
+| published_at  | timestamp(6) without time zone |                                       | true     |                                                                                                                                   |                                             |         |
+| created_by_id | integer                        |                                       | true     |                                                                                                                                   | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                       | true     |                                                                                                                                   | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
@@ -35,7 +35,7 @@
 erDiagram
 
 "public.favorites_user_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
-"public.favorites_animal_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
+"public.favorites_animals_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
 "public.favorites" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.favorites" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
@@ -52,10 +52,11 @@ erDiagram
   integer favorite_id FK
   integer user_id FK
 }
-"public.favorites_animal_links" {
+"public.favorites_animals_links" {
   integer id
   integer favorite_id FK
   integer animal_id FK
+  double_precision animal_order
 }
 "public.admin_users" {
   integer id

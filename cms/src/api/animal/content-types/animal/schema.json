@@ -51,6 +51,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::animal-kind.animal-kind"
+    },
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }

@@ -23,7 +23,7 @@
 | [public.up_users](public.up_users.md)                                                                           | 14      |         | BASE TABLE |
 | [public.animals](public.animals.md)                                                                             | 12      |         | BASE TABLE |
 | [public.animal_kinds](public.animal_kinds.md)                                                                   | 7       |         | BASE TABLE |
-| [public.animal_logs](public.animal_logs.md)                                                                     | 7       |         | BASE TABLE |
+| [public.animal_logs](public.animal_logs.md)                                                                     | 6       |         | BASE TABLE |
 | [public.employees](public.employees.md)                                                                         | 6       |         | BASE TABLE |
 | [public.favorites](public.favorites.md)                                                                         | 6       |         | BASE TABLE |
 | [public.institutions](public.institutions.md)                                                                   | 12      |         | BASE TABLE |
@@ -40,18 +40,21 @@
 | [public.upload_folders_parent_links](public.upload_folders_parent_links.md)                                     | 4       |         | BASE TABLE |
 | [public.up_permissions_role_links](public.up_permissions_role_links.md)                                         | 4       |         | BASE TABLE |
 | [public.up_users_role_links](public.up_users_role_links.md)                                                     | 4       |         | BASE TABLE |
+| [public.animal_logs_animal_links](public.animal_logs_animal_links.md)                                           | 3       |         | BASE TABLE |
 | [public.employees_institution_links](public.employees_institution_links.md)                                     | 3       |         | BASE TABLE |
 | [public.favorites_user_links](public.favorites_user_links.md)                                                   | 3       |         | BASE TABLE |
 | [public.messages_institution_links](public.messages_institution_links.md)                                       | 3       |         | BASE TABLE |
-| [public.messages_user_links](public.messages_user_links.md)                                                     | 3       |         | BASE TABLE |
 | [public.notifications_user_links](public.notifications_user_links.md)                                           | 3       |         | BASE TABLE |
 | [public.tasks_employee_links](public.tasks_employee_links.md)                                                   | 3       |         | BASE TABLE |
 | [public.tasks_institution_links](public.tasks_institution_links.md)                                             | 3       |         | BASE TABLE |
 | [public.timelines_user_links](public.timelines_user_links.md)                                                   | 3       |         | BASE TABLE |
-| [public.animal_kinds_animal_links](public.animal_kinds_animal_links.md)                                         | 3       |         | BASE TABLE |
-| [public.animal_logs_animal_links](public.animal_logs_animal_links.md)                                           | 3       |         | BASE TABLE |
-| [public.employees_user_links](public.employees_user_links.md)                                                   | 3       |         | BASE TABLE |
-| [public.favorites_animal_links](public.favorites_animal_links.md)                                               | 3       |         | BASE TABLE |
+| [public.logs](public.logs.md)                                                                                   | 7       |         | BASE TABLE |
+| [public.animals_animal_kind_links](public.animals_animal_kind_links.md)                                         | 3       |         | BASE TABLE |
+| [public.animal_logs_logs_links](public.animal_logs_logs_links.md)                                               | 4       |         | BASE TABLE |
+| [public.employees_users_links](public.employees_users_links.md)                                                 | 4       |         | BASE TABLE |
+| [public.favorites_animals_links](public.favorites_animals_links.md)                                             | 4       |         | BASE TABLE |
+| [public.messages_sender_links](public.messages_sender_links.md)                                                 | 3       |         | BASE TABLE |
+| [public.messages_recipient_links](public.messages_recipient_links.md)                                           | 3       |         | BASE TABLE |
 
 ## Relations
 
@@ -121,14 +124,14 @@ erDiagram
 "public.up_permissions_role_links" }o--o| "public.up_roles" : "FOREIGN KEY (role_id) REFERENCES up_roles(id) ON DELETE CASCADE"
 "public.up_users_role_links" }o--o| "public.up_roles" : "FOREIGN KEY (role_id) REFERENCES up_roles(id) ON DELETE CASCADE"
 "public.up_users_role_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
+"public.animal_logs_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
+"public.animal_logs_animal_links" }o--o| "public.animal_logs" : "FOREIGN KEY (animal_log_id) REFERENCES animal_logs(id) ON DELETE CASCADE"
 "public.employees_institution_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
 "public.employees_institution_links" }o--o| "public.institutions" : "FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE"
 "public.favorites_user_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
 "public.favorites_user_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
 "public.messages_institution_links" }o--o| "public.institutions" : "FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE"
 "public.messages_institution_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
-"public.messages_user_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
-"public.messages_user_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
 "public.notifications_user_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
 "public.notifications_user_links" }o--o| "public.notifications" : "FOREIGN KEY (notification_id) REFERENCES notifications(id) ON DELETE CASCADE"
 "public.tasks_employee_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
@@ -137,14 +140,20 @@ erDiagram
 "public.tasks_institution_links" }o--o| "public.tasks" : "FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE"
 "public.timelines_user_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
 "public.timelines_user_links" }o--o| "public.timelines" : "FOREIGN KEY (timeline_id) REFERENCES timelines(id) ON DELETE CASCADE"
-"public.animal_kinds_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
-"public.animal_kinds_animal_links" }o--o| "public.animal_kinds" : "FOREIGN KEY (animal_kind_id) REFERENCES animal_kinds(id) ON DELETE CASCADE"
-"public.animal_logs_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
-"public.animal_logs_animal_links" }o--o| "public.animal_logs" : "FOREIGN KEY (animal_log_id) REFERENCES animal_logs(id) ON DELETE CASCADE"
-"public.employees_user_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
-"public.employees_user_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
-"public.favorites_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
-"public.favorites_animal_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
+"public.logs" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
+"public.logs" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
+"public.animals_animal_kind_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
+"public.animals_animal_kind_links" }o--o| "public.animal_kinds" : "FOREIGN KEY (animal_kind_id) REFERENCES animal_kinds(id) ON DELETE CASCADE"
+"public.animal_logs_logs_links" }o--o| "public.animal_logs" : "FOREIGN KEY (animal_log_id) REFERENCES animal_logs(id) ON DELETE CASCADE"
+"public.animal_logs_logs_links" }o--o| "public.logs" : "FOREIGN KEY (log_id) REFERENCES logs(id) ON DELETE CASCADE"
+"public.employees_users_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
+"public.employees_users_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
+"public.favorites_animals_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
+"public.favorites_animals_links" }o--o| "public.favorites" : "FOREIGN KEY (favorite_id) REFERENCES favorites(id) ON DELETE CASCADE"
+"public.messages_sender_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
+"public.messages_sender_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
+"public.messages_recipient_links" }o--o| "public.up_users" : "FOREIGN KEY (user_id) REFERENCES up_users(id) ON DELETE CASCADE"
+"public.messages_recipient_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
 
 "public.strapi_migrations" {
   integer id
@@ -355,7 +364,6 @@ erDiagram
 }
 "public.animal_logs" {
   integer id
-  varchar_255_ content
   timestamp_6__without_time_zone created_at
   timestamp_6__without_time_zone updated_at
   timestamp_6__without_time_zone published_at
@@ -487,6 +495,11 @@ erDiagram
   integer role_id FK
   double_precision user_order
 }
+"public.animal_logs_animal_links" {
+  integer id
+  integer animal_log_id FK
+  integer animal_id FK
+}
 "public.employees_institution_links" {
   integer id
   integer employee_id FK
@@ -501,11 +514,6 @@ erDiagram
   integer id
   integer message_id FK
   integer institution_id FK
-}
-"public.messages_user_links" {
-  integer id
-  integer message_id FK
-  integer user_id FK
 }
 "public.notifications_user_links" {
   integer id
@@ -527,25 +535,47 @@ erDiagram
   integer timeline_id FK
   integer user_id FK
 }
-"public.animal_kinds_animal_links" {
+"public.logs" {
   integer id
-  integer animal_kind_id FK
-  integer animal_id FK
+  varchar_255_ content
+  timestamp_6__without_time_zone created_at
+  timestamp_6__without_time_zone updated_at
+  timestamp_6__without_time_zone published_at
+  integer created_by_id FK
+  integer updated_by_id FK
 }
-"public.animal_logs_animal_links" {
+"public.animals_animal_kind_links" {
+  integer id
+  integer animal_id FK
+  integer animal_kind_id FK
+}
+"public.animal_logs_logs_links" {
   integer id
   integer animal_log_id FK
-  integer animal_id FK
+  integer log_id FK
+  double_precision log_order
 }
-"public.employees_user_links" {
+"public.employees_users_links" {
   integer id
   integer employee_id FK
   integer user_id FK
+  double_precision user_order
 }
-"public.favorites_animal_links" {
+"public.favorites_animals_links" {
   integer id
   integer favorite_id FK
   integer animal_id FK
+  double_precision animal_order
+}
+"public.messages_sender_links" {
+  integer id
+  integer message_id FK
+  integer user_id FK
+}
+"public.messages_recipient_links" {
+  integer id
+  integer message_id FK
+  integer user_id FK
 }
 ```
 
