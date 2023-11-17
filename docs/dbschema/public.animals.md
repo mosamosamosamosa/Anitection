@@ -4,20 +4,20 @@
 
 ## Columns
 
-| Name          | Type                           | Default                             | Nullable | Children                                                                                                                                                                                                        | Parents                                     | Comment |
-| ------------- | ------------------------------ | ----------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('animals_id_seq'::regclass) | false    | [public.animal_kinds_animal_links](public.animal_kinds_animal_links.md) [public.animal_logs_animal_links](public.animal_logs_animal_links.md) [public.favorites_animal_links](public.favorites_animal_links.md) |                                             |         |
-| name          | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| age           | integer                        |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| gender        | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| personality   | text                           |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| interest      | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| description   | text                           |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| created_at    | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| updated_at    | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| published_at  | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                 |                                             |         |
-| created_by_id | integer                        |                                     | true     |                                                                                                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
-| updated_by_id | integer                        |                                     | true     |                                                                                                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
+| Name          | Type                           | Default                             | Nullable | Children                                                                                                                                                                                                          | Parents                                     | Comment |
+| ------------- | ------------------------------ | ----------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('animals_id_seq'::regclass) | false    | [public.animal_logs_animal_links](public.animal_logs_animal_links.md) [public.animals_animal_kind_links](public.animals_animal_kind_links.md) [public.favorites_animals_links](public.favorites_animals_links.md) |                                             |         |
+| name          | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| age           | integer                        |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| gender        | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| personality   | text                           |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| interest      | varchar(255)                   |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| description   | text                           |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| created_at    | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| published_at  | timestamp(6) without time zone |                                     | true     |                                                                                                                                                                                                                   |                                             |         |
+| created_by_id | integer                        |                                     | true     |                                                                                                                                                                                                                   | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                     | true     |                                                                                                                                                                                                                   | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
@@ -40,9 +40,9 @@
 ```mermaid
 erDiagram
 
-"public.animal_kinds_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
 "public.animal_logs_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
-"public.favorites_animal_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
+"public.animals_animal_kind_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
+"public.favorites_animals_links" }o--o| "public.animals" : "FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE"
 "public.animals" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.animals" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
@@ -60,20 +60,21 @@ erDiagram
   integer created_by_id FK
   integer updated_by_id FK
 }
-"public.animal_kinds_animal_links" {
-  integer id
-  integer animal_kind_id FK
-  integer animal_id FK
-}
 "public.animal_logs_animal_links" {
   integer id
   integer animal_log_id FK
   integer animal_id FK
 }
-"public.favorites_animal_links" {
+"public.animals_animal_kind_links" {
+  integer id
+  integer animal_id FK
+  integer animal_kind_id FK
+}
+"public.favorites_animals_links" {
   integer id
   integer favorite_id FK
   integer animal_id FK
+  double_precision animal_order
 }
 "public.admin_users" {
   integer id
