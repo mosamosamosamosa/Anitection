@@ -251,12 +251,12 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                             color: const Color(0xFFFFE39E),
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: StrokeText(
-                            text: animal.attributes.interest ?? "",
+                          child: const StrokeText(
+                            text: "好きなもの",
                             strokeWidth: 2,
                             strokeColor: Colors.white,
-                            textColor: const Color(0xFF444444),
-                            textStyle: const TextStyle(
+                            textColor: Color(0xFF444444),
+                            textStyle: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),
@@ -266,9 +266,9 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                           width: 4,
                         ),
                         // ねこじゃらし
-                        const Text(
-                          "ねこじゃらし",
-                          style: TextStyle(
+                        Text(
+                          animal.attributes.interest ?? "",
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xFF444444),
                             fontWeight: FontWeight.w700,
