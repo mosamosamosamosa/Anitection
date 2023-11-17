@@ -14,9 +14,7 @@ const Component = () => {
           </div>
           <div className="mb-4">
             <div className="h-full bg-main rounded-md px-4 py-2 shadow-md border-2 border-stroke">
-              <div className="w-full h-40">
-                contents
-              </div>
+              <div className="w-full h-40">contents</div>
             </div>
           </div>
         </div>
@@ -29,9 +27,7 @@ const Component = () => {
           </div>
           <div className="mb-4">
             <div className="h-full bg-main rounded-md px-4 py-2 shadow-md border-2 border-stroke">
-              <div className="w-full h-40">
-                contents
-              </div>
+              <div className="w-full h-40">contents</div>
             </div>
           </div>
         </div>
@@ -43,15 +39,14 @@ const Component = () => {
             </div>
           </div>
           <div className="mb-4 flex items-center gap-4">
-            <input type="text"
+            <input
+              type="text"
               className="w-1/2 h-12 rounded-md px-4 py-2 shadow-md focus:outline-none"
               placeholder="動物名を入力してください"
             />
             <div className="w-12 h-12 rounded-full bg-white border-4"></div>
           </div>
-          <div>
-            cards
-          </div>
+          <div>cards</div>
         </div>
       </div>
     </Layout>
