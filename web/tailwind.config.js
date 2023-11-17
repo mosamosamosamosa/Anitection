@@ -9,7 +9,7 @@ module.exports = {
         paragraph: '#2d334a',
         button: '#ffd803',
         'button-text': '#444444',
-        stroke: '#FFFFFE',
+        stroke: '#C3EB89',
         main: '#FFFFFE',
         highlight: '#C3EB89',
         secondary: '#e3f6f5',
