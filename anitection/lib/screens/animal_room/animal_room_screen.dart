@@ -35,7 +35,6 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
         child: animalAsyncState.when(data: (data) {
           return ElevatedButton(
             onPressed: () {
-              log("data:${data.toJson((value) => value.toJson((value) => value.toJson()))}");
               showAnimalRoomProfileDialog(context, size, data.data);
             },
             child: const Text("Button"),
