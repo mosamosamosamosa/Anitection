@@ -4,6 +4,8 @@ import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/media/media.dart';
+import 'package:anitection/screens/animal_room/institution_button.dart';
+import 'package:anitection/screens/institution_detail/institution_screen.dart';
 import 'package:anitection/utils/gender_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -264,6 +266,19 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                   ))
             ],
           ),
+          Positioned(
+            bottom: 8,
+            right: 8,
+            child: InstitutionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const InstitutionScreen(),
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
