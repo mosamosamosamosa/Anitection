@@ -1,4 +1,5 @@
 import 'package:anitection/models/base.dart';
+import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -17,6 +18,7 @@ class AnimalAttributes {
     required this.updatedAt,
     required this.images,
     required this.realIcon,
+    required this.institution,
   });
 
   final String? name;
@@ -27,6 +29,8 @@ class AnimalAttributes {
   final String? description;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+
+  final SingleData<Model<InstitutionAttributes>>? institution;
 
   final ArrayData<Model<MediaAttributes>>? images;
 
