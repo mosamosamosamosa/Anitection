@@ -4,15 +4,15 @@
 
 ## Columns
 
-| Name          | Type                           | Default                              | Nullable | Children                                                                                                                              | Parents                                     | Comment |
-| ------------- | ------------------------------ | ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('messages_id_seq'::regclass) | false    | [public.messages_institution_links](public.messages_institution_links.md) [public.messages_user_links](public.messages_user_links.md) |                                             |         |
-| content       | text                           |                                      | true     |                                                                                                                                       |                                             |         |
-| created_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
-| updated_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
-| published_at  | timestamp(6) without time zone |                                      | true     |                                                                                                                                       |                                             |         |
-| created_by_id | integer                        |                                      | true     |                                                                                                                                       | [public.admin_users](public.admin_users.md) |         |
-| updated_by_id | integer                        |                                      | true     |                                                                                                                                       | [public.admin_users](public.admin_users.md) |         |
+| Name          | Type                           | Default                              | Nullable | Children                                                                                                                                                                                                        | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('messages_id_seq'::regclass) | false    | [public.messages_institution_links](public.messages_institution_links.md) [public.messages_sender_links](public.messages_sender_links.md) [public.messages_recipient_links](public.messages_recipient_links.md) |                                             |         |
+| content       | text                           |                                      | true     |                                                                                                                                                                                                                 |                                             |         |
+| created_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                                                                                                 |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                      | true     |                                                                                                                                                                                                                 |                                             |         |
+| published_at  | timestamp(6) without time zone |                                      | true     |                                                                                                                                                                                                                 |                                             |         |
+| created_by_id | integer                        |                                      | true     |                                                                                                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                      | true     |                                                                                                                                                                                                                 | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
@@ -36,7 +36,8 @@
 erDiagram
 
 "public.messages_institution_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
-"public.messages_user_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
+"public.messages_sender_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
+"public.messages_recipient_links" }o--o| "public.messages" : "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
 "public.messages" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.messages" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
@@ -54,7 +55,12 @@ erDiagram
   integer message_id FK
   integer institution_id FK
 }
-"public.messages_user_links" {
+"public.messages_sender_links" {
+  integer id
+  integer message_id FK
+  integer user_id FK
+}
+"public.messages_recipient_links" {
   integer id
   integer message_id FK
   integer user_id FK
