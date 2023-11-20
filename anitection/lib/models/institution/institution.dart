@@ -30,7 +30,7 @@ class InstitutionAttributes {
     return _$InstitutionAttributesFromJson(json);
   }
 
-  factory InstitutionAttributes.fromJsonString(Map<String, dynamic> json) {
-    return _$InstitutionAttributesFromJson(json);
+  Map<String, dynamic> toJson() {
+    return _$InstitutionAttributesToJson(this);
   }
 }
