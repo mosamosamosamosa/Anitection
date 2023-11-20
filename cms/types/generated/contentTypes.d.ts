@@ -707,6 +707,8 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
       'oneToOne',
       'api::institution.institution'
     >;
+    avatar_icon: Attribute.Media;
+    real_icon: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
