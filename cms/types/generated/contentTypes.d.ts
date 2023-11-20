@@ -896,6 +896,7 @@ export interface ApiInstitutionInstitution extends Schema.CollectionType {
     website_url: Attribute.String;
     needs_url: Attribute.String;
     description: Attribute.Text;
+    image: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
