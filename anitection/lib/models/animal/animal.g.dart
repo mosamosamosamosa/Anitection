@@ -28,6 +28,14 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
                   value as Map<String, dynamic>,
                   (value) =>
                       MediaAttributes.fromJson(value as Map<String, dynamic>))),
+      realIcon: json['real_icon'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['real_icon'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
@@ -41,6 +49,11 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'images': instance.images?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
+      'real_icon': instance.realIcon?.toJson(
         (value) => value.toJson(
           (value) => value,
         ),

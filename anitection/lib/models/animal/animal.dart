@@ -16,6 +16,7 @@ class AnimalAttributes {
     required this.createdAt,
     required this.updatedAt,
     required this.images,
+    required this.realIcon,
   });
 
   final String? name;
@@ -28,6 +29,8 @@ class AnimalAttributes {
   final DateTime? updatedAt;
 
   final ArrayData<Model<MediaAttributes>>? images;
+
+  @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);

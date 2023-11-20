@@ -143,7 +143,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image.network(
-                      "https://p.potaufeu.asahi.com/9d94-p/picture/27141331/7f594b52c0696519598b63ac8162e3ff.jpg",
+                      AppConstants.mediaServerBaseUrl + (animal.attributes.realIcon?.data.attributes.url ?? ""),
                       fit: BoxFit.cover,
                     ),
                   ),
