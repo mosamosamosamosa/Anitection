@@ -271,11 +271,15 @@ class AnimalRoomProfileDialog extends StatelessWidget {
             right: 8,
             child: InstitutionButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const InstitutionScreen(),
-                  ),
-                );
+                final id = animal.attributes.institution?.data.id;
+                if (id != null) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => InstitutionScreen(institutionId: id),
+                    ),
+                  );
+                }
+
               },
             ),
           )
