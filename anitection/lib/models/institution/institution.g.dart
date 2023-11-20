@@ -21,6 +21,14 @@ InstitutionAttributes _$InstitutionAttributesFromJson(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
+      image: json['image'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['image'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
     );
 
 Map<String, dynamic> _$InstitutionAttributesToJson(
@@ -34,4 +42,9 @@ Map<String, dynamic> _$InstitutionAttributesToJson(
       'needs_url': instance.needsUrl,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'image': instance.image?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
     };

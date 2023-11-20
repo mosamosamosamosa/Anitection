@@ -1,6 +1,7 @@
 import 'package:anitection/components/institution_title.dart';
 import 'package:anitection/components/nav_up_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
 import 'package:anitection/providers/institution.dart';
 import 'package:anitection/screens/chat/chat_screen.dart';
 import 'package:anitection/screens/institution_detail/chat_button.dart';
@@ -54,9 +55,8 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const InstitutionImage(
-                      url:
-                      "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
+                    InstitutionImage(
+                      url: AppConstants.mediaServerBaseUrl + (institution.attributes.image?.data.attributes.url ?? ''),
                     ),
                     const SizedBox(
                       height: 32,
