@@ -44,6 +44,12 @@ jobs:
 
       - name: Build and push Docker image for cms
         uses: docker/build-push-action@v2
+        env:
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_KEYS: ${{ secrets.API_KEYS }}
+          ADMIN_JWR_SECRET: ${{ secrets.ADMIN_JWR_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           context: ./cms
           push: true
@@ -52,12 +58,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache-cms
           cache-to: type=local,dest=/tmp/.buildx-cache-cms-new
           tags: yumekiti/anitection-cms:${{ steps.get-commit.outputs.commit_hash }}
-          env:
-            APP_KEYS: ${{ secrets.APP_KEYS }}
-            API_KEYS: ${{ secrets.API_KEYS }}
-            ADMIN_JWR_SECRET: ${{ secrets.ADMIN_JWR_SECRET }}
-            TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-            JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Update deployment.yaml for cms
         run: |
