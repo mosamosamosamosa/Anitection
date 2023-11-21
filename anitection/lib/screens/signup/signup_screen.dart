@@ -27,99 +27,176 @@ class SignUpScreenState extends State<SignUpScreen> {
         children: [
           const AnimalPadBackground(),
           SafeArea(
-              child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: "メールアドレス",
-                      ),
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: const InputDecoration(
-                        labelText: "パスワード",
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('入力に誤りがあります')),
-                          );
-                        }
-                      },
-                      child: const Text("登録"),
-                    ),
-                    NormalButton(
-                      onPressed: () {},
-                      width: 219,
-                      height: 64,
-                      child: const StrokeText(
-                        text: "登録",
-                        textColor: Color(0xFF573F1B),
-                        strokeColor: Colors.white,
-                        strokeWidth: 2,
-                        shadows: [
-                          Shadow(
-                            color: Color(0xFF573F1B),
-                            offset: Offset(2, 2),
-                            blurRadius: 10,
-                          ),
-                        ],
-                        textStyle: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontFamily: GoogleFonts.zenMaruGothic().fontFamily,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        children: [
-                          const TextSpan(
-                            text: "アカウントをお持ちの方は",
-                            style: TextStyle(color: Color(0xFF573F1B)),
-                          ),
-                          TextSpan(
-                            text: "こちら",
-                            style: const TextStyle(
-                              color: Color(0xFFFF635A),
-                              decoration: TextDecoration.underline,
+                    const SizedBox(),
+                    const Text("ここにロゴが入る"),
+                    SignUpScreenFormArea(emailController: _emailController, passwordController: _passwordController),
+                    Column(
+                      children: [
+                        NormalButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('入力に誤りがあります')),
+                              );
+                            }
+                          },
+                          width: 219,
+                          height: 64,
+                          maxElevation: 8,
+                          child: const StrokeText(
+                            text: "登録",
+                            textColor: Color(0xFF573F1B),
+                            strokeColor: Colors.white,
+                            strokeWidth: 2,
+                            shadows: [
+                              Shadow(
+                                color: Color(0xFF573F1B),
+                                offset: Offset(2, 2),
+                                blurRadius: 10,
+                              ),
+                            ],
+                            textStyle: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignInScreen(),
-                                  ),
-                                );
-                              },
                           ),
-                        ],
-                      ),
-                    )
+                        ),
+                        const SizedBox(
+                          height: 28,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily:
+                                  GoogleFonts.zenMaruGothic().fontFamily,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            children: [
+                              const TextSpan(
+                                text: "アカウントをお持ちの方は",
+                                style: TextStyle(color: Color(0xFF573F1B)),
+                              ),
+                              TextSpan(
+                                text: "こちら",
+                                style: const TextStyle(
+                                  color: Color(0xFFFF635A),
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignInScreen(),
+                                      ),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
+    );
+  }
+}
+
+
+class SignUpScreenFormArea extends StatelessWidget {
+  const SignUpScreenFormArea({super.key, required this.emailController, required this.passwordController});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Material(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: TextFormField(
+            controller: emailController,
+            decoration: const InputDecoration(
+              labelText: "E-Mail",
+              fillColor: Color(0xFFF5EED6),
+              labelStyle: TextStyle(
+                color: Color(0x664B4B4B),
+                fontWeight: FontWeight.bold,
+              ),
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderSide: BorderSide.none
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderSide: BorderSide.none
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(40)),
+                borderSide: BorderSide(
+                  color: Color(0xFFA9E94C),
+                  width: 3,
+                ),
+              ),
+            ),
+          ),
+
+        ),
+        const SizedBox(height: 16,),
+        Material(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: TextFormField(
+            controller: passwordController,
+            keyboardType: TextInputType.visiblePassword,
+            decoration: const InputDecoration(
+              labelText: "Password",
+              fillColor: Color(0xFFF5EED6),
+              labelStyle: TextStyle(
+                color: Color(0x664B4B4B),
+                fontWeight: FontWeight.bold,
+              ),
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderSide: BorderSide.none
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderSide: BorderSide.none
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(40)),
+                borderSide: BorderSide(
+                  color: Color(0xFFA9E94C),
+                  width: 3,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
