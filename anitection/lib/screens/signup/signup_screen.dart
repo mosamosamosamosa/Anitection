@@ -1,4 +1,5 @@
 import 'package:anitection/components/animal_pad_background.dart';
+import 'package:anitection/screens/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -49,11 +50,14 @@ class SignUpScreenState extends State<SignUpScreen> {
                     }
 
                   },
-                  child: const Text("ログイン"),
+                  child: const Text("登録"),
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text("新規登録"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignInScreen()));
+                  },
+                  child: const Text("ログイン"),
                 ),
               ],
             ),
