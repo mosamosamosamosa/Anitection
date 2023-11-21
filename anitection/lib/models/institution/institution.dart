@@ -1,5 +1,8 @@
 
+import 'package:anitection/models/base.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../media/media.dart';
 
 part 'institution.g.dart';
 
@@ -15,6 +18,7 @@ class InstitutionAttributes {
     this.needsUrl,
     this.createdAt,
     this.updatedAt,
+    this.image,
   });
 
   final String? name;
@@ -25,6 +29,8 @@ class InstitutionAttributes {
   @JsonKey(name: 'needs_url') final String? needsUrl;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+
+  final SingleData<Model<MediaAttributes>>? image;
 
   factory InstitutionAttributes.fromJson(Map<String, dynamic> json) {
     return _$InstitutionAttributesFromJson(json);
