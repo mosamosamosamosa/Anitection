@@ -36,7 +36,7 @@ class SignInScreenState extends State<SignInScreen> {
                   children: [
                     const SizedBox(),
                     const Text("ここにロゴが入る"),
-                    SignInScreenFormArea(emailController: _emailController, passwordController: _passwordController),
+                    AuthInputFormArea(emailController: _emailController, passwordController: _passwordController),
                     Column(
                       children: [
                         NormalButton(
@@ -117,8 +117,8 @@ class SignInScreenState extends State<SignInScreen> {
   }
 }
 
-class SignInScreenFormArea extends StatelessWidget {
-  const SignInScreenFormArea({super.key, required this.emailController, required this.passwordController});
+class AuthInputFormArea extends StatelessWidget {
+  const AuthInputFormArea({super.key, required this.emailController, required this.passwordController});
   final TextEditingController emailController;
   final TextEditingController passwordController;
 

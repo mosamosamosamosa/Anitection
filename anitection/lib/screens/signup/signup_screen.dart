@@ -36,7 +36,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     const SizedBox(),
                     const Text("ここにロゴが入る"),
-                    SignUpScreenFormArea(emailController: _emailController, passwordController: _passwordController),
+                    AuthInputFormArea(emailController: _emailController, passwordController: _passwordController),
                     Column(
                       children: [
                         NormalButton(
@@ -117,86 +117,3 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-
-class SignUpScreenFormArea extends StatelessWidget {
-  const SignUpScreenFormArea({super.key, required this.emailController, required this.passwordController});
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Material(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
-          child: TextFormField(
-            controller: emailController,
-            decoration: const InputDecoration(
-              labelText: "E-Mail",
-              fillColor: Color(0xFFF5EED6),
-              labelStyle: TextStyle(
-                color: Color(0x664B4B4B),
-                fontWeight: FontWeight.bold,
-              ),
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
-              disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-                borderSide: BorderSide(
-                  color: Color(0xFFA9E94C),
-                  width: 3,
-                ),
-              ),
-            ),
-          ),
-
-        ),
-        const SizedBox(height: 16,),
-        Material(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
-          child: TextFormField(
-            controller: passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: const InputDecoration(
-              labelText: "Password",
-              fillColor: Color(0xFFF5EED6),
-              labelStyle: TextStyle(
-                color: Color(0x664B4B4B),
-                fontWeight: FontWeight.bold,
-              ),
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
-              disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-                borderSide: BorderSide(
-                  color: Color(0xFFA9E94C),
-                  width: 3,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
