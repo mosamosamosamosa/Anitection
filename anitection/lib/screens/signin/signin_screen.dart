@@ -30,13 +30,37 @@ class SignInScreenState extends State<SignInScreen> {
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const SizedBox(),
-                    const Text("ここにロゴが入る"),
-                    AuthInputFormArea(emailController: _emailController, passwordController: _passwordController),
+                    Column(
+                      children: [
+                        StrokeText(
+                          text: "Animal Protection",
+                          strokeColor: Colors.white,
+                          strokeWidth: 4,
+                          textStyle: GoogleFonts.zenMaruGothic(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF573F1B),
+                          ),
+                          shadows: const [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        Image.asset("assets/images/anitection_dummy_logo.png"),
+                      ],
+                    ),
+                    AuthInputFormArea(
+                        emailController: _emailController,
+                        passwordController: _passwordController),
                     Column(
                       children: [
                         NormalButton(
@@ -75,7 +99,7 @@ class SignInScreenState extends State<SignInScreen> {
                           text: TextSpan(
                             style: TextStyle(
                               fontFamily:
-                              GoogleFonts.zenMaruGothic().fontFamily,
+                                  GoogleFonts.zenMaruGothic().fontFamily,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -96,7 +120,7 @@ class SignInScreenState extends State<SignInScreen> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        const SignUpScreen(),
+                                            const SignUpScreen(),
                                       ),
                                     );
                                   },
@@ -112,13 +136,17 @@ class SignInScreenState extends State<SignInScreen> {
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }
 
 class AuthInputFormArea extends StatelessWidget {
-  const AuthInputFormArea({super.key, required this.emailController, required this.passwordController});
+  const AuthInputFormArea(
+      {super.key,
+      required this.emailController,
+      required this.passwordController});
+
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
@@ -143,12 +171,10 @@ class AuthInputFormArea extends StatelessWidget {
               filled: true,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
+                  borderSide: BorderSide.none),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
+                  borderSide: BorderSide.none),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 borderSide: BorderSide(
@@ -158,9 +184,10 @@ class AuthInputFormArea extends StatelessWidget {
               ),
             ),
           ),
-
         ),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         Material(
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -179,12 +206,10 @@ class AuthInputFormArea extends StatelessWidget {
               filled: true,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
+                  borderSide: BorderSide.none),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  borderSide: BorderSide.none
-              ),
+                  borderSide: BorderSide.none),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 borderSide: BorderSide(

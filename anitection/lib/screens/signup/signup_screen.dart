@@ -30,13 +30,38 @@ class SignUpScreenState extends State<SignUpScreen> {
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const SizedBox(),
-                    const Text("ここにロゴが入る"),
-                    AuthInputFormArea(emailController: _emailController, passwordController: _passwordController),
+                    Column(
+                      children: [
+                        StrokeText(
+                          text: "Animal Protection",
+                          strokeColor: Colors.white,
+                          strokeWidth: 4,
+                          textStyle: GoogleFonts.zenMaruGothic(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF573F1B),
+                          ),
+                          shadows: const [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        Image.asset("assets/images/anitection_dummy_logo.png"),
+                      ],
+                    ),
+                    AuthInputFormArea(
+                        emailController: _emailController,
+                        passwordController: _passwordController,
+                    ),
                     Column(
                       children: [
                         NormalButton(
@@ -116,4 +141,3 @@ class SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
