@@ -53,11 +53,11 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-cms-new
           tags: yumekiti/anitection-cms:${{ steps.get-commit.outputs.commit_hash }}
           build-args: |
-            "APP_KEYS=${{ secrets.APP_KEYS }}"
-            "API_KEYS=${{ secrets.API_KEYS }}"
-            "ADMIN_JWR_SECRET=${{ secrets.ADMIN_JWR_SECRET }}"
-            "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}"
-            "JWT_SECRET=${{ secrets.JWT_SECRET }}"
+            APP_KEYS=${{ secrets.APP_KEYS }}
+            API_KEYS=${{ secrets.API_KEYS }}
+            ADMIN_JWR_SECRET=${{ secrets.ADMIN_JWR_SECRET }}
+            TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
 
       - name: Update deployment.yaml for cms
         run: |
