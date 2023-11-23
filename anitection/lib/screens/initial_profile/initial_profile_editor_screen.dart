@@ -52,63 +52,69 @@ class InitialProfileEditorScreenState
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: InitialProfileEditorScreenAvatarPreview(),
-                  ),
-                ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
                   child: Column(
                     children: [
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: InitialProfileEditorScreenAvatarPreview(),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
                       const NicknameHeader(),
-                      TextFormField(
-                        controller: _nicknameController,
-                        decoration: const InputDecoration(
-                          hintText: "ニックネームを入力してください",
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF573F1B),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF573F1B),
+                      const SizedBox(height: 8),
+                      Material(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          controller: _nicknameController,
+                          decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                            labelStyle: TextStyle(
+                              color: Color(0x664B4B4B),
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF573F1B),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide.none,
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
                       const LiveHeader(),
-                      TextFormField(
-                        controller: _nicknameController,
-                        decoration: const InputDecoration(
-                          hintText: "お住まいの地域を入力してください",
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF573F1B),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF573F1B),
+                      Material(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          controller: _nicknameController,
+                          decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                            labelStyle: TextStyle(
+                              color: Color(0x664B4B4B),
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF573F1B),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide.none,
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
                       const InstallReasonHeader(),
-
                     ],
                   ),
                 ),
@@ -136,6 +142,7 @@ class CancelButton extends StatelessWidget {
   const CancelButton({super.key, required this.onPressed});
 
   final VoidCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
     return NormalButton(
@@ -184,6 +191,7 @@ class SubmitButton extends StatelessWidget {
     );
   }
 }
+
 class InitialProfileEditorScreenAvatarPreview extends StatelessWidget {
   const InitialProfileEditorScreenAvatarPreview({super.key});
 
