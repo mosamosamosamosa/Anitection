@@ -3,9 +3,21 @@ import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class InitialAnimalTypeSelectionType extends StatelessWidget {
-  const InitialAnimalTypeSelectionType({super.key});
+
+class InitialAnimalTypeSelectionTypeScreen extends ConsumerStatefulWidget {
+  const InitialAnimalTypeSelectionTypeScreen({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return InitialAnimalTypeSelectionTypeState();
+  }
+}
+
+class InitialAnimalTypeSelectionTypeState extends ConsumerState<InitialAnimalTypeSelectionTypeScreen> {
+
+  AnimalType _selectedType = AnimalType.cat;
 
   @override
   Widget build(BuildContext context) {
@@ -54,44 +66,58 @@ class InitialAnimalTypeSelectionType extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        width: 125,
-                        height: 125,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              offset: const Offset(2, 2),
-                              blurRadius: 4,
-                            )
-                          ],
-                        ),
-                        child: Image.asset(
-                          "assets/images/img_animal_type_as_cat.png",
-                          width: 100,
-                          height: 75,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedType = AnimalType.cat;
+                          });
+                        },
+                        child: Container(
+                          width: 125,
+                          height: 125,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: _selectedType == AnimalType.cat ? const Color(0xFFFDE38B) : const Color(0xFFD9D9D9),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                offset: const Offset(2, 2),
+                                blurRadius: 4,
+                              )
+                            ],
+                          ),
+                          child: Image.asset(
+                            "assets/images/img_animal_type_as_cat.png",
+                            width: 100,
+                            height: 75,
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 125,
-                        height: 125,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xFFFDE38B),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              offset: const Offset(2, 2),
-                              blurRadius: 4,
-                            )
-                          ],
-                        ),
-                        child: Image.asset(
-                          "assets/images/img_animal_type_as_dog.png",
-                          width: 100,
-                          height: 75,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedType = AnimalType.dog;
+                          });
+                        },
+                        child: Container(
+                          width: 125,
+                          height: 125,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: _selectedType == AnimalType.dog ? const Color(0xFFFDE38B) : const Color(0xFFD9D9D9),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                offset: const Offset(2, 2),
+                                blurRadius: 4,
+                              )
+                            ],
+                          ),
+                          child: Image.asset(
+                            "assets/images/img_animal_type_as_dog.png",
+                            width: 100,
+                            height: 75,
+                          ),
                         ),
                       )
                     ],
@@ -129,4 +155,8 @@ class InitialAnimalTypeSelectionType extends StatelessWidget {
       ),
     );
   }
+}
+
+enum AnimalType {
+  cat, dog
 }
