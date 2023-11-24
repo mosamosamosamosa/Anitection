@@ -1,5 +1,5 @@
 import 'package:anitection/components/nav_up_button.dart';
-import 'package:anitection/screens/institution_detail/institution_screen.dart';
+import 'package:anitection/screens/animal_room/animal_room_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const InstitutionScreen(),
+      home: const AnimalRoomScreen(animalId: 1),
     );
   }
 }

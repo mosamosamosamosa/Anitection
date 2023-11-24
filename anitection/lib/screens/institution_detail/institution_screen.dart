@@ -1,6 +1,8 @@
 import 'package:anitection/components/institution_title.dart';
 import 'package:anitection/components/nav_up_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
+import 'package:anitection/providers/institution.dart';
 import 'package:anitection/screens/chat/chat_screen.dart';
 import 'package:anitection/screens/institution_detail/chat_button.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../components/animal_pad_background.dart';
 
 class InstitutionScreen extends ConsumerStatefulWidget {
-  const InstitutionScreen({super.key});
+  const InstitutionScreen({super.key, required this.institutionId});
+  final int institutionId;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -20,15 +23,16 @@ class InstitutionScreen extends ConsumerStatefulWidget {
 class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
   @override
   Widget build(BuildContext context) {
+    final institutionFuture = ref.watch(institutionFutureProvider(widget.institutionId));
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
       appBar: AppBar(
         centerTitle: true,
         elevation: 4,
         backgroundColor: const Color(0xFFC3EB89),
-        title: const Padding(
-          padding: EdgeInsets.all(16),
-          child: InstitutionTitle(title: "あにまる保護施設"),
+        title: Padding(
+          padding: const EdgeInsets.all(16),
+          child: InstitutionTitle(title: institutionFuture.valueOrNull?.attributes.name ?? ""),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(8),
@@ -44,66 +48,75 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
           const AnimalPadBackground(),
           // ここに他のウィジェットを追加
           SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const InstitutionImage(
-                    url:
-                        "https://img.furusato-tax.jp/img/x/original/feature/form/details/20211129/gpfd_107bfa9e0ad3c76c4afea5461d79acf480140bda.jpg",
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  const InstitutionLabel(label: "所在地"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  _Address(
-                    address: "大阪府大阪市旭区高殿2-21-11-5",
-                    onCopyToClipboard: () {},
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const InstitutionLabel(label: "電話番号"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  _Tel(
-                    tel: "222-2222-2222",
-                    onCopyToClipboard: () {},
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const InstitutionLabel(label: "Webサイト"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  _WebSite(
-                      url: "http://www/nyannyan.com", onOpenWebSite: () {}),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const InstitutionLabel(label: "取扱動物"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const _Text(text: "犬 23匹 / 猫 12匹 / 鳥 4匹 / "),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const InstitutionLabel(label: "ほしい物リスト"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const _Text(text: "Amazon"),
-                ],
-              ),
-            ),
+            child: institutionFuture.when(data: (institution) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InstitutionImage(
+                      url: AppConstants.mediaServerBaseUrl + (institution.attributes.image?.data.attributes.url ?? ''),
+                    ),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    const InstitutionLabel(label: "所在地"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _Address(
+                      address: institution.attributes.address ?? "",
+                      onCopyToClipboard: () {},
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const InstitutionLabel(label: "電話番号"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _Tel(
+                      tel: institution.attributes.phone ?? "",
+                      onCopyToClipboard: () {},
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const InstitutionLabel(label: "Webサイト"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _WebSite(
+                        url: institution.attributes.websiteUrl ?? "", onOpenWebSite: () {}),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const InstitutionLabel(label: "取扱動物"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const _Text(text: "犬 23匹 / 猫 12匹 / 鳥 4匹 / "),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const InstitutionLabel(label: "ほしい物リスト"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _Text(text: institution.attributes.needsUrl ?? ""),
+                  ],
+                ),
+              );
+            }, error: (e, st) {
+              return Center(
+                child: Text(e.toString()),
+              );
+            }, loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }),
           )
         ],
       ),

@@ -4,14 +4,14 @@
 
 ## Columns
 
-| Name          | Type                           | Default                               | Nullable | Children                                                                                                                                                                                                | Parents                                     | Comment |
-| ------------- | ------------------------------ | ------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
-| id            | integer                        | nextval('employees_id_seq'::regclass) | false    | [public.employees_institution_links](public.employees_institution_links.md) [public.tasks_employee_links](public.tasks_employee_links.md) [public.employees_user_links](public.employees_user_links.md) |                                             |         |
-| created_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
-| updated_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
-| published_at  | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                         |                                             |         |
-| created_by_id | integer                        |                                       | true     |                                                                                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
-| updated_by_id | integer                        |                                       | true     |                                                                                                                                                                                                         | [public.admin_users](public.admin_users.md) |         |
+| Name          | Type                           | Default                               | Nullable | Children                                                                                                                                                                                                  | Parents                                     | Comment |
+| ------------- | ------------------------------ | ------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| id            | integer                        | nextval('employees_id_seq'::regclass) | false    | [public.employees_institution_links](public.employees_institution_links.md) [public.tasks_employee_links](public.tasks_employee_links.md) [public.employees_users_links](public.employees_users_links.md) |                                             |         |
+| created_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                           |                                             |         |
+| updated_at    | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                           |                                             |         |
+| published_at  | timestamp(6) without time zone |                                       | true     |                                                                                                                                                                                                           |                                             |         |
+| created_by_id | integer                        |                                       | true     |                                                                                                                                                                                                           | [public.admin_users](public.admin_users.md) |         |
+| updated_by_id | integer                        |                                       | true     |                                                                                                                                                                                                           | [public.admin_users](public.admin_users.md) |         |
 
 ## Constraints
 
@@ -36,7 +36,7 @@ erDiagram
 
 "public.employees_institution_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
 "public.tasks_employee_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
-"public.employees_user_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
+"public.employees_users_links" }o--o| "public.employees" : "FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE"
 "public.employees" }o--o| "public.admin_users" : "FOREIGN KEY (created_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 "public.employees" }o--o| "public.admin_users" : "FOREIGN KEY (updated_by_id) REFERENCES admin_users(id) ON DELETE SET NULL"
 
@@ -58,10 +58,11 @@ erDiagram
   integer task_id FK
   integer employee_id FK
 }
-"public.employees_user_links" {
+"public.employees_users_links" {
   integer id
   integer employee_id FK
   integer user_id FK
+  double_precision user_order
 }
 "public.admin_users" {
   integer id

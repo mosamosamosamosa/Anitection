@@ -1,4 +1,5 @@
 import 'package:anitection/models/base.dart';
+import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -16,6 +17,8 @@ class AnimalAttributes {
     required this.createdAt,
     required this.updatedAt,
     required this.images,
+    required this.realIcon,
+    required this.institution,
   });
 
   final String? name;
@@ -27,7 +30,11 @@ class AnimalAttributes {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  final ArrayData<MediaAttributes>? images;
+  final SingleData<Model<InstitutionAttributes>>? institution;
+
+  final ArrayData<Model<MediaAttributes>>? images;
+
+  @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);

@@ -43,7 +43,6 @@ erDiagram
 }
 "public.animal_logs" {
   integer id
-  varchar_255_ content
   timestamp_6__without_time_zone created_at
   timestamp_6__without_time_zone updated_at
   timestamp_6__without_time_zone published_at
