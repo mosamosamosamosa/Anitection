@@ -740,6 +740,11 @@ export interface ApiAnimalKindAnimalKind extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
+    patterns: Attribute.Relation<
+      'api::animal-kind.animal-kind',
+      'oneToMany',
+      'api::pattern.pattern'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1019,6 +1024,37 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
   };
 }
 
+export interface ApiPatternPattern extends Schema.CollectionType {
+  collectionName: 'patterns';
+  info: {
+    singularName: 'pattern';
+    pluralName: 'patterns';
+    displayName: 'Pattern';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    image: Attribute.Media;
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::pattern.pattern',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::pattern.pattern',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTaskTask extends Schema.CollectionType {
   collectionName: 'tasks';
   info: {
@@ -1116,6 +1152,7 @@ declare module '@strapi/types' {
       'api::log.log': ApiLogLog;
       'api::message.message': ApiMessageMessage;
       'api::notification.notification': ApiNotificationNotification;
+      'api::pattern.pattern': ApiPatternPattern;
       'api::task.task': ApiTaskTask;
       'api::timeline.timeline': ApiTimelineTimeline;
     }
