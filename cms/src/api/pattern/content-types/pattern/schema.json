@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patterns",
+  "info": {
+    "singularName": "pattern",
+    "pluralName": "patterns",
+    "displayName": "Pattern"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}
