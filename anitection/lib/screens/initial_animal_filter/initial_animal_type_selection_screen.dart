@@ -2,6 +2,7 @@ import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -130,7 +131,15 @@ class InitialAnimalTypeSelectionTypeState extends ConsumerState<InitialAnimalTyp
                   NormalButton(
                     width: 219,
                     height: 64,
-                    onPressed: () {},
+                    onPressed: () {
+                      switch(_selectedType) {
+                        case AnimalType.cat:
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InitialCatPreferenceSelectionScreen()));
+                          break;
+                        case AnimalType.dog:
+                          break;
+                      }
+                    },
                     child: const StrokeText(
                       text: "次へ",
                       textColor: Color(0xFF573F1B),
