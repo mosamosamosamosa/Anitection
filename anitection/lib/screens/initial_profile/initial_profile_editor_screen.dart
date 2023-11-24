@@ -95,6 +95,7 @@ class InitialProfileEditorScreenState
                       ),
                       const SizedBox(height: 24),
                       const LiveHeader(),
+                      const SizedBox(height: 8),
                       Material(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
