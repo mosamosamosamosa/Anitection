@@ -57,7 +57,7 @@ class NumberStepper extends StatelessWidget {
 
   Color? getLineColor(i) {
     Color? color =
-    curStep > i + 1 ? Colors.red.withOpacity(0.4) : Colors.grey[200];
+    curStep > i + 1 ? const Color(0xFFC3EB89) : Colors.grey[200];
     return color;
   }
 
