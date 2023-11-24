@@ -17,6 +17,7 @@ class InitialProfileEditorScreenState
     extends ConsumerState<InitialProfileEditorScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nicknameController = TextEditingController();
+  final _liveController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +76,9 @@ class InitialProfileEditorScreenState
                         child: TextFormField(
                           controller: _nicknameController,
                           decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 8,
+                            ),
                             fillColor: Colors.white,
                             labelStyle: TextStyle(
                               color: Color(0x664B4B4B),
@@ -97,7 +101,7 @@ class InitialProfileEditorScreenState
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextFormField(
-                          controller: _nicknameController,
+                          controller: _liveController,
                           decoration: const InputDecoration(
                             fillColor: Colors.white,
                             labelStyle: TextStyle(
@@ -107,14 +111,42 @@ class InitialProfileEditorScreenState
                             filled: true,
                             border: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8,
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
                       const InstallReasonHeader(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // radio
+                          RadioSelection(
+                            title: "保護犬猫を引き取りたい",
+                            onChanged: (v) {},
+                            groupValue: "a",
+                            value: "a",
+                          ),
+                          RadioSelection(
+                            title: "保護犬猫への支援に興味がある",
+                            onChanged: (v) {},
+                            groupValue: "a",
+                            value: "b",
+                          ),
+                          RadioSelection(
+                            title: "アプリを体験してみたい",
+                            onChanged: (v) {},
+                            groupValue: "a",
+                            value: "c",
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -344,6 +376,40 @@ class NicknameHeader extends StatelessWidget {
         SizedBox(width: 8),
         RequireLabel(),
       ],
+    );
+  }
+}
+
+class RadioSelection<T> extends StatelessWidget {
+  const RadioSelection(
+      {super.key,
+      required this.title,
+      required this.onChanged,
+      required this.groupValue,
+      required this.value});
+
+  final String title;
+  final ValueChanged<T?>? onChanged;
+  final T? groupValue;
+  final T value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(unselectedWidgetColor: const Color(0xFFFFB001)),
+      child: RadioListTile(
+        activeColor: const Color(0xFFFFB001),
+        value: value,
+        groupValue: groupValue,
+        onChanged: onChanged,
+        contentPadding: EdgeInsets.zero,
+        title: StrokeText(
+          text: title,
+          strokeWidth: 4,
+          strokeColor: Colors.white,
+          textStyle: const TextStyle(color: Color(0xFF573F1B), fontSize: 18),
+        ),
+      ),
     );
   }
 }
