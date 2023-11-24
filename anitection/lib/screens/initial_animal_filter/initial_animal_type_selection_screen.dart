@@ -78,6 +78,7 @@ class InitialAnimalTypeSelectionTypeState extends ConsumerState<InitialAnimalTyp
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: _selectedType == AnimalType.cat ? const Color(0xFFFDE38B) : const Color(0xFFD9D9D9),
+                            border: _selectedType == AnimalType.cat ? Border.all(color: const Color(0xFFFFB001), width: 2) : null,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.25),
@@ -105,6 +106,7 @@ class InitialAnimalTypeSelectionTypeState extends ConsumerState<InitialAnimalTyp
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: _selectedType == AnimalType.dog ? const Color(0xFFFDE38B) : const Color(0xFFD9D9D9),
+                            border: _selectedType == AnimalType.dog ? Border.all(color: const Color(0xFFFFB001), width: 2) : null,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.25),
