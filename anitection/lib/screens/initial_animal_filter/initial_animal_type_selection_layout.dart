@@ -68,13 +68,18 @@ class InitialAnimalTypeSelectionType extends StatelessWidget {
                             )
                           ],
                         ),
+                        child: Image.asset(
+                          "assets/images/img_animal_type_as_cat.png",
+                          width: 100,
+                          height: 75,
+                        ),
                       ),
                       Container(
                         width: 125,
                         height: 125,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFFFDE38B),
+                          color: const Color(0xFFFDE38B),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.25),
@@ -82,6 +87,11 @@ class InitialAnimalTypeSelectionType extends StatelessWidget {
                               blurRadius: 4,
                             )
                           ],
+                        ),
+                        child: Image.asset(
+                          "assets/images/img_animal_type_as_dog.png",
+                          width: 100,
+                          height: 75,
                         ),
                       )
                     ],
