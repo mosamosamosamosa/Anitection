@@ -55,8 +55,8 @@ class NumberStepper extends StatelessWidget {
     return color;
   }
 
-  getLineColor(i) {
-    var color =
+  Color? getLineColor(i) {
+    Color? color =
     curStep > i + 1 ? Colors.red.withOpacity(0.4) : Colors.grey[200];
     return color;
   }
@@ -68,7 +68,7 @@ class NumberStepper extends StatelessWidget {
 
       var circleColor = getCircleColor(i);
       var borderColor = getBorderColor(i);
-      var lineColor = getLineColor(i);
+      Color? lineColor = getLineColor(i);
 
       // step circles
       list.add(
@@ -82,6 +82,13 @@ class NumberStepper extends StatelessWidget {
               color: borderColor,
               width: 1.0,
             ),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 2.0,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
           child: getInnerElementOfStepper(i),
         ),
@@ -93,7 +100,16 @@ class NumberStepper extends StatelessWidget {
           Expanded(
             child: Container(
               height: lineWidth,
-              color: lineColor,
+              decoration: BoxDecoration(
+                color: lineColor ?? Colors.grey,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 2.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              )
             ),
           ),
         );
