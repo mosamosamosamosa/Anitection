@@ -23,6 +23,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFF8E0),
       body: Stack(
         children: [
           const AnimalPadBackground(),
