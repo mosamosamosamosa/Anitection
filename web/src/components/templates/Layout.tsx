@@ -15,8 +15,10 @@ const Component: FC<Props> = ({ children }) => {
       <Header />
       <div className="flex flex-grow">
         <aside className="bg-main w-1/6 p-4 h-full">
-          <UserPanel />
-          <Navigation />
+          <div className="sticky top-8">
+            <UserPanel />
+            <Navigation />
+          </div>
         </aside>
         <div className="flex-grow">
           <Breadcrumbs />
