@@ -44,24 +44,21 @@ const Component = () => {
           </div>
           <div className="mb-4">
             <div className="grid grid-cols-12 gap-4">
-              {
-                [...Array(24)].map((_, index: number) => {
-                  return (
-                    index === 0 ?
-                    <div key={index} className="col-span-12 md:col-span-2">
-                      <Card>
-                        <div className="w-full h-40">plus</div>
-                      </Card>
-                    </div>
-                    :
-                    <div key={index} className="col-span-12 md:col-span-2">
-                      <Card>
-                        <div className="w-full h-40">contents</div>
-                      </Card>
-                    </div>
-                  );
-                })
-              }
+              {[...Array(24)].map((_, index: number) => {
+                return index === 0 ? (
+                  <div key={index} className="col-span-12 md:col-span-2">
+                    <Card>
+                      <div className="w-full h-40">plus</div>
+                    </Card>
+                  </div>
+                ) : (
+                  <div key={index} className="col-span-12 md:col-span-2">
+                    <Card>
+                      <div className="w-full h-40">contents</div>
+                    </Card>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
