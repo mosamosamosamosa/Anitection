@@ -19,7 +19,20 @@ const Component = () => {
             onClick={() => {}}
           />
         </li>
-        {/* 他のナビゲーション項目を追加 */}
+        <li className="mb-2">
+          <LinkButton
+            text="通知"
+            icon="ion:notifications-outline"
+            onClick={() => {}}
+          />
+        </li>
+        <li className="mb-2">
+          <LinkButton
+            text="設定"
+            icon="ion:settings-outline"
+            onClick={() => {}}
+          />
+        </li>
       </ul>
     </nav>
   );

@@ -5,16 +5,16 @@ const Component = () => {
     <nav className="p-2">
       <ol className="list-reset flex text-sm">
         <li>
-          <a href="/dashboard" className="text-blue-500 hover:underline">
-            Dashboard
+          <a href="/" className="text-blue-500 hover:underline">
+            Home
           </a>
         </li>
         <li className="mx-2">/</li>
-        <li>
+        {/* <li>
           <a href="/profile" className="text-blue-500 hover:underline">
             Profile
           </a>
-        </li>
+        </li> */}
       </ol>
     </nav>
   );
