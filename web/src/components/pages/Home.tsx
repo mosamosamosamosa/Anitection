@@ -43,7 +43,7 @@ const Component = () => {
           <div className="mb-4 flex items-center gap-4">
             <input
               type="text"
-              className="w-1/2 h-12 rounded-md px-4 py-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+              className="w-3/4 md:w-1/2 h-12 rounded-md px-4 py-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
               placeholder="動物名を入力してください"
             />
             <div className="w-12 h-12 rounded-full bg-white border-4"></div>
@@ -52,13 +52,13 @@ const Component = () => {
             <div className="grid grid-cols-12 gap-4">
               {[...Array(24)].map((_, index: number) => {
                 return index === 0 ? (
-                  <div key={index} className="col-span-12 md:col-span-2">
+                  <div key={index} className="col-span-6 md:col-span-2">
                     <Card>
                       <div className="w-full h-40">plus</div>
                     </Card>
                   </div>
                 ) : (
-                  <div key={index} className="col-span-12 md:col-span-2">
+                  <div key={index} className="col-span-6 md:col-span-2">
                     <Card>
                       <div className="w-full h-40">contents</div>
                     </Card>
