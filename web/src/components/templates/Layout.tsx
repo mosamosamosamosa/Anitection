@@ -39,8 +39,7 @@ const Component: FC<Props> = ({ children }) => {
   return (
     <div className="App h-screen flex flex-col">
       <div className="flex flex-grow">
-        {
-          mobile && sidebar &&
+        {mobile && sidebar && (
           <div
             className="fixed w-full top-0 left-0 h-screen z-10 bg-opacity-60 bg-gray-400"
             onClick={() => dispatch(viewSlice.actions.toggleSidebar())}
@@ -53,9 +52,8 @@ const Component: FC<Props> = ({ children }) => {
             </div>
             <div className="fixed top-0 right-0 w-2/5 h-full" />
           </div>
-        }
-        {
-          !mobile &&
+        )}
+        {!mobile && (
           <aside
             className={`bg-main h-full relative border-r border-gray-300 duration-300 transition-all ${
               sidebar ? 'w-1/6 p-4' : 'w-0'
@@ -68,7 +66,7 @@ const Component: FC<Props> = ({ children }) => {
               </div>
             )}
           </aside>
-        }
+        )}
         <div className="flex-grow">
           <Header />
           <Breadcrumbs />

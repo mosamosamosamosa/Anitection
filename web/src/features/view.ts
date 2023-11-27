@@ -32,6 +32,6 @@ export const viewSlice = createSlice({
     },
     setSidebar: (state, action) => {
       state.sidebar = action.payload;
-    }
+    },
   },
 });
