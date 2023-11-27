@@ -78,6 +78,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final itemSize = (width - 80) / 4 - ((width - 80) / 4 * 0.1);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -90,8 +92,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: itemSize,
+                  height: itemSize,
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFCF3),
                     shape: BoxShape.circle,
@@ -101,8 +103,11 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
                     ),
                   ),
                 ),
-                SvgPicture.asset("assets/svg/ic_dinner.svg",
-                    width: 40, height: 40),
+                SvgPicture.asset(
+                  "assets/svg/ic_dinner.svg",
+                  width: itemSize * 0.57,
+                  height: itemSize * 0.57,
+                ),
               ],
             ),
             Container(
@@ -118,8 +123,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: itemSize,
+                  height: itemSize,
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFCF3),
                     shape: BoxShape.circle,
@@ -130,7 +135,7 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
                   ),
                 ),
                 SvgPicture.asset("assets/svg/ic_tree.svg",
-                    width: 40, height: 40),
+                    width: itemSize * 0.57, height: itemSize * 0.57),
               ],
             ),
             Container(
@@ -146,8 +151,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: itemSize,
+                  height: itemSize,
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFCF3),
                     shape: BoxShape.circle,
@@ -159,8 +164,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
                 ),
                 SvgPicture.asset(
                   "assets/svg/ic_bucket.svg",
-                  width: 40,
-                  height: 40,
+                  width: itemSize * 0.57,
+                  height: itemSize * 0.57,
                 ),
               ],
             ),
@@ -177,8 +182,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: itemSize,
+                  height: itemSize,
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFCF3),
                     shape: BoxShape.circle,
@@ -190,8 +195,8 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
                 ),
                 SvgPicture.asset(
                   "assets/svg/ic_stop_hand.svg",
-                  width: 40,
-                  height: 40,
+                  width: itemSize * 0.57,
+                  height: itemSize * 0.57,
                 ),
               ],
             ),
