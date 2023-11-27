@@ -261,6 +261,13 @@ class AnimalNameLabel extends StatelessWidget {
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
+      shadows: [
+        Shadow(
+          blurRadius: 10,
+          color: Colors.black,
+          offset: Offset(2, 2),
+        )
+      ],
     );
   }
 }
