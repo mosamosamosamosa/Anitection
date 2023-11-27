@@ -25,7 +25,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.height * 0.1),
+        preferredSize: const Size.fromHeight(56),
         child: Container(
           color: const Color(0xFFC3EB89),
           child: const Column(children: []),
@@ -361,14 +361,14 @@ class AppBarCurtainItem extends StatelessWidget {
       height: 39,
       width: 50,
       decoration: BoxDecoration(
-          color: Color(0xFFC3EB89),
-          borderRadius: BorderRadius.all(
+          color: const Color(0xFFC3EB89),
+          borderRadius: const BorderRadius.all(
             Radius.elliptical(50, 39),
           ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
               blurRadius: 2,
             )
           ]),
