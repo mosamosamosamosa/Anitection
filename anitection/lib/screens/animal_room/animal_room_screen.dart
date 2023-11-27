@@ -60,9 +60,149 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             bottom: -83,
             left: -116,
             child: DoorIcon(),
-          )
+          ),
+          const Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: AnimalRoomBottomNavMenu(),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class AnimalRoomBottomNavMenu extends StatelessWidget {
+  const AnimalRoomBottomNavMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        const SizedBox(
+          width: 80,
+        ),
+        Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF3),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFFC3EB89),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset("assets/svg/ic_dinner.svg",
+                    width: 40, height: 40),
+              ],
+            ),
+            Container(
+              width: 3,
+              height: 43,
+              color: const Color(0xFFC3EB89),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF3),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFFFFB001),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset("assets/svg/ic_tree.svg",
+                    width: 40, height: 40),
+              ],
+            ),
+            Container(
+              width: 3,
+              height: 43,
+              color: const Color(0xFFFFB001),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF3),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFFC6DEE8),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  "assets/svg/ic_bucket.svg",
+                  width: 40,
+                  height: 40,
+                ),
+              ],
+            ),
+            Container(
+              width: 3,
+              height: 43,
+              color: const Color(0xFFC6DEE8),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF3),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFFFFDB1D),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  "assets/svg/ic_stop_hand.svg",
+                  width: 40,
+                  height: 40,
+                ),
+              ],
+            ),
+            Container(
+              width: 3,
+              height: 43,
+              color: const Color(0xFFFFDB1D),
+            )
+          ],
+        )
+      ],
     );
   }
 }
@@ -105,6 +245,7 @@ class DoorIcon extends StatelessWidget {
     );
   }
 }
+
 class AnimalNameLabel extends StatelessWidget {
   const AnimalNameLabel({super.key});
 
