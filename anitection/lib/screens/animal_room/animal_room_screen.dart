@@ -1,4 +1,4 @@
-
+import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
@@ -25,22 +25,59 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-        child: Container(
-          color: Color(0xFFC3EB89),
-          child: Column(children: []),
-        ),
         preferredSize: Size.fromHeight(size.height * 0.1),
+        child: Container(
+          color: const Color(0xFFC3EB89),
+          child: const Column(children: []),
+        ),
       ),
       body: Stack(
         children: [
           const AnimalRoomBackground(),
           const AppBarCurtain(),
-          Positioned(
+          const Positioned(
             top: 40,
             right: 14,
             child: RightNavMenu(),
-          )
+          ),
+          Positioned(
+            top: size.height * 0.2,
+            child: Container(
+              alignment: Alignment.center,
+              width: size.width,
+              child: const AnimalNameLabel(),
+            ),
+          ),
+          Positioned(
+            top: size.height * 0.5,
+            child: Container(
+              width: size.width,
+              alignment: Alignment.center,
+              child: Image.asset(
+                  "assets/images/img_example_dog.png"
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class AnimalNameLabel extends StatelessWidget {
+  const AnimalNameLabel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const StrokeText(
+      text: "あるるくんのお部屋",
+      strokeColor: Colors.white,
+      textColor: Color(0xFF573F1B),
+      textAlign: TextAlign.center,
+      strokeWidth: 4,
+      textStyle: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -72,22 +109,17 @@ class RightNavMenu extends StatelessWidget {
             height: 50,
             width: 50,
             padding: const EdgeInsets.all(4),
-            child: SvgPicture.asset(
-                "assets/svg/ic_heart.svg"
-            ),
+            child: SvgPicture.asset("assets/svg/ic_heart.svg"),
           ),
           SizedBox(
             height: 50,
             width: 50,
-            child: Image.asset(
-                "assets/images/img_offering_box.png"
-            ),
+            child: Image.asset("assets/images/img_offering_box.png"),
           ),
         ],
       ),
     );
   }
-
 }
 
 Future<void> showAnimalRoomProfileDialog(
