@@ -19,14 +19,17 @@ const Component: FC<Props> = ({ children }) => {
   return (
     <div className="App h-screen flex flex-col">
       <div className="flex flex-grow">
-        <aside className={`bg-main h-full relative border-r border-gray-300 duration-300 transition-all ${!sidebar ? 'w-1/6 p-4' : 'w-0'}`}>
-          {
-            !sidebar &&
+        <aside
+          className={`bg-main h-full relative border-r border-gray-300 duration-300 transition-all ${
+            !sidebar ? 'w-1/6 p-4' : 'w-0'
+          }`}
+        >
+          {!sidebar && (
             <div className="sticky top-8">
               <UserPanel />
               <Navigation />
             </div>
-          }
+          )}
         </aside>
         <div className="flex-grow">
           <Header />
