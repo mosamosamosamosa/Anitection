@@ -4,6 +4,7 @@ import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
+import 'package:anitection/screens/animal_room/animal_avatar_area.dart';
 import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,7 +56,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             child: Container(
               width: size.width,
               alignment: Alignment.center,
-              child: Image.asset("assets/images/img_example_dog.png"),
+              child: AnimalAvatarArea(size: Size(size.width, size.height)),
             ),
           ),
           const Positioned(
