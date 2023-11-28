@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: anitection-cms
-          image: yumekiti/anitection-cms:1749697
+          image: yumekiti/anitection-cms:e8f29e6
           ports:
             - containerPort: 1337
           volumeMounts:
@@ -79,6 +79,6 @@ spec:
     spec:
       containers:
         - name: anitection-bff
-          image: yumekiti/anitection-bff:1749697
+          image: yumekiti/anitection-bff:e8f29e6
           ports:
             - containerPort: 8080
