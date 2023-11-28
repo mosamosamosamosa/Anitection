@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
@@ -79,7 +81,7 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final itemSize = (width - 80) / 4 - ((width - 80) / 4 * 0.1);
+    final itemSize = min((width - 80) / 4 - ((width - 80) / 4 * 0.1), 70.0);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
