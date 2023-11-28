@@ -11,6 +11,9 @@ import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
 
+import Login from '../organisms/Login';
+// import Register from '../organisms/Register';
+
 type Props = {
   children: ReactNode;
 };
@@ -74,6 +77,7 @@ const Component: FC<Props> = ({ children }) => {
             <main className="flex-grow">{children}</main>
           </div>
         </div>
+        <Login />
       </div>
     </div>
   );
