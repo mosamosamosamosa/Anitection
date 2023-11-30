@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"bff/config"
-	"bff/utils"
 )
 
 type StrapiHandler interface {
