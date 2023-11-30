@@ -12,6 +12,14 @@ ENV ADMIN_JWT_SECRET=$ADMIN_JWT_SECRET
 ENV TRANSFER_TOKEN_SALT=$TRANSFER_TOKEN_SALT
 ENV JWT_SECRET=$JWT_SECRET
 
+ENV DATABASE_CLIENT=postgres
+ENV DATABASE_HOST=db
+ENV DATABASE_PORT=5432
+ENV DATABASE_NAME=anitection
+ENV DATABASE_USERNAME=user
+ENV DATABASE_PASSWORD=password
+ENV DATABASE_SSL=false
+
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 
 WORKDIR /app
