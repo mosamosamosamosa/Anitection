@@ -28,7 +28,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           color: Color(0xFFC3EB89),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+              // padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+              padding: const EdgeInsets.only(top: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,18 +44,19 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       SvgPicture.asset(
                         "assets/svg/ic_calendar.svg",
-                        width: 50,
-                        height: 50,
+                        width: 38,
+                        height: 38,
                       ),
                       Container(
                         decoration: const BoxDecoration(
-                            color: Color(0xFF94CD68),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            )),
+                          color: Color(0xFF94CD68),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 2),
+                            horizontal: 4, vertical: 0),
                         child: const Text(
                           "10月30日",
                           style: TextStyle(
@@ -87,19 +89,18 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           const AnimalPadBackground(),
           Column(
             children: [
-
               Stack(
                 clipBehavior: Clip.none,
                 children: [
                   CustomPaint(
                     size: Size(MediaQuery.of(context).size.width,
-                        MediaQuery.of(context).size.width * 0.12512820512 + 10),
+                        MediaQuery.of(context).size.width * 0.10512820512 + 10),
                     painter: TrianglePainter(),
                   ),
                   Positioned(
                     child: CustomPaint(
                       size: Size(MediaQuery.of(context).size.width,
-                          MediaQuery.of(context).size.width * 0.12512820512),
+                          MediaQuery.of(context).size.width * 0.10512820512),
                       painter: TriangleLinePainter(),
                     ),
                   )
@@ -135,19 +136,22 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Flexible(
                 child: ListView.separated(
-                  itemCount: 10,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimalAvatarCard(onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const AnimalRoomScreen(animalId: 1)));
-                    },);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 18,
-                    );
-                  }
-                ),
+                    itemCount: 10,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimalAvatarCard(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const AnimalRoomScreen(animalId: 1)));
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 18,
+                      );
+                    }),
               ),
             ],
           )
@@ -164,7 +168,6 @@ class TrianglePainter extends CustomPainter {
       ..color = const Color(0xFFC3EB89)
       ..style = PaintingStyle.fill;
 
-
     var path = Path();
 
     path.moveTo(size.width / 2, size.height); // 上の中心点
@@ -179,7 +182,6 @@ class TrianglePainter extends CustomPainter {
     canvas.drawShadow(path, Colors.black.withOpacity(0.5), 4.0, false);
 
     canvas.drawPath(path, paint);
-
   }
 
   @override
@@ -268,9 +270,9 @@ class PointCounter extends StatelessWidget {
   }
 }
 
-
 class AnimalAvatarCard extends StatelessWidget {
   const AnimalAvatarCard({super.key, required this.onPressed});
+
   final VoidCallback onPressed;
 
   @override
@@ -285,8 +287,14 @@ class AnimalAvatarCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
         child: Row(
           children: [
-            Image.asset("assets/images/img_example_cat_avatar.png", width: 60, height: 60,),
-            const SizedBox(width: 16,),
+            Image.asset(
+              "assets/images/img_example_cat_avatar.png",
+              width: 60,
+              height: 60,
+            ),
+            const SizedBox(
+              width: 16,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -307,10 +315,12 @@ class AnimalAvatarCard extends StatelessWidget {
                     )
                   ],
                 ),
-                const Text("あにまる保護施設", textAlign: TextAlign.end,)
+                const Text(
+                  "あにまる保護施設",
+                  textAlign: TextAlign.end,
+                )
               ],
             ),
-
           ],
         ),
       ),
