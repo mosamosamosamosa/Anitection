@@ -25,7 +25,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     return AuthGuardLayout(
         isLoggedIn: true,
         child: Scaffold(
-          backgroundColor: const Color(0xFFF9F2DB),
+          backgroundColor: const Color(0xFFFFF8E0),
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: Container(
