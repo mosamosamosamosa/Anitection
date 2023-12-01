@@ -87,21 +87,16 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           const AnimalPadBackground(),
           Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 8,
-                color: const Color(0xFFC3EB89),
-              ),
+
               Stack(
                 clipBehavior: Clip.none,
                 children: [
                   CustomPaint(
                     size: Size(MediaQuery.of(context).size.width,
-                        MediaQuery.of(context).size.width * 0.12512820512),
+                        MediaQuery.of(context).size.width * 0.12512820512 + 10),
                     painter: TrianglePainter(),
                   ),
                   Positioned(
-                    top: -10,
                     child: CustomPaint(
                       size: Size(MediaQuery.of(context).size.width,
                           MediaQuery.of(context).size.width * 0.12512820512),
@@ -166,39 +161,25 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = Color(0xFFC3EB89)
+      ..color = const Color(0xFFC3EB89)
       ..style = PaintingStyle.fill;
 
+
     var path = Path();
+
     path.moveTo(size.width / 2, size.height); // 上の中心点
-    path.lineTo(size.width, 0); // 右下の点
-    path.lineTo(0, 0); // 左下の点
+    path.lineTo(size.width, 10); // 右下の点
+    path.lineTo(0, 10); // 左下の点
     path.close(); // パスを閉じる
 
-    // 影のスタイルを定義
-    // var shadowPaint = Paint()
-    //   ..color = Colors.black.withOpacity(0.1) // 影の色と透明度
-    //   ..maskFilter = MaskFilter.blur(BlurStyle.normal, 10); // ぼかしのスタイルと度合い
+    // 0,0からsize.width, 10まで四角形を描画
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 10), paint);
 
     // 影を描画
     canvas.drawShadow(path, Colors.black.withOpacity(0.5), 4.0, false);
 
     canvas.drawPath(path, paint);
 
-    // 点線を描画
-    // var dotPathPaint = Paint()
-    //   ..color = Colors.white
-    //   ..strokeWidth = 4;
-    //
-    // double dashWidth = 5.0, dashSpace = 6.0, startX = 0.0;
-    // while (startX < size.width) {
-    //   canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), dotPathPaint);
-    //   startX += dashWidth + dashSpace;
-    // }
-    //
-    // final paint = Paint()
-    //   ..color = Colors.black
-    //   ..strokeWidth = 1;
   }
 
   @override
