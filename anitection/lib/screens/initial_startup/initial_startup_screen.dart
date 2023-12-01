@@ -146,14 +146,45 @@ class InitialStartupScreenState extends State<InitialStartupScreen> {
                   ),
                 ],
               ),
-              Container(
-                color: const Color(0xFFC3EB89),
-                height: 48,
-              ),
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    color: const Color(0xFFC3EB89),
+                    height: 48,
+                  ),
+                  CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width,
+                        40),
+                    painter: LinearLinePainter(),
+                  ),
+                ],
+              )
             ],
           )
         ],
       ),
     );
   }
+}
+
+class LinearLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final dotLinePaint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 2;
+
+    const dashWidth = 8.0;
+    const dashSpace = 8.0;
+
+    // 点線を描画
+    for (double i = 0; i < size.width; i += dashWidth + dashSpace) {
+      canvas.drawLine(Offset(i, 0), Offset(i + dashWidth, 0), dotLinePaint);
+    }
+
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
