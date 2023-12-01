@@ -82,7 +82,6 @@ class InitialStartupScreenState extends State<InitialStartupScreen> {
                 children: [
                   NormalButton(
                     onPressed: () {
-                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const SignUpScreen()),
@@ -116,7 +115,6 @@ class InitialStartupScreenState extends State<InitialStartupScreen> {
                   ),
                   NormalButton(
                     onPressed: () {
-                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const SignInScreen()),
