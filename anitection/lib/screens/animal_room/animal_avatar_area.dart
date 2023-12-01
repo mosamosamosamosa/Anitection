@@ -1,16 +1,17 @@
-
-
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+
 // math import
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
 class AnimalAvatarArea extends StatefulWidget {
-  const AnimalAvatarArea({super.key, required this.size});
+  const AnimalAvatarArea({super.key, required this.size, required this.onAvatarTap});
+
   final Size size;
+  final VoidCallback onAvatarTap;
 
   @override
   State<StatefulWidget> createState() {
@@ -24,20 +25,21 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
   final avatarHeight = 191.0;
 
   int animationSession = DateTime.now().microsecondsSinceEpoch;
+
   void moveToPosition(Offset position) async {
     const double tolerance = 10.0; // 許容される誤差の範囲
     final current = DateTime.now().microsecondsSinceEpoch;
     animationSession = current;
-    while(((_position.x - position.dx).abs() > tolerance ||
-        (_position.y - position.dy).abs() > tolerance) &&
-            animationSession == current) {
+    while (((_position.x - position.dx).abs() > tolerance ||
+            (_position.y - position.dy).abs() > tolerance) &&
+        animationSession == current) {
       setState(() {
         _position.moveTowards(Point(position.dx, position.dy), 5);
       });
       await Future.delayed(const Duration(milliseconds: 10));
     }
-
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -59,10 +61,17 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
             Positioned(
               top: _position.y - avatarHeight / 2,
               left: _position.x - avatarWidth / 2,
-              child: Image.asset("assets/images/img_example_dog.png", width: 171, height: 191,),
+              child: GestureDetector(
+                onTap: widget.onAvatarTap,
+                child: Image.asset(
+                  "assets/images/img_example_dog.png",
+                  width: 171,
+                  height: 191,
+                ),
+              ),
             ),
           ],
-        )
+        ),
       ),
     );
   }

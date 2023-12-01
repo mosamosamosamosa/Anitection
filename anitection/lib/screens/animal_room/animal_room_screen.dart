@@ -56,7 +56,15 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             child: Container(
               width: size.width,
               alignment: Alignment.center,
-              child: AnimalAvatarArea(size: Size(size.width, size.height)),
+              child: AnimalAvatarArea(
+                size: Size(size.width, size.height),
+                onAvatarTap: () {
+                  final data = animalAsyncState.valueOrNull;
+                  if (data != null) {
+                    showAnimalRoomProfileDialog(context, size, data.data);
+                  }
+                },
+              ),
             ),
           ),
           const Positioned(
