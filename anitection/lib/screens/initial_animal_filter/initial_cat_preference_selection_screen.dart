@@ -16,6 +16,10 @@ class InitialCatPreferenceSelectionScreen extends ConsumerStatefulWidget {
 
 class InitialCatPreferenceSelectionScreenState
     extends ConsumerState<InitialCatPreferenceSelectionScreen> {
+  final Set<CatHairLength> catHairLength = {};
+  final Set<CatAge> catAge = {};
+  final Set<CatSize> catSize = {};
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * 0.7;
@@ -87,19 +91,25 @@ class InitialCatPreferenceSelectionScreenState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatHairLengthButtonPressed(CatHairLength.long);
+                            },
                             text: "長毛",
-                            isSelected: true,
+                            isSelected: catHairLength.contains(CatHairLength.long),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatHairLengthButtonPressed(CatHairLength.short);
+                            },
                             text: "短毛",
-                            isSelected: false,
+                            isSelected: catHairLength.contains(CatHairLength.short),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatHairLengthButtonPressed(CatHairLength.hairless);
+                            },
                             text: "無毛",
-                            isSelected: false,
+                            isSelected: catHairLength.contains(CatHairLength.hairless),
                           ),
                         ],
                       ),
@@ -127,19 +137,25 @@ class InitialCatPreferenceSelectionScreenState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onSizeButtonPressed(CatSize.large);
+                            },
                             text: "大きめ",
-                            isSelected: true,
+                            isSelected: catSize.contains(CatSize.large),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onSizeButtonPressed(CatSize.medium);
+                            },
                             text: "普通",
-                            isSelected: false,
+                            isSelected: catSize.contains(CatSize.medium),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onSizeButtonPressed(CatSize.small);
+                            },
                             text: "小さめ",
-                            isSelected: false,
+                            isSelected: catSize.contains(CatSize.small),
                           ),
                         ],
                       ),
@@ -167,19 +183,25 @@ class InitialCatPreferenceSelectionScreenState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatAgeButtonPressed(CatAge.adult);
+                            },
                             text: "成猫",
-                            isSelected: true,
+                            isSelected: catAge.contains(CatAge.adult),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatAgeButtonPressed(CatAge.kitten);
+                            },
                             text: "子猫",
-                            isSelected: false,
+                            isSelected: catAge.contains(CatAge.kitten),
                           ),
                           CatPreferenceSelectionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              onCatAgeButtonPressed(CatAge.senior);
+                            },
                             text: "シニア猫",
-                            isSelected: false,
+                            isSelected: catAge.contains(CatAge.senior),
                           ),
                         ],
                       ),
@@ -205,6 +227,36 @@ class InitialCatPreferenceSelectionScreenState
       ),
     );
   }
+
+  void onSizeButtonPressed(CatSize size) {
+    setState(() {
+      if (catSize.contains(size)) {
+        catSize.remove(size);
+      } else {
+        catSize.add(size);
+      }
+    });
+  }
+
+  void onCatHairLengthButtonPressed(CatHairLength hairLength) {
+    setState(() {
+      if (catHairLength.contains(hairLength)) {
+        catHairLength.remove(hairLength);
+      } else {
+        catHairLength.add(hairLength);
+      }
+    });
+  }
+
+  void onCatAgeButtonPressed(CatAge age) {
+    setState(() {
+      if (catAge.contains(age)) {
+        catAge.remove(age);
+      } else {
+        catAge.add(age);
+      }
+    });
+  }
 }
 
 class CatPreferenceSelectionButton extends StatelessWidget {
@@ -221,42 +273,45 @@ class CatPreferenceSelectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 54,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        border: isSelected ? Border.all(
-          color: const Color(0xFFFFB001),
-          width: 1.0,
-        ) : null,
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 2.0,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: StrokeText(
-        text: text,
-        strokeColor: Colors.white,
-        textColor: const Color(0xFF573F1B),
-        textAlign: TextAlign.center,
-        strokeWidth: 4,
-        textStyle: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: 100,
+        height: 54,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: isSelected ? Border.all(
+            color: const Color(0xFFFFB001),
+            width: 1.0,
+          ) : null,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 2.0,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
-        shadows: [
-          Shadow(
-            blurRadius: 4,
-            color: Colors.black.withOpacity(0.25),
-            offset: const Offset(2, 2),
-          )
-        ],
+        child: StrokeText(
+          text: text,
+          strokeColor: Colors.white,
+          textColor: const Color(0xFF573F1B),
+          textAlign: TextAlign.center,
+          strokeWidth: 4,
+          textStyle: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          shadows: [
+            Shadow(
+              blurRadius: 4,
+              color: Colors.black.withOpacity(0.25),
+              offset: const Offset(2, 2),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -314,4 +369,22 @@ class NextButton extends StatelessWidget {
       ),
     );
   }
+}
+
+enum CatSize {
+  large,
+  medium,
+  small,
+}
+
+enum CatAge {
+  adult,
+  kitten,
+  senior,
+}
+
+enum CatHairLength {
+  long,
+  short,
+  hairless,
 }
