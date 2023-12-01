@@ -1,6 +1,8 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/screens/animal_room/animal_room_screen.dart';
+import 'package:anitection/screens/home/search_button.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_animal_type_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -157,6 +159,17 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           )
         ],
       ),
+      floatingActionButton: SearchButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return const InitialAnimalTypeSelectionTypeScreen();
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -180,7 +193,6 @@ class TrianglePainter extends CustomPainter {
 
     // 0,0からsize.width, 10まで四角形を描画
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 10), paint);
-
 
     canvas.drawPath(path, paint);
   }
