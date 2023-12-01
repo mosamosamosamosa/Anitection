@@ -9,6 +9,8 @@ body {
   font-family: 'Zen Maru Gothic', sans-serif;
   background-color: #FFF8E0;
   color: #444444;
+  background-image: url("../assets/background.svg");
+  background-repeat: repeat;
 }
 
 html {

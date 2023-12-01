@@ -77,7 +77,7 @@ const Component: FC<Props> = ({ children }) => {
             <main className="flex-grow">{children}</main>
           </div>
         </div>
-        <Login />
+        {false && <Login />}
       </div>
     </div>
   );

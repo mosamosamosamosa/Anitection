@@ -38,7 +38,7 @@ module.exports = {
       const newUtilities = {
         '.stroked': {
           'text-shadow':
-            '-0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff, 0.5px 0.5px 0 #fff',
+            '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff',
         },
       };
 
