@@ -20,64 +20,65 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Container(
-            color: Color(0xFFC3EB89),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: SizedBox(
-                        width: 24,
-                        height: 18,
-                      ),
+        preferredSize: const Size.fromHeight(60),
+        child: Container(
+          color: Color(0xFFC3EB89),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SizedBox(
+                      width: 24,
+                      height: 18,
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          "assets/svg/ic_calendar.svg",
-                          width: 50,
-                          height: 50,
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color(0xFF94CD68),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                              )),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4, vertical: 2),
-                          child: const Text(
-                            "10月30日",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/ic_calendar.svg",
+                        width: 50,
+                        height: 50,
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: Color(0xFF94CD68),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 2),
+                        child: const Text(
+                          "10月30日",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                    GestureDetector(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Image.asset(
-                          'assets/images/ic_setting.png',
-                          width: 24,
-                          height: 24,
-                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Image.asset(
+                        'assets/images/ic_setting.png',
+                        width: 24,
+                        height: 24,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          )),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           const AnimalPadBackground(),
