@@ -19,6 +19,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F2DB),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: Container(
@@ -107,6 +108,23 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   )
                 ],
               ),
+              const SizedBox(height: 10,),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: const Color(0xFFFFB001),
+                    width: 3,
+                  ),
+                  image: const DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/img_empty_avatar.png"),
+                  ),
+                ),
+              ),
+
             ],
           )
         ],
