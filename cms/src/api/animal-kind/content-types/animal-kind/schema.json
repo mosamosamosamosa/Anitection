@@ -19,6 +19,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::pattern.pattern"
+    },
+    "pedigrees": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pedigree.pedigree"
     }
   }
 }
