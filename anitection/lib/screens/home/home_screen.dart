@@ -2,6 +2,7 @@ import 'package:anitection/components/animal_pad_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 // import math
 import 'dart:math' as math;
 
@@ -90,17 +91,21 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                CustomPaint(
-                  size: Size(MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).size.width * 0.10512820512),
-                  painter: TrianglePainter(),
-                ),
-                Positioned(child: CustomPaint(
-                  size: Size(MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).size.width * 0.10512820512),
-                  painter: TriangleLinePainter(),
-                ), top: -10,)
-              ],),
+                  CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width,
+                        MediaQuery.of(context).size.width * 0.12512820512),
+                    painter: TrianglePainter(),
+                  ),
+                  Positioned(
+                    top: -10,
+                    child: CustomPaint(
+                      size: Size(MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).size.width * 0.12512820512),
+                      painter: TriangleLinePainter(),
+                    ),
+                  )
+                ],
+              ),
             ],
           )
         ],
@@ -146,8 +151,6 @@ class TrianglePainter extends CustomPainter {
     // final paint = Paint()
     //   ..color = Colors.black
     //   ..strokeWidth = 1;
-
-
   }
 
   @override
@@ -173,8 +176,10 @@ class TriangleLinePainter extends CustomPainter {
         if (i % 2 == 0) {
           final x1 = start.dx + dx / dashCount * (i + dashWidth / distance);
           final y1 = start.dy + dy / dashCount * (i + dashWidth / distance);
-          final x2 = start.dx + dx / dashCount * ((i + 1) + dashWidth / distance);
-          final y2 = start.dy + dy / dashCount * ((i + 1) + dashWidth / distance);
+          final x2 =
+              start.dx + dx / dashCount * ((i + 1) + dashWidth / distance);
+          final y2 =
+              start.dy + dy / dashCount * ((i + 1) + dashWidth / distance);
           canvas.drawLine(Offset(x1, y1), Offset(x2, y2), dotLinePaint);
         }
       }
@@ -189,7 +194,7 @@ class TriangleLinePainter extends CustomPainter {
     drawDashedLine(point1, point2);
     drawDashedLine(point3, point1);
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
-
 }
