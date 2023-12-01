@@ -108,7 +108,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   )
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Container(
                 width: 100,
                 height: 100,
@@ -124,7 +126,43 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
-
+              Padding(
+                padding: EdgeInsets.only(left: 24, right: 24, top: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset("assets/svg/ic_point.svg",
+                            width: 30, height: 30),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0x40077205),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          child: const Row(
+                            children: [
+                              Text(
+                                  "10,000",
+                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w900)
+                              ),
+                              SizedBox(width: 4,),
+                              Text(
+                                  "p",
+                                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w900)
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
             ],
           )
         ],
