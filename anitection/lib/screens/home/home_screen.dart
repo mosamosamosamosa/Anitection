@@ -1,5 +1,6 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/screens/animal_room/animal_room_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -142,42 +143,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   itemCount: 10,
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/img_example_cat_avatar.png", width: 60, height: 60,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              StrokeText(
-                                  text: "あるるくん",
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF444444),
-                                ),
-                                strokeWidth: 2,
-                                strokeColor: Colors.white,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2,
-                                    color: Colors.black.withOpacity(0.5),
-                                    offset: const Offset(1, 1),
-                                  )
-                                ],
-                              ),
-                              const Text("あにまる保護施設", textAlign: TextAlign.end,)
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    );
+                    return AnimalAvatarCard(onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const AnimalRoomScreen(animalId: 1)));
+                    },);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
@@ -315,6 +283,56 @@ class PointCounter extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+
+class AnimalAvatarCard extends StatelessWidget {
+  const AnimalAvatarCard({super.key, required this.onPressed});
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+        child: Row(
+          children: [
+            Image.asset("assets/images/img_example_cat_avatar.png", width: 60, height: 60,),
+            const SizedBox(width: 16,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StrokeText(
+                  text: "あるるくん",
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF444444),
+                  ),
+                  strokeWidth: 2,
+                  strokeColor: Colors.white,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 2,
+                      color: Colors.black.withOpacity(0.5),
+                      offset: const Offset(1, 1),
+                    )
+                  ],
+                ),
+                const Text("あにまる保護施設", textAlign: TextAlign.end,)
+              ],
+            ),
+
+          ],
+        ),
+      ),
     );
   }
 }
