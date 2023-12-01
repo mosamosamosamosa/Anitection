@@ -82,11 +82,25 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           const AnimalPadBackground(),
           Column(
             children: [
-              CustomPaint(
-                size: Size(MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).size.width * 0.10512820512),
-                painter: TrianglePainter(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 8,
+                color: const Color(0xFFC3EB89),
               ),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                CustomPaint(
+                  size: Size(MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).size.width * 0.10512820512),
+                  painter: TrianglePainter(),
+                ),
+                Positioned(child: CustomPaint(
+                  size: Size(MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).size.width * 0.10512820512),
+                  painter: TriangleLinePainter(),
+                ), top: -10,)
+              ],),
             ],
           )
         ],
@@ -133,6 +147,16 @@ class TrianglePainter extends CustomPainter {
     //   ..color = Colors.black
     //   ..strokeWidth = 1;
 
+
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class TriangleLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
     final dotLinePaint = Paint()
       ..color = Colors.white
       ..strokeWidth = 2;
@@ -164,11 +188,8 @@ class TrianglePainter extends CustomPainter {
     // 各辺に点線を描画
     drawDashedLine(point1, point2);
     drawDashedLine(point3, point1);
-
   }
-
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
+
 }
-
-
