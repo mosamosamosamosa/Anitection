@@ -1,5 +1,7 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/components/triangle_line_painter.dart';
+import 'package:anitection/components/triangle_painter.dart';
 import 'package:anitection/screens/animal_room/animal_room_screen.dart';
 import 'package:anitection/screens/home/search_button.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_animal_type_selection_screen.dart';
@@ -7,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// import math
-import 'dart:math' as math;
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -174,74 +174,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-class TrianglePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = const Color(0xFFC3EB89)
-      ..style = PaintingStyle.fill;
 
-    var path = Path();
 
-    path.moveTo(size.width / 2, size.height); // 上の中心点
-    path.lineTo(size.width, 10); // 右下の点
-    path.lineTo(0, 10); // 左下の点
-    path.close(); // パスを閉じる
-
-    // 影を描画
-    canvas.drawShadow(path, Colors.black.withOpacity(0.5), 4.0, false);
-
-    // 0,0からsize.width, 10まで四角形を描画
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 10), paint);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
-
-class TriangleLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final dotLinePaint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 2;
-
-    const dashWidth = 5.0;
-    const dashSpace = 3.0;
-    void drawDashedLine(Offset start, Offset end) {
-      final dx = end.dx - start.dx;
-      final dy = end.dy - start.dy;
-      final distance = math.sqrt(dx * dx + dy * dy);
-      final dashCount = (distance / (dashWidth + dashSpace)).floor();
-
-      for (var i = 0; i < dashCount; ++i) {
-        if (i % 2 == 0) {
-          final x1 = start.dx + dx / dashCount * (i + dashWidth / distance);
-          final y1 = start.dy + dy / dashCount * (i + dashWidth / distance);
-          final x2 =
-              start.dx + dx / dashCount * ((i + 1) + dashWidth / distance);
-          final y2 =
-              start.dy + dy / dashCount * ((i + 1) + dashWidth / distance);
-          canvas.drawLine(Offset(x1, y1), Offset(x2, y2), dotLinePaint);
-        }
-      }
-    }
-
-    // 三角形の頂点を計算
-    final point1 = Offset(size.width / 2, size.height);
-    final point2 = Offset(0, 0);
-    final point3 = Offset(size.width, 0);
-
-    // 各辺に点線を描画
-    drawDashedLine(point1, point2);
-    drawDashedLine(point3, point1);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
 
 class PointCounter extends StatelessWidget {
   const PointCounter({super.key});

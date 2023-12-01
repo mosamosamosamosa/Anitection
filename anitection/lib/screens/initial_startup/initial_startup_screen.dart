@@ -2,7 +2,8 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
-import 'package:anitection/screens/home/home_screen.dart';
+import 'package:anitection/components/triangle_line_painter.dart';
+import 'package:anitection/components/triangle_painter.dart';
 import 'package:anitection/screens/signin/signin_screen.dart';
 import 'package:anitection/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
