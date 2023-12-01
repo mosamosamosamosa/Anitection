@@ -661,6 +661,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     employee: Attribute.Boolean;
     icon: Attribute.Media;
+    region: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -709,6 +710,8 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     >;
     avatar_icon: Attribute.Media;
     real_icon: Attribute.Media;
+    hair_length: Attribute.String;
+    size: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
