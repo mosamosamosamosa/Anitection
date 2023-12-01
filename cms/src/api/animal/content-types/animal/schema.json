@@ -58,24 +58,32 @@
       "target": "api::institution.institution"
     },
     "avatar_icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "real_icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "hair_length": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string"
     }
   }
 }
