@@ -175,11 +175,12 @@ class TrianglePainter extends CustomPainter {
     path.lineTo(0, 10); // 左下の点
     path.close(); // パスを閉じる
 
+    // 影を描画
+    canvas.drawShadow(path, Colors.black.withOpacity(0.5), 4.0, false);
+
     // 0,0からsize.width, 10まで四角形を描画
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 10), paint);
 
-    // 影を描画
-    canvas.drawShadow(path, Colors.black.withOpacity(0.5), 4.0, false);
 
     canvas.drawPath(path, paint);
   }
