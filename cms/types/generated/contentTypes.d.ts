@@ -748,6 +748,11 @@ export interface ApiAnimalKindAnimalKind extends Schema.CollectionType {
       'oneToMany',
       'api::pattern.pattern'
     >;
+    pedigrees: Attribute.Relation<
+      'api::animal-kind.animal-kind',
+      'oneToMany',
+      'api::pedigree.pedigree'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1058,6 +1063,43 @@ export interface ApiPatternPattern extends Schema.CollectionType {
   };
 }
 
+export interface ApiPedigreePedigree extends Schema.CollectionType {
+  collectionName: 'pedigrees';
+  info: {
+    singularName: 'pedigree';
+    pluralName: 'pedigrees';
+    displayName: 'Pedigree';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    image: Attribute.Media;
+    animal_kind: Attribute.Relation<
+      'api::pedigree.pedigree',
+      'oneToOne',
+      'api::animal-kind.animal-kind'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::pedigree.pedigree',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::pedigree.pedigree',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTaskTask extends Schema.CollectionType {
   collectionName: 'tasks';
   info: {
@@ -1156,6 +1198,7 @@ declare module '@strapi/types' {
       'api::message.message': ApiMessageMessage;
       'api::notification.notification': ApiNotificationNotification;
       'api::pattern.pattern': ApiPatternPattern;
+      'api::pedigree.pedigree': ApiPedigreePedigree;
       'api::task.task': ApiTaskTask;
       'api::timeline.timeline': ApiTimelineTimeline;
     }

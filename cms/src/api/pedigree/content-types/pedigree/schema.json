@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pedigrees",
+  "info": {
+    "singularName": "pedigree",
+    "pluralName": "pedigrees",
+    "displayName": "Pedigree",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "animal_kind": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::animal-kind.animal-kind"
+    }
+  }
+}
