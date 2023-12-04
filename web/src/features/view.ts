@@ -10,7 +10,7 @@ export type View = {
 export type ViewState = View;
 
 const initialState: ViewState = {
-  loginModal: false,
+  loginModal: true,
   registerModal: false,
   sidebar: true,
   mobile: false,
@@ -25,6 +25,10 @@ export const viewSlice = createSlice({
     },
     toggleRegisterModal: (state) => {
       state.registerModal = !state.registerModal;
+    },
+    resetModal: (state) => {
+      state.loginModal = false;
+      state.registerModal = false;
     },
     toggleSidebar: (state) => {
       state.sidebar = !state.sidebar;

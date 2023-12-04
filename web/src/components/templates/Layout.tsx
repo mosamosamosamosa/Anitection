@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
 
 import Login from '../organisms/Login';
-// import Register from '../organisms/Register';
+import Register from '../organisms/Register';
 
 type Props = {
   children: ReactNode;
@@ -20,7 +20,7 @@ type Props = {
 
 const Component: FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
-  const { mobile, sidebar } = useSelector((state: RootState) => state.view);
+  const { mobile, sidebar, loginModal, registerModal } = useSelector((state: RootState) => state.view);
 
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 1024) {
@@ -77,7 +77,8 @@ const Component: FC<Props> = ({ children }) => {
             <main className="flex-grow">{children}</main>
           </div>
         </div>
-        {false && <Login />}
+        {!registerModal && loginModal && <Login />}
+        {registerModal && <Register />}
       </div>
     </div>
   );

@@ -1,37 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type View = {
-  loginModal: boolean;
-  sidebar: boolean;
-  mobile: boolean;
+export type User = {
+  username: string;
+  email: string;
+  token: string;
 };
 
-export type ViewState = View;
+export type UserState = User;
 
-const initialState: ViewState = {
-  loginModal: false,
-  sidebar: true,
-  mobile: false,
+const initialState: UserState = {
+  username: '',
+  email: '',
+  token: localStorage.getItem('token') || '',
 };
 
-export const viewSlice = createSlice({
-  name: 'view',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    toggleLoginModal: (state) => {
-      state.loginModal = !state.loginModal;
+    setUsername: (state, action) => {
+      state.username = action.payload;
     },
-    toggleSidebar: (state) => {
-      state.sidebar = !state.sidebar;
+    setEmail: (state, action) => {
+      state.email = action.payload;
     },
-    setMobile: (state, action) => {
-      state.mobile = action.payload;
-    },
-    setLoginModal: (state, action) => {
-      state.loginModal = action.payload;
-    },
-    setSidebar: (state, action) => {
-      state.sidebar = action.payload;
+    setToken: (state, action) => {
+      localStorage.setItem('token', action.payload);
+      state.token = action.payload;
     },
   },
 });

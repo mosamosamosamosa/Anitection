@@ -1,13 +1,21 @@
 import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { Icon } from '@iconify/react';
+
+import { viewSlice } from '../../features/view';
 
 type Props = {
   text: string;
-  handleClick: () => void;
   children: React.ReactNode;
 };
 
-const Component: FC<Props> = ({ text, handleClick, children }) => {
+const Component: FC<Props> = ({ text, children }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(viewSlice.actions.resetModal());
+  };
+
   return (
     <div className="fixed inset-0 bg-background bg-opacity-80 flex justify-center items-center z-30">
       <div
