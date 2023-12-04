@@ -21,6 +21,62 @@ class _AnitectionClient implements AnitectionClient {
   String? baseUrl;
 
   @override
+  Future<AuthResult> login(Map<String, dynamic> request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AuthResult>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/auth/local',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = AuthResult.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AuthResult> register(Map<String, dynamic> request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AuthResult>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/auth/local/register',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = AuthResult.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<PagingData<Model<AnimalAttributes>>> getAnimals() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
