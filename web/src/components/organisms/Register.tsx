@@ -28,7 +28,9 @@ const Component: FC = () => {
     setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
     setConfirmPassword(event.target.value);
   };
 
@@ -56,50 +58,53 @@ const Component: FC = () => {
   };
 
   return (
-    <Modal text='登録'>
-      <div className='flex flex-col justify-center items-center gap-4 mb-12'>
-        <div className='flex flex-col justify-center items-start'>
-          <p className='text-headline font-bold'>ユーザー名</p>
+    <Modal text="登録">
+      <div className="flex flex-col justify-center items-center gap-4 mb-12">
+        <div className="flex flex-col justify-center items-start">
+          <p className="text-headline font-bold">ユーザー名</p>
           <input
-            type='text'
-            className='w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight'
+            type="text"
+            className="w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight"
             value={username}
             onChange={handleUsernameChange}
           />
         </div>
-        <div className='flex flex-col justify-center items-start'>
-          <p className='text-headline font-bold'>メールアドレス</p>
+        <div className="flex flex-col justify-center items-start">
+          <p className="text-headline font-bold">メールアドレス</p>
           <input
-            type='text'
-            className='w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight'
+            type="text"
+            className="w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight"
             value={email}
             onChange={handleEmailChange}
           />
         </div>
-        <div className='flex flex-col justify-center items-start'>
-          <p className='text-headline font-bold'>パスワード</p>
+        <div className="flex flex-col justify-center items-start">
+          <p className="text-headline font-bold">パスワード</p>
           <input
-            type='password'
-            className='w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight'
+            type="password"
+            className="w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <div className='flex flex-col justify-center items-start'>
-          <p className='text-headline font-bold'>パスワード確認</p>
+        <div className="flex flex-col justify-center items-start">
+          <p className="text-headline font-bold">パスワード確認</p>
           <input
-            type='password'
-            className='w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight'
+            type="password"
+            className="w-64 h-8 rounded-md border border-gray-300 px-1 outline-none focus:border-highlight"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
         </div>
       </div>
-      <div className='flex flex-col justify-center items-center'>
-        <button className='w-64 h-8 rounded-md bg-highlight text-white font-bold' onClick={handleLoginClick}>
+      <div className="flex flex-col justify-center items-center">
+        <button
+          className="w-64 h-8 rounded-md bg-highlight text-white font-bold"
+          onClick={handleLoginClick}
+        >
           登録
         </button>
-        <p className='text-red-500 text-sm mt-10 ml-4'>&nbsp;{message}</p>
+        <p className="text-red-500 text-sm mt-10 ml-4">&nbsp;{message}</p>
       </div>
     </Modal>
   );

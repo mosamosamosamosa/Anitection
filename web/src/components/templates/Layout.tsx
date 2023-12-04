@@ -20,7 +20,9 @@ type Props = {
 
 const Component: FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
-  const { mobile, sidebar, loginModal, registerModal } = useSelector((state: RootState) => state.view);
+  const { mobile, sidebar, loginModal, registerModal } = useSelector(
+    (state: RootState) => state.view,
+  );
 
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 1024) {
