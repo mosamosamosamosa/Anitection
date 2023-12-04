@@ -24,7 +24,7 @@ const Component: FC<Props> = ({ text, children }) => {
       >
         <div className="w-full h-full"></div>
       </div>
-      <div className="z-50 h-4/6 flex justify-center items-center w-10/12 lg:w-4/12 md:w-6/12">
+      <div className="z-50 flex justify-center items-center w-10/12 lg:w-4/12 md:w-6/12">
         <div className="h-full w-full bg-main rounded-lg px-4 py-2 flex flex-col border-2 border-stroke">
           <div className="flex justify-between items-start">
             <div className="flex justify-start items-center gap-2 m-2">
@@ -37,7 +37,7 @@ const Component: FC<Props> = ({ text, children }) => {
               <Icon icon="ant-design:close-outlined" className="w-6 h-6" />
             </button>
           </div>
-          <div className="h-full flex flex-col justify-center items-center">
+          <div className="py-0 md:py-24 h-full flex flex-col justify-center items-center">
             {children}
           </div>
         </div>

@@ -16,7 +16,7 @@ const Component = () => {
   };
 
   return (
-    <header className="shadow bg-highlight px-4 py-2 flex justify-between items-center">
+    <header className="shadow bg-highlight px-2 md:px-4 py-1 md:py-2 flex justify-between items-center">
       <div className="flex gap-2 items-center">
         <button
           className="w-10 h-10 p-1 hover:cursor-pointer rounded hover:bg-white"
