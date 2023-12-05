@@ -1,21 +1,23 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/signup/signup_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return SignInScreenState();
   }
 }
 
-class SignInScreenState extends State<SignInScreen> {
+class SignInScreenState extends ConsumerState<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -70,7 +72,9 @@ class SignInScreenState extends State<SignInScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('入力に誤りがあります')),
                               );
+                              return;
                             }
+                            onSubmit();
                           },
                           width: 219,
                           height: 64,
@@ -139,6 +143,13 @@ class SignInScreenState extends State<SignInScreen> {
         ],
       ),
     );
+  }
+
+  void onSubmit() async {
+    await ref.read(authControllerProvider.notifier).signIn(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
   }
 }
 

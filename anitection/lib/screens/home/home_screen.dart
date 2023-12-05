@@ -3,6 +3,7 @@ import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/components/triangle_line_painter.dart';
 import 'package:anitection/components/triangle_painter.dart';
 import 'package:anitection/layout/auth_guard_layout.dart';
+import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/animal_room_screen.dart';
 import 'package:anitection/screens/home/search_button.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_animal_type_selection_screen.dart';
@@ -22,8 +23,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+
     return AuthGuardLayout(
-        isLoggedIn: true,
+        asyncValue: ref.watch(authControllerProvider),
         child: Scaffold(
           backgroundColor: const Color(0xFFFFF8E0),
           appBar: PreferredSize(
