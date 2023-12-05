@@ -1,21 +1,25 @@
+import 'dart:developer';
+
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/signin/signin_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return SignUpScreenState();
   }
 }
 
-class SignUpScreenState extends State<SignUpScreen> {
+class SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -67,11 +71,12 @@ class SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         NormalButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (!_formKey.currentState!.validate()) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('入力に誤りがあります')),
                               );
                             }
+                            onSubmit();
                           },
                           width: 219,
                           height: 64,
@@ -140,5 +145,14 @@ class SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
+  }
+
+  void onSubmit() async {
+    ref.read(authControllerProvider.notifier).signUp(email: _emailController.text, password: _passwordController.text).then((value) {
+      log("登録成功");
+      Navigator.of(context).pop();
+    }).catchError((e, st) {
+      log("登録エラー", error: e, stackTrace: st);
+    });
   }
 }

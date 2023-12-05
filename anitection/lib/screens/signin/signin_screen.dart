@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
@@ -68,12 +70,12 @@ class SignInScreenState extends ConsumerState<SignInScreen> {
                       children: [
                         NormalButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('入力に誤りがあります')),
-                              );
-                              return;
-                            }
+                            // if (_formKey.currentState!.validate()) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(content: Text('入力に誤りがあります')),
+                            //   );
+                            //   return;
+                            // }
                             onSubmit();
                           },
                           width: 219,
@@ -146,10 +148,18 @@ class SignInScreenState extends ConsumerState<SignInScreen> {
   }
 
   void onSubmit() async {
-    await ref.read(authControllerProvider.notifier).signIn(
+    await ref
+        .read(authControllerProvider.notifier)
+        .signIn(
           email: _emailController.text,
           password: _passwordController.text,
-        );
+        )
+        .then((value) {
+      log("ログイン成功");
+      Navigator.of(context).pop();
+    }).catchError((e, st) {
+      log("ログイン失敗", error: e, stackTrace: st);
+    });
   }
 }
 

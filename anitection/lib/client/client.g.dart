@@ -13,7 +13,7 @@ class _AnitectionClient implements AnitectionClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://anitection-api.yumekiti.net';
+    baseUrl ??= 'https://anitection-api.yumekiti.net/';
   }
 
   final Dio _dio;
@@ -90,7 +90,7 @@ class _AnitectionClient implements AnitectionClient {
     )
             .compose(
               _dio.options,
-              'api/auth/local/register',
+              '/api/auth/local/register',
               queryParameters: queryParameters,
               data: _data,
             )

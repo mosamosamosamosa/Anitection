@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/auth/auth_result.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/user/user.dart';
+import 'package:anitection/repositories/token_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
 
-@RestApi(baseUrl: "https://anitection-api.yumekiti.net")
+@RestApi(baseUrl: "https://anitection-api.yumekiti.net/")
 abstract class AnitectionClient {
   factory AnitectionClient(Dio dio, {String baseUrl}) = _AnitectionClient;
   
@@ -18,7 +21,7 @@ abstract class AnitectionClient {
   @POST("/api/auth/local")
   Future<AuthResult> login(@Body() Map<String, dynamic> request);
   
-  @POST("api/auth/local/register")
+  @POST("/api/auth/local/register")
   Future<AuthResult> register(@Body() Map<String, dynamic> request);
 
   @GET("/api/animals")
@@ -29,4 +32,21 @@ abstract class AnitectionClient {
 
   @GET("/api/institutions/{id}")
   Future<SingleData<Model<InstitutionAttributes>>> getInstitution(@Path("id") int id);
+}
+
+AnitectionClient create(TokenRepository service,) {
+  final dio = Dio();
+
+  dio.interceptors.add(InterceptorsWrapper(
+    onRequest: (options, handler) async {
+      final token = await service.get();
+      log("token: $token");
+      if (token != null) {
+        options.headers['Authorization'] = "Bearer $token";
+      }
+
+      handler.next(options);
+    },
+  ));
+  return AnitectionClient(dio);
 }
