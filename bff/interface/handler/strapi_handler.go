@@ -28,6 +28,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 	q := c.Request().URL.Query()
 	q.Add("populate", "*")
 	c.Request().URL.RawQuery = q.Encode()
+	c.Request().Header.Add("Authorization", c.Request().Header.Get("Authorization"))
 
 	req, err := http.Get(StrapiURL + c.Request().URL.Path + "?" + c.Request().URL.RawQuery)
 	if err != nil {
@@ -44,6 +45,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) PostHandler(c echo.Context) error {
+	c.Request().Header.Add("Authorization", c.Request().Header.Get("Authorization"))
 	req, err := http.Post(StrapiURL+c.Request().URL.Path, "application/json", c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
@@ -59,6 +61,7 @@ func (h *strapiHandler) PostHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) PutHandler(c echo.Context) error {
+	c.Request().Header.Add("Authorization", c.Request().Header.Get("Authorization"))
 	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
@@ -80,6 +83,7 @@ func (h *strapiHandler) PutHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) DeleteHandler(c echo.Context) error {
+	c.Request().Header.Add("Authorization", c.Request().Header.Get("Authorization"))
 	req, err := http.NewRequest(http.MethodDelete, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
