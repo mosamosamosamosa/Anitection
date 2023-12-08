@@ -1,6 +1,7 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/pattern/pattern.dart';
 import 'package:anitection/providers/pattern.dart';
@@ -176,6 +177,12 @@ class PatternSelectionItem extends StatelessWidget {
                   offset: const Offset(2, 2),
                 )
               ],
+              image: DecorationImage(
+                image: NetworkImage(
+                  AppConstants.mediaServerBaseUrl + (model.attributes.image.data.attributes.url ?? ""),
+                ),
+                fit: BoxFit.cover,
+              )
             ),
           ),
           const SizedBox(
