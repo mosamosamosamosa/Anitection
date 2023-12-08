@@ -2,6 +2,7 @@ import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_cat_pattern_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -95,21 +96,25 @@ class InitialCatPreferenceSelectionScreenState
                               onCatHairLengthButtonPressed(CatHairLength.long);
                             },
                             text: "長毛",
-                            isSelected: catHairLength.contains(CatHairLength.long),
+                            isSelected:
+                                catHairLength.contains(CatHairLength.long),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
                               onCatHairLengthButtonPressed(CatHairLength.short);
                             },
                             text: "短毛",
-                            isSelected: catHairLength.contains(CatHairLength.short),
+                            isSelected:
+                                catHairLength.contains(CatHairLength.short),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatHairLengthButtonPressed(CatHairLength.hairless);
+                              onCatHairLengthButtonPressed(
+                                  CatHairLength.hairless);
                             },
                             text: "無毛",
-                            isSelected: catHairLength.contains(CatHairLength.hairless),
+                            isSelected:
+                                catHairLength.contains(CatHairLength.hairless),
                           ),
                         ],
                       ),
@@ -216,7 +221,18 @@ class InitialCatPreferenceSelectionScreenState
                         Navigator.of(context).pop();
                       }),
                       const SizedBox(width: 16),
-                      NextButton(onPressed: () {}),
+                      NextButton(onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return InitialCatPatternScreen(
+                                  catHairLength: catHairLength,
+                                  catAge: catAge,
+                                  catSize: catSize);
+                            },
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ],
@@ -282,10 +298,12 @@ class CatPreferenceSelectionButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: isSelected ? Border.all(
-            color: const Color(0xFFFFB001),
-            width: 1.0,
-          ) : null,
+          border: isSelected
+              ? Border.all(
+                  color: const Color(0xFFFFB001),
+                  width: 1.0,
+                )
+              : null,
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
