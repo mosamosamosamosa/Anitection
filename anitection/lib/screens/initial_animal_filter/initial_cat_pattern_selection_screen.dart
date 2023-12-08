@@ -1,4 +1,3 @@
-
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
@@ -7,7 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InitialCatPatternScreen extends ConsumerStatefulWidget {
-  const InitialCatPatternScreen({super.key, required this.catHairLength, required this.catAge, required this.catSize});
+  const InitialCatPatternScreen(
+      {super.key,
+      required this.catHairLength,
+      required this.catAge,
+      required this.catSize});
+
   final Set<CatHairLength> catHairLength;
   final Set<CatAge> catAge;
   final Set<CatSize> catSize;
@@ -17,7 +21,6 @@ class InitialCatPatternScreen extends ConsumerStatefulWidget {
     return InitialCatPatternState();
   }
 }
-
 
 class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
   @override
@@ -30,7 +33,7 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
           const AnimalPadBackground(),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 48),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +67,32 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                       )
                     ],
                   ),
+                  const SizedBox(height: 32,),
+                  Flexible(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: Colors.black.withOpacity(0.25),
+                            offset: const Offset(2, 2),
+                          )
+                        ],
+                      ),
+                      child: GridView.builder(
+                        itemCount: 0,
+                        gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 100),
+                        itemBuilder: (BuildContext context, int index) {
 
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32,),
                   Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
