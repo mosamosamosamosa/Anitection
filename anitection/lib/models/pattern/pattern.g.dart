@@ -8,9 +8,7 @@ part of 'pattern.dart';
 
 PatternAttributes _$PatternAttributesFromJson(Map<String, dynamic> json) =>
     PatternAttributes(
-      id: json['id'] as int,
       name: json['name'] as String,
-      description: json['description'] as String,
       image: SingleData<Model<MediaAttributes>>.fromJson(
           json['image'] as Map<String, dynamic>,
           (value) => Model<MediaAttributes>.fromJson(
@@ -23,9 +21,7 @@ PatternAttributes _$PatternAttributesFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PatternAttributesToJson(PatternAttributes instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
-      'description': instance.description,
       'image': instance.image.toJson(
         (value) => value.toJson(
           (value) => value,

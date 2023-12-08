@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
@@ -32,7 +34,6 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncPatterns = ref.watch(catPatternsFutureProvider);
-    final patterns = asyncPatterns.valueOrNull?.data ?? [];
     final width = MediaQuery.of(context).size.width * 0.7;
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
@@ -91,32 +92,46 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                           )
                         ],
                       ),
-                      child: GridView.builder(
-                        itemCount: patterns.length,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 32),
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 110,
-                                crossAxisSpacing: 4,
-                                mainAxisSpacing: 4),
-                        itemBuilder: (BuildContext context, int index) {
-                          final pattern = patterns[index];
-                          return PatternSelectionItem(
-                            selected: selectedPatterns.contains(pattern.id),
-                            model: pattern,
-                            onSelect: () {
-                              setState(() {
-                                if (selectedPatterns.contains(pattern.id)) {
-                                  selectedPatterns.remove(pattern.id);
-                                } else {
-                                  selectedPatterns.add(pattern.id);
-                                }
-                              });
-                            },
-                          );
-                        },
-                      ),
+                      child: asyncPatterns.when(data: (data) {
+                        final patterns = data.data;
+                        return GridView.builder(
+                          itemCount: patterns.length,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 32),
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 110,
+                                  crossAxisSpacing: 4,
+                                  mainAxisSpacing: 4),
+                          itemBuilder: (BuildContext context, int index) {
+                            final pattern = patterns[index];
+                            return PatternSelectionItem(
+                              selected: selectedPatterns.contains(pattern.id),
+                              model: pattern,
+                              onSelect: () {
+                                setState(() {
+                                  if (selectedPatterns.contains(pattern.id)) {
+                                    selectedPatterns.remove(pattern.id);
+                                  } else {
+                                    selectedPatterns.add(pattern.id);
+                                  }
+                                });
+                              },
+                            );
+                          },
+                        );
+                      }, error: (e, st) {
+                        log("error: $e", error: e, stackTrace: st);
+                        return Center(
+                          child: SingleChildScrollView(
+                            child: Text(e.toString() + st.toString()),
+                          ),
+                        );
+                      }, loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }),
                     ),
                   ),
                   const SizedBox(
@@ -165,7 +180,6 @@ class PatternSelectionItem extends StatelessWidget {
             width: selected ? 85 : 80,
             height: selected ? 85 : 80,
             decoration: BoxDecoration(
-              color: const Color(0xFFD9D9D9),
               borderRadius: BorderRadius.circular(10),
               border: selected
                   ? Border.all(color: const Color(0xFFFFB001), width: 5)
@@ -179,10 +193,11 @@ class PatternSelectionItem extends StatelessWidget {
               ],
               image: DecorationImage(
                 image: NetworkImage(
-                  AppConstants.mediaServerBaseUrl + (model.attributes.image.data.attributes.url ?? ""),
+                  AppConstants.mediaServerBaseUrl +
+                      (model.attributes.image.data.attributes.url ?? ""),
                 ),
                 fit: BoxFit.cover,
-              )
+              ),
             ),
           ),
           const SizedBox(
