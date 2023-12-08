@@ -35,7 +35,7 @@ abstract class AnitectionClient {
   Future<SingleData<Model<InstitutionAttributes>>> getInstitution(@Path("id") int id);
 
   @GET("/api/patterns")
-  Future<PagingData<Model<PatternAttributes>>> getPatterns();
+  Future<PagingData<Model<PatternAttributes>>> getPatterns(@Query("pagination[page]") int? page,);
 }
 
 AnitectionClient create(TokenRepository service,) {

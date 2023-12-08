@@ -93,7 +93,7 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                         ],
                       ),
                       child: asyncPatterns.when(data: (data) {
-                        final patterns = data.data;
+                        final patterns = data;
                         return GridView.builder(
                           itemCount: patterns.length,
                           padding: const EdgeInsets.symmetric(
