@@ -20,7 +20,7 @@ class AnimalPadBackground extends StatelessWidget {
         int yIndex = (index / dotsPerRow).floor();
         bool isOddRow = yIndex.isOdd;
 
-        double xOffset = (dotSize + space) * xIndex + (isOddRow ? space / 2 : 0);
+        double xOffset = (dotSize + space) * xIndex + (isOddRow ? (space + dotSize) / 2 : 0);
         double yOffset = (dotSize + spaceY) * yIndex;
 
         return Positioned(

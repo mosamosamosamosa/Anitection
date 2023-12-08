@@ -10,6 +10,7 @@ class StrokeText extends StatelessWidget {
   final Color strokeColor;
   final TextStyle? textStyle;
   final List<Shadow>? shadows;
+  final TextAlign textAlign;
 
   const StrokeText(
       {Key? key,
@@ -18,7 +19,9 @@ class StrokeText extends StatelessWidget {
         this.strokeColor = Colors.black,
         this.textColor = Colors.white,
         this.textStyle,
-        this.shadows})
+        this.shadows,
+        this.textAlign = TextAlign.start,
+      })
       : super(key: key);
 
   @override
@@ -27,6 +30,7 @@ class StrokeText extends StatelessWidget {
       children: [
         Text(
           text,
+          textAlign: textAlign,
           style: TextStyle(
             foreground: Paint()
               ..style = PaintingStyle.stroke
@@ -37,6 +41,7 @@ class StrokeText extends StatelessWidget {
         ),
         Text(
           text,
+          textAlign: textAlign,
           style: TextStyle(
             color: textColor,
           ).merge(textStyle),
