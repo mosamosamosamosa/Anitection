@@ -67,7 +67,9 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 32,),
+                  const SizedBox(
+                    height: 32,
+                  ),
                   Flexible(
                     child: Container(
                       decoration: BoxDecoration(
@@ -82,17 +84,19 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                         ],
                       ),
                       child: GridView.builder(
-                        itemCount: 0,
-                        gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 100),
+                        itemCount: 100,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 32),
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 110, crossAxisSpacing: 4, mainAxisSpacing: 4),
                         itemBuilder: (BuildContext context, int index) {
-
+                          return PatternSelectionItem(selected: index % 5 == 0);
                         },
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32,),
+                  const SizedBox(
+                    height: 32,
+                  ),
                   Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -111,6 +115,55 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
           )
         ],
       ),
+    );
+  }
+}
+
+class PatternSelectionItem extends StatelessWidget {
+  const PatternSelectionItem({super.key, required this.selected});
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: selected ? 85 : 80,
+          height:  selected ? 85 : 80,
+          decoration: BoxDecoration(
+            color: const Color(0xFFD9D9D9),
+            borderRadius: BorderRadius.circular(10),
+            border: selected ? Border.all(color: const Color(0xFFFFB001), width: 5) : null,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Colors.black.withOpacity(0.25),
+                offset: const Offset(2, 2),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        const StrokeText(
+          text: "グレー×全身",
+          strokeWidth: 3,
+          strokeColor: Colors.white,
+          textStyle: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF573F1B),
+          ),
+          shadows: [
+            Shadow(
+              blurRadius: 2,
+              color: Colors.black,
+              offset: Offset(1, 1),
+            )
+          ],
+        )
+      ],
     );
   }
 }
