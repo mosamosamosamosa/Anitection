@@ -3,6 +3,7 @@ import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_dog_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -137,6 +138,7 @@ class InitialAnimalTypeSelectionTypeState extends ConsumerState<InitialAnimalTyp
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InitialCatPreferenceSelectionScreen()));
                           break;
                         case AnimalType.dog:
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InitialDogPreferenceSelectionScreen()));
                           break;
                       }
                     },
