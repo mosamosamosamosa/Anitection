@@ -203,6 +203,39 @@ class _AnitectionClient implements AnitectionClient {
     return value;
   }
 
+  @override
+  Future<PagingData<Model<PatternAttributes>>> getPatterns() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PagingData<Model<PatternAttributes>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/patterns',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PagingData<Model<PatternAttributes>>.fromJson(
+      _result.data!,
+      (json) => Model<PatternAttributes>.fromJson(
+        json as Map<String, dynamic>,
+        (json) => PatternAttributes.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

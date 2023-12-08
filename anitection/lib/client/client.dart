@@ -4,6 +4,7 @@ import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/auth/auth_result.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
+import 'package:anitection/models/pattern/pattern.dart';
 import 'package:anitection/models/user/user.dart';
 import 'package:anitection/repositories/token_repository.dart';
 import 'package:dio/dio.dart';
@@ -32,6 +33,9 @@ abstract class AnitectionClient {
 
   @GET("/api/institutions/{id}")
   Future<SingleData<Model<InstitutionAttributes>>> getInstitution(@Path("id") int id);
+
+  @GET("/api/patterns")
+  Future<PagingData<Model<PatternAttributes>>> getPatterns();
 }
 
 AnitectionClient create(TokenRepository service,) {
