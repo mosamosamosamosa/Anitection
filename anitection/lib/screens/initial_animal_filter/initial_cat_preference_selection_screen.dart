@@ -18,7 +18,7 @@ class InitialCatPreferenceSelectionScreen extends ConsumerStatefulWidget {
 class InitialCatPreferenceSelectionScreenState
     extends ConsumerState<InitialCatPreferenceSelectionScreen> {
   final Set<CatHairLength> catHairLength = {};
-  final Set<CatAge> catAge = {};
+  final Set<Age> catAge = {};
   final Set<CatSize> catSize = {};
 
   @override
@@ -189,24 +189,24 @@ class InitialCatPreferenceSelectionScreenState
                         children: [
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(CatAge.adult);
+                              onCatAgeButtonPressed(Age.adult);
                             },
                             text: "成猫",
-                            isSelected: catAge.contains(CatAge.adult),
+                            isSelected: catAge.contains(Age.adult),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(CatAge.kitten);
+                              onCatAgeButtonPressed(Age.kitten);
                             },
                             text: "子猫",
-                            isSelected: catAge.contains(CatAge.kitten),
+                            isSelected: catAge.contains(Age.kitten),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(CatAge.senior);
+                              onCatAgeButtonPressed(Age.senior);
                             },
                             text: "シニア猫",
-                            isSelected: catAge.contains(CatAge.senior),
+                            isSelected: catAge.contains(Age.senior),
                           ),
                         ],
                       ),
@@ -264,7 +264,7 @@ class InitialCatPreferenceSelectionScreenState
     });
   }
 
-  void onCatAgeButtonPressed(CatAge age) {
+  void onCatAgeButtonPressed(Age age) {
     setState(() {
       if (catAge.contains(age)) {
         catAge.remove(age);
@@ -395,7 +395,7 @@ enum CatSize {
   small,
 }
 
-enum CatAge {
+enum Age {
   adult,
   kitten,
   senior,

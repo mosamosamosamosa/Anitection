@@ -19,7 +19,7 @@ class InitialCatPatternScreen extends ConsumerStatefulWidget {
       required this.catSize});
 
   final Set<CatHairLength> catHairLength;
-  final Set<CatAge> catAge;
+  final Set<Age> catAge;
   final Set<CatSize> catSize;
 
   @override

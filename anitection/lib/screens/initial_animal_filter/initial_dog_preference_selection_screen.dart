@@ -2,6 +2,7 @@ import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,7 @@ class InitialDogPreferenceSelectionScreen extends ConsumerStatefulWidget {
 
 class InitialDogPreferenceSelectionScreenState
     extends ConsumerState<InitialDogPreferenceSelectionScreen> {
-  final Set<DogAge> dogAge = {};
+  final Set<Age> dogAge = {};
 
   @override
   Widget build(BuildContext context) {
@@ -91,24 +92,24 @@ class InitialDogPreferenceSelectionScreenState
                         children: [
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(DogAge.adult);
+                              onCatAgeButtonPressed(Age.adult);
                             },
                             text: "成犬",
-                            isSelected: dogAge.contains(DogAge.adult),
+                            isSelected: dogAge.contains(Age.adult),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(DogAge.kitten);
+                              onCatAgeButtonPressed(Age.kitten);
                             },
                             text: "子犬",
-                            isSelected: dogAge.contains(DogAge.kitten),
+                            isSelected: dogAge.contains(Age.kitten),
                           ),
                           CatPreferenceSelectionButton(
                             onPressed: () {
-                              onCatAgeButtonPressed(DogAge.senior);
+                              onCatAgeButtonPressed(Age.senior);
                             },
                             text: "シニア犬",
-                            isSelected: dogAge.contains(DogAge.senior),
+                            isSelected: dogAge.contains(Age.senior),
                           ),
                         ],
                       ),
@@ -138,7 +139,7 @@ class InitialDogPreferenceSelectionScreenState
 
 
 
-  void onCatAgeButtonPressed(DogAge age) {
+  void onCatAgeButtonPressed(Age age) {
     setState(() {
       if (dogAge.contains(age)) {
         dogAge.remove(age);
@@ -264,11 +265,5 @@ class NextButton extends StatelessWidget {
 }
 
 
-
-enum DogAge {
-  adult,
-  kitten,
-  senior,
-}
 
 
