@@ -237,6 +237,43 @@ class _AnitectionClient implements AnitectionClient {
     return value;
   }
 
+  @override
+  Future<PagingData<Model<AnimalAttributes>>> searchAnimals(
+      String? animalKind) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'filter[animal_kind][name]': animalKind
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PagingData<Model<AnimalAttributes>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/animals',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PagingData<Model<AnimalAttributes>>.fromJson(
+      _result.data!,
+      (json) => Model<AnimalAttributes>.fromJson(
+        json as Map<String, dynamic>,
+        (json) => AnimalAttributes.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

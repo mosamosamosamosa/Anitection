@@ -36,6 +36,9 @@ abstract class AnitectionClient {
 
   @GET("/api/patterns")
   Future<PagingData<Model<PatternAttributes>>> getPatterns(@Query("pagination[page]") int? page,);
+
+  @GET("/api/animals")
+  Future<PagingData<Model<AnimalAttributes>>> searchAnimals(@Query("filter[animal_kind][name]") String? animalKind,);
 }
 
 AnitectionClient create(TokenRepository service,) {

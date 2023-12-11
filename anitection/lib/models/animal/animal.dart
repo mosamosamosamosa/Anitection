@@ -1,3 +1,4 @@
+import 'package:anitection/models/animal/kind/animal_kind.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/media/media.dart';
@@ -19,6 +20,7 @@ class AnimalAttributes {
     required this.images,
     required this.realIcon,
     required this.institution,
+    required this.animalKind,
   });
 
   final String? name;
@@ -35,6 +37,8 @@ class AnimalAttributes {
   final ArrayData<Model<MediaAttributes>>? images;
 
   @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
+
+  @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>>? animalKind;
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);
