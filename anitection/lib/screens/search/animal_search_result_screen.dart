@@ -1,3 +1,4 @@
+import 'package:anitection/providers/animal.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,11 +25,41 @@ class AnimalSearchResultScreen extends ConsumerStatefulWidget {
 class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    final searchResult = ref.watch(searchAnimalFutureProvider(buildQueryParameter(
+      widget.animalKind,
+      size: widget.size,
+      hairLength: widget.hairLength,
+      age: widget.age?.toSet(),
+    )));
+    return Scaffold(
+      body: searchResult.when(
+        data: (data) {
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              final animal = data.data[index];
+              return ListTile(
+                title: Text(animal.attributes.name ?? ""),
+              );
+            },
+            itemCount: data.data.length,
+          );
+        },
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+        error: (error, stackTrace) {
+          return const Center(
+            child: Text("エラーが発生しました"),
+          );
+        },
+      )
+    );
   }
 }
 
-String buildQueryParameter(
+Map<String, dynamic> buildQueryParameter(
   String animalKind, {
   List<String>? size,
   List<String>? hairLength,
@@ -76,14 +107,5 @@ String buildQueryParameter(
     queryParams["filters[age][\$lte]"] = min.toString();
   }
 
-  String params = "";
-  final keys = queryParams.keys.toList();
-  for (int i = 0; i < keys.length; i ++) {
-    if (i == 0) {
-      params += ("${keys[i]}=${queryParams[keys[i]]}");
-    } else {
-      params += ("&${keys[i]}=${queryParams[keys[i]]}");
-    }
-  }
-  return params;
+  return queryParams;
 }

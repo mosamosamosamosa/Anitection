@@ -239,21 +239,10 @@ class _AnitectionClient implements AnitectionClient {
 
   @override
   Future<PagingData<Model<AnimalAttributes>>> searchAnimals(
-    String? animalKind,
-    String? size,
-    String? hairLength,
-    int? ageGte,
-    int? ageLte,
-  ) async {
+      Map<String, dynamic> query) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'filters[animal_kind][name][$eq]': animalKind,
-      r'filters[size][$eq]': size,
-      r'filters[hair_length][$eq]': hairLength,
-      r'filters[age][$gte]': ageGte,
-      r'filters[age][$lte]': ageLte,
-    };
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(

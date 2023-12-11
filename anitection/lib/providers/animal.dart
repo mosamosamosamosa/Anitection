@@ -11,3 +11,7 @@ final animalsFutureProvider = FutureProvider.autoDispose((ref) {
 final animalFutureProvider = FutureProvider.autoDispose.family<SingleData<Model<AnimalAttributes>>, int>((ref, id) {
   return ref.read(anitectionClientProvider).getAnimal(id);
 });
+
+final searchAnimalFutureProvider = FutureProvider.autoDispose.family<PagingData<Model<AnimalAttributes>>, Map<String, dynamic>>((ref, query) {
+  return ref.read(anitectionClientProvider).searchAnimals(query);
+});

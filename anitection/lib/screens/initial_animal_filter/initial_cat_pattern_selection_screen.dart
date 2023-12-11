@@ -8,6 +8,7 @@ import 'package:anitection/models/base.dart';
 import 'package:anitection/models/pattern/pattern.dart';
 import 'package:anitection/providers/pattern.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
+import 'package:anitection/screens/search/animal_search_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -146,7 +147,23 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                         Navigator.of(context).pop();
                       }),
                       const SizedBox(width: 16),
-                      NextButton(onPressed: () {}),
+                      NextButton(onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AnimalSearchResultScreen(
+                                animalKind: "猫",
+                                hairLength: [
+                                  for (final l in widget.catHairLength)
+                                    l.toString()
+                                ],
+                                age: widget.catAge.toList(),
+                                size: widget.catSize.map((e) => e.toString()).toList(),
+                              );
+                            },
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ],
