@@ -21,6 +21,8 @@ class AnimalAttributes {
     required this.realIcon,
     required this.institution,
     required this.animalKind,
+    required this.hairLength,
+    required this.size,
   });
 
   final String? name;
@@ -39,6 +41,11 @@ class AnimalAttributes {
   @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
 
   @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>>? animalKind;
+
+  @JsonKey(name: 'hair_length') final String? hairLength;
+
+  @JsonKey(name: 'size') final String? size;
+
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
     return _$AnimalAttributesFromJson(json);

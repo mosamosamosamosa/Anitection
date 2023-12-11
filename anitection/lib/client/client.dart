@@ -38,7 +38,13 @@ abstract class AnitectionClient {
   Future<PagingData<Model<PatternAttributes>>> getPatterns(@Query("pagination[page]") int? page,);
 
   @GET("/api/animals")
-  Future<PagingData<Model<AnimalAttributes>>> searchAnimals(@Query("filter[animal_kind][name]") String? animalKind,);
+  Future<PagingData<Model<AnimalAttributes>>> searchAnimals(
+  @Query("filters[animal_kind][name][\$eq]") String? animalKind,
+  @Query("filters[size][\$eq]") String? size,
+  @Query("filters[hair_length][\$eq]") String? hairLength,
+  @Query("filters[age][\$gte]") int? ageGte,
+  @Query("filters[age][\$lte]") int? ageLte,
+  );
 }
 
 AnitectionClient create(TokenRepository service,) {

@@ -52,6 +52,8 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
                   value as Map<String, dynamic>,
                   (value) =>
                       AnimalKind.fromJson(value as Map<String, dynamic>))),
+      hairLength: json['hair_length'] as String?,
+      size: json['size'] as String?,
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
@@ -84,4 +86,6 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
           (value) => value,
         ),
       ),
+      'hair_length': instance.hairLength,
+      'size': instance.size,
     };
