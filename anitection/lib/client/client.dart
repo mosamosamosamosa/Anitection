@@ -69,8 +69,39 @@ AnitectionClient create(
         options.headers['Authorization'] = "Bearer $token";
       }
 
+      logCurlCommand(options);
       handler.next(options);
     },
   ));
   return AnitectionClient(dio);
+}
+
+void logCurlCommand(RequestOptions options) {
+  final method = options.method;
+  final url = options.uri;
+  final headers = options.headers;
+  final data = options.data;
+  final queryParameters = options.queryParameters;
+
+  final curlCommand = StringBuffer("curl -X $method ");
+
+  headers.forEach((key, value) {
+    curlCommand.write("-H '$key: $value' ");
+  });
+
+  if (data != null) {
+    curlCommand.write("-d '$data' ");
+  }
+
+  curlCommand.write("'$url'");
+
+  if (queryParameters.isNotEmpty) {
+    curlCommand.write("?");
+    queryParameters.forEach((key, value) {
+      curlCommand.write("$key=$value&");
+    });
+    curlCommand.write("'");
+  }
+
+  log(curlCommand.toString());
 }
