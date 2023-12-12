@@ -3,6 +3,7 @@ import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/number_stepper.dart';
 import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_dog_pedigree_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -125,6 +126,7 @@ class InitialDogPreferenceSelectionScreenState
                       }),
                       const SizedBox(width: 16),
                       NextButton(onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InitialDogPedigreeScreen(age: dogAge)));
                       }),
                     ],
                   ),

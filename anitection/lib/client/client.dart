@@ -5,6 +5,7 @@ import 'package:anitection/models/auth/auth_result.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/pattern/pattern.dart';
+import 'package:anitection/models/pedigree/pedigree.dart';
 import 'package:anitection/models/user/user.dart';
 import 'package:anitection/repositories/token_repository.dart';
 import 'package:dio/dio.dart';
@@ -40,6 +41,10 @@ abstract class AnitectionClient {
     @Query("pagination[page]") int? page,
   );
 
+  @GET("/api/pedigrees")
+  Future<PagingData<Model<PedigreeAttributes>>> getPedigree(
+    @Query("pagination[page]") int? page,
+  );
   //
   // @GET("/api/animals")
   // Future<PagingData<Model<AnimalAttributes>>> searchAnimals(

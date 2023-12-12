@@ -24,6 +24,7 @@ Map<String, dynamic> buildQueryParameter(
       List<String>? hairLength,
       Set<Age>? age,
       List<int>? patternIds,
+      List<int>? pedigreeIds,
     }) {
 
   final queryParams = {
@@ -48,6 +49,13 @@ Map<String, dynamic> buildQueryParameter(
     for (int i = 0; i < patternIds.length; i ++) {
       final id = patternIds[i];
       queryParams["filters[pattern][id][\$in][$i]"] = id.toString();
+    }
+  }
+
+  if (pedigreeIds != null && pedigreeIds.isNotEmpty) {
+    for (int i = 0; i < pedigreeIds.length; i ++) {
+      final id = pedigreeIds[i];
+      queryParams["filters[pedigree][id][\$in][$i]"] = id.toString();
     }
   }
 
@@ -84,6 +92,7 @@ class AnimalSearchQueries {
     required this.hairLength,
     required this.age,
     required this.patternIds,
+    required this.pedigreeIds,
   });
 
   final String animalKind;
@@ -91,6 +100,7 @@ class AnimalSearchQueries {
   final List<String>? hairLength;
   final List<Age>? age;
   final List<int>? patternIds;
+  final List<int>? pedigreeIds;
 
   Map<String, dynamic> toQueries() {
     return buildQueryParameter(animalKind, size: size, hairLength: hairLength, age: age?.toSet(), patternIds: patternIds);
@@ -106,10 +116,11 @@ class AnimalSearchQueries {
         listEquals(other.size, size) &&
         listEquals(other.hairLength, hairLength) &&
         listEquals(other.age, age) &&
-        listEquals(other.patternIds, patternIds);
+        listEquals(other.patternIds, patternIds) &&
+        listEquals(other.pedigreeIds, pedigreeIds);
   }
 
   @override
-  int get hashCode => animalKind.hashCode ^ size.hashCode ^ hairLength.hashCode ^ age.hashCode ^ patternIds.hashCode;
+  int get hashCode => animalKind.hashCode ^ size.hashCode ^ hairLength.hashCode ^ age.hashCode ^ patternIds.hashCode ^ pedigreeIds.hashCode;
 
 }

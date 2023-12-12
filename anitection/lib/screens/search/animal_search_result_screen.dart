@@ -11,19 +11,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AnimalSearchResultScreen extends ConsumerStatefulWidget {
-  const AnimalSearchResultScreen(
-      {super.key,
-      required this.animalKind,
-      required this.size,
-      required this.hairLength,
-      required this.age,
-      required this.patternIds});
+  const AnimalSearchResultScreen({
+    super.key,
+    required this.animalKind,
+    this.size,
+    this.hairLength,
+    this.age,
+    this.patternIds,
+    this.pedigreeIds,
+  });
 
   final String animalKind;
-  final List<String> size;
+  final List<String>? size;
   final List<String>? hairLength;
   final List<Age>? age;
   final List<int>? patternIds;
+  final List<int>? pedigreeIds;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -41,6 +44,7 @@ class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
       hairLength: widget.hairLength,
       age: widget.age,
       patternIds: widget.patternIds,
+      pedigreeIds: widget.pedigreeIds,
     )));
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
