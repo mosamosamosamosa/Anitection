@@ -73,14 +73,14 @@ Map<String, dynamic> buildQueryParameter(
   if (size != null) {
     for (int i = 0; i < size.length; i ++) {
       final s = size[i];
-      queryParams["filters[\$or][$i][size]"] = s;
+      queryParams["filters[\$or][$i][size][\$eq]"] = s;
     }
   }
 
   if (hairLength != null) {
     for (int i = 0; i < hairLength.length; i ++) {
       final l = hairLength[i];
-      queryParams["filters[\$or][$i][hair_length]"] = l;
+      queryParams["filters[\$or][$i][hair_length][\$eq]"] = l;
     }
   }
 
@@ -103,8 +103,8 @@ Map<String, dynamic> buildQueryParameter(
       max = 1;
     }
 
-    queryParams["filters[age][\$gte]"] = max.toString();
-    queryParams["filters[age][\$lte]"] = min.toString();
+    queryParams["filters[age][\$lte]"] = max.toString();
+    queryParams["filters[age][\$gte]"] = min.toString();
   }
 
   return queryParams;

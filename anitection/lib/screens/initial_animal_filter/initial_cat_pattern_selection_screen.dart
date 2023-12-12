@@ -155,10 +155,28 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                                 animalKind: "猫",
                                 hairLength: [
                                   for (final l in widget.catHairLength)
-                                    l.toString()
+                                    () {
+                                      switch (l) {
+                                        case CatHairLength.short:
+                                          return "短毛";
+                                        case CatHairLength.hairless:
+                                          return "無毛";
+                                        case CatHairLength.long:
+                                          return "長毛";
+                                      }
+                                    }()
                                 ],
                                 age: widget.catAge.toList(),
-                                size: widget.catSize.map((e) => e.toString()).toList(),
+                                size: widget.catSize.map((e) {
+                                  switch (e) {
+                                    case CatSize.small:
+                                      return "小さめ";
+                                    case CatSize.medium:
+                                      return "普通";
+                                    case CatSize.large:
+                                      return "大きめ";
+                                  }
+                                }).toList(),
                               );
                             },
                           ),
