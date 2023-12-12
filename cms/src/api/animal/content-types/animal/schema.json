@@ -84,6 +84,16 @@
     },
     "size": {
       "type": "string"
+    },
+    "pattern": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pattern.pattern"
+    },
+    "pedigree": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pedigree.pedigree"
     }
   }
 }

@@ -712,6 +712,16 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     real_icon: Attribute.Media;
     hair_length: Attribute.String;
     size: Attribute.String;
+    pattern: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'api::pattern.pattern'
+    >;
+    pedigree: Attribute.Relation<
+      'api::animal.animal',
+      'oneToOne',
+      'api::pedigree.pedigree'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
