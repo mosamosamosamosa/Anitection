@@ -54,7 +54,7 @@ class PagingData<T> {
 
 @JsonSerializable(genericArgumentFactories: true)
 class ArrayData<T> {
-  final List<T> data;
+  final List<T>? data;
 
   ArrayData({required this.data});
 

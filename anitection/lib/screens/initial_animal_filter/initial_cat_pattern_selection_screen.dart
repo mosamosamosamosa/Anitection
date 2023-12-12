@@ -158,11 +158,11 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                                     () {
                                       switch (l) {
                                         case CatHairLength.short:
-                                          return "短毛";
+                                          return "短め";
                                         case CatHairLength.hairless:
                                           return "無毛";
                                         case CatHairLength.long:
-                                          return "長毛";
+                                          return "長め";
                                       }
                                     }()
                                 ],
@@ -177,6 +177,7 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                                       return "大きめ";
                                   }
                                 }).toList(),
+                                patternIds: selectedPatterns.toList(),
                               );
                             },
                           ),

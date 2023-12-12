@@ -63,7 +63,7 @@ ArrayData<T> _$ArrayDataFromJson<T>(
   T Function(Object? json) fromJsonT,
 ) =>
     ArrayData<T>(
-      data: (json['data'] as List<dynamic>).map(fromJsonT).toList(),
+      data: (json['data'] as List<dynamic>?)?.map(fromJsonT).toList(),
     );
 
 Map<String, dynamic> _$ArrayDataToJson<T>(
@@ -71,7 +71,7 @@ Map<String, dynamic> _$ArrayDataToJson<T>(
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{
-      'data': instance.data.map(toJsonT).toList(),
+      'data': instance.data?.map(toJsonT).toList(),
     };
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(

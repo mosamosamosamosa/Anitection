@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anitection/providers/animal.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +11,15 @@ class AnimalSearchResultScreen extends ConsumerStatefulWidget {
       required this.animalKind,
       required this.size,
       required this.hairLength,
-      required this.age});
+      required this.age,
+      required this.patternIds
+      });
 
   final String animalKind;
   final List<String> size;
   final List<String>? hairLength;
   final List<Age>? age;
+  final List<int>? patternIds;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -30,6 +35,7 @@ class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
       size: widget.size,
       hairLength: widget.hairLength,
       age: widget.age,
+      patternIds: widget.patternIds,
     )));
     return Scaffold(
       body: searchResult.when(
@@ -50,8 +56,9 @@ class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
           );
         },
         error: (error, stackTrace) {
-          return const Center(
-            child: Text("エラーが発生しました"),
+          log("error: $error, stackTrace: $stackTrace", error: error, stackTrace: stackTrace);
+          return Center(
+            child: Text("エラーが発生しました:$error, $stackTrace"),
           );
         },
       )
