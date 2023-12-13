@@ -5,7 +5,6 @@ import 'package:anitection/components/triangle_painter.dart';
 import 'package:anitection/layout/auth_guard_layout.dart';
 import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/animal_room_screen.dart';
-import 'package:anitection/screens/animal_room/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -174,10 +173,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         //     );
         //   },
         // ),
-        bottomNavigationBar: BottomNavigationView(
-          selectedTab: TabType.home,
-          onSelectedTabItem: (tab) {},
-        ),
       ),
     );
   }
