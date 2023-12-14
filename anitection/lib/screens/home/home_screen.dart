@@ -5,6 +5,7 @@ import 'package:anitection/components/triangle_painter.dart';
 import 'package:anitection/layout/auth_guard_layout.dart';
 import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/animal_room_screen.dart';
+import 'package:anitection/screens/initial_animal_filter/initial_animal_type_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -141,45 +142,62 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 Flexible(
                   child: ListView.separated(
-                      itemCount: 10,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      itemBuilder: (BuildContext context, int index) {
-                        return AnimalAvatarCard(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                    itemCount: 10,
+                    padding:
+                        const EdgeInsets.only(left: 24, right: 24, bottom: 40),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 9) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    const AnimalRoomScreen(animalId: 1)));
+                                    const InitialAnimalTypeSelectionTypeScreen()
+                              ),
+                            );
                           },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                SvgPicture.asset("assets/svg/ic_add_animal.svg")
+                              ],
+                            ),
+                          ),
                         );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          height: 18,
-                        );
-                      }),
+                      }
+                      return AnimalAvatarCard(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const AnimalRoomScreen(animalId: 1),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 18,
+                      );
+                    },
+                  ),
                 ),
               ],
             )
           ],
         ),
-        // floatingActionButton: SearchButton(
-        //   onPressed: () {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (BuildContext context) {
-        //           return const InitialAnimalTypeSelectionTypeScreen();
-        //         },
-        //       ),
-        //     );
-        //   },
-        // ),
       ),
     );
   }
 }
-
-
-
 
 class PointCounter extends StatelessWidget {
   const PointCounter({super.key});
