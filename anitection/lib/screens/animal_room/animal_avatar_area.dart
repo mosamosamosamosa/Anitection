@@ -8,10 +8,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class AnimalAvatarArea extends StatefulWidget {
-  const AnimalAvatarArea({super.key, required this.size, required this.onAvatarTap});
+  const AnimalAvatarArea({super.key, required this.size, required this.onAvatarTap, required this.avatarImageUrl, required this.avatarSize});
 
   final Size size;
   final VoidCallback onAvatarTap;
+  final Size avatarSize;
+  final String avatarImageUrl;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,9 +24,15 @@ class AnimalAvatarArea extends StatefulWidget {
 class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
   final Point _position = Point(0, 0);
   final avatarWidth = 171.0;
-  final avatarHeight = 191.0;
+  late double avatarHeight;
 
   int animationSession = DateTime.now().microsecondsSinceEpoch;
+
+  @override
+  void initState() {
+    avatarHeight = (widget.avatarSize.height / widget.avatarSize.width * avatarWidth);
+    super.initState();
+  }
 
   void moveToPosition(Offset position) async {
     const double tolerance = 10.0; // 許容される誤差の範囲
@@ -63,10 +71,10 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
               left: _position.x - avatarWidth / 2,
               child: GestureDetector(
                 onTap: widget.onAvatarTap,
-                child: Image.asset(
-                  "assets/images/img_example_dog.png",
-                  width: 171,
-                  height: 191,
+                child: Image.network(
+                  widget.avatarImageUrl,
+                  width: avatarWidth,
+                  height: avatarHeight,
                 ),
               ),
             ),

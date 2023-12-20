@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
@@ -48,7 +49,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             child: Container(
               alignment: Alignment.center,
               width: size.width,
-              child: const AnimalNameLabel(),
+              child: AnimalNameLabel(
+                name: animalAsyncState.valueOrNull?.data.attributes.name ?? "",
+              ),
             ),
           ),
           Positioned(
@@ -58,6 +61,16 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               alignment: Alignment.center,
               child: AnimalAvatarArea(
                 size: Size(size.width, size.height),
+                avatarImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarIcon?.data.attributes.url ?? ""),
+                avatarSize: () {
+                  final data = animalAsyncState.valueOrNull;
+                  if (data != null) {
+                    final width = data.data.attributes.avatarIcon?.data.attributes.width ?? 0;
+                    final height = data.data.attributes.avatarIcon?.data.attributes.height ?? 0;
+                    return Size(width.toDouble(), height.toDouble());
+                  }
+                  return const Size(0, 0);
+                }(),
                 onAvatarTap: () {
                   final data = animalAsyncState.valueOrNull;
                   if (data != null) {
@@ -271,21 +284,22 @@ class DoorIcon extends StatelessWidget {
 }
 
 class AnimalNameLabel extends StatelessWidget {
-  const AnimalNameLabel({super.key});
+  const AnimalNameLabel({super.key, required this.name});
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    return const StrokeText(
-      text: "あるるくんのお部屋",
+    return StrokeText(
+      text: name,
       strokeColor: Colors.white,
-      textColor: Color(0xFF573F1B),
+      textColor: const Color(0xFF573F1B),
       textAlign: TextAlign.center,
       strokeWidth: 4,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
-      shadows: [
+      shadows: const [
         Shadow(
           blurRadius: 10,
           color: Colors.black,
