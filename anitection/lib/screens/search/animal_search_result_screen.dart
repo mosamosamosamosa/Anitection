@@ -2,13 +2,17 @@ import 'dart:developer';
 
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/nav_up_button.dart';
+import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
+import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
+import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimalSearchResultScreen extends ConsumerStatefulWidget {
   const AnimalSearchResultScreen({
@@ -99,6 +103,15 @@ class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
                           return AnimalAvatarCard(
                             animal: data.data[index],
                             onPressed: () {
+                              // dialog
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    // custom dialog
+                                    return AnimalDetailDialogLayout(
+                                      animal: data.data[index],
+                                    );
+                                  });
                               // Navigator.of(context).push(MaterialPageRoute(
                               //     builder: (BuildContext context) =>
                               //     const AnimalRoomScreen(animalId: 1)));
@@ -190,6 +203,247 @@ class AnimalAvatarCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimalDetailDialogLayout extends StatelessWidget {
+  const AnimalDetailDialogLayout({super.key, required this.animal});
+
+  final Model<AnimalAttributes> animal;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: const Color(0xFFC3EB89),
+            width: 5,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                              color: const Color(0xFFC3EB89),
+                              width: 5,
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                              AppConstants.mediaServerBaseUrl +
+                                  (animal.attributes.realIcon?.data.attributes
+                                          .url ??
+                                      ""),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Flexible(
+                            child: Column(
+                          children: [
+                            Text(
+                              animal.attributes.name ?? "",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF444444),
+                                fontSize: 18,
+                              ),
+                            ),
+                            Wrap(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 2,
+                                    horizontal: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFFE39E),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const StrokeText(
+                                    text: "性格",
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                    textColor: Color(0xFF444444),
+                                    textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  animal.attributes.personality ?? "",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF444444),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const Text(
+                                  "/",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w900,
+                                    color: Color(0xFFC3EB89),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 2,
+                                    horizontal: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFFE39E),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const StrokeText(
+                                    text: "好きなもの",
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                    textColor: Color(0xFF444444),
+                                    textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                // ねこじゃらし
+                                Text(
+                                  animal.attributes.interest ?? "",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF444444),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
+                    const AnimalRoomProfileDialogDivider(),
+                    // horizontal list
+                    SizedBox(
+                      height: 90,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: animal.attributes.images?.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 90,
+                            width: 90,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: const Color(0xFFC3EB89),
+                                width: 5,
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                AppConstants.mediaServerBaseUrl +
+                                    (animal.attributes.images?.data![index]
+                                            .attributes.url ??
+                                        ""),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            width: 16,
+                          );
+                        },
+                      ),
+                    ),
+                    AddToFavoriteButton(onPressed: () {})
+                    // NormalButton(onPressed: () {}, child: Row(children: [
+                    //   const Icon(Icons.chat_bubble_outline),
+                    //   const SizedBox(width: 8,),
+                    //   const Text("チャットで問い合わせる"),
+                    // ],))
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddToFavoriteButton extends StatelessWidget {
+  const AddToFavoriteButton({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return NormalButton(
+      width: 219,
+      height: 56,
+      maxElevation: 6,
+      onPressed: onPressed,
+      surfaceColor: const Color(0xFFFFDB1D),
+      sideColor: const Color(0xFFFFB001),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/svg/ic_add_to_favorite.svg",
+            width: 43,
+            height: 33,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          const StrokeText(
+            text: "登録する",
+            strokeWidth: 4,
+            strokeColor: Colors.white,
+            textStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF573F1B),
+            ),
+          )
+        ],
       ),
     );
   }
