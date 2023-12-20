@@ -23,6 +23,7 @@ class AnimalAttributes {
     required this.animalKind,
     required this.hairLength,
     required this.size,
+    required this.avatarIcon,
   });
 
   final String? name;
@@ -41,6 +42,8 @@ class AnimalAttributes {
   @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
 
   @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>>? animalKind;
+
+  @JsonKey(name: 'avatar_icon') final SingleData<Model<MediaAttributes>>? avatarIcon;
 
   @JsonKey(name: 'hair_length') final String? hairLength;
 

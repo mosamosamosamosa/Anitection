@@ -8,8 +8,8 @@ part of 'favorite.dart';
 
 FavoriteAttributes _$FavoriteAttributesFromJson(Map<String, dynamic> json) =>
     FavoriteAttributes(
-      animal: SingleData<Model<AnimalAttributes>>.fromJson(
-          json['animal'] as Map<String, dynamic>,
+      animals: ArrayData<Model<AnimalAttributes>>.fromJson(
+          json['animals'] as Map<String, dynamic>,
           (value) => Model<AnimalAttributes>.fromJson(
               value as Map<String, dynamic>,
               (value) =>
@@ -18,7 +18,7 @@ FavoriteAttributes _$FavoriteAttributesFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FavoriteAttributesToJson(FavoriteAttributes instance) =>
     <String, dynamic>{
-      'animal': instance.animal.toJson(
+      'animals': instance.animals.toJson(
         (value) => value.toJson(
           (value) => value,
         ),

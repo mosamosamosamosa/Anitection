@@ -54,6 +54,14 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
                       AnimalKind.fromJson(value as Map<String, dynamic>))),
       hairLength: json['hair_length'] as String?,
       size: json['size'] as String?,
+      avatarIcon: json['avatar_icon'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['avatar_icon'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
@@ -82,6 +90,11 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
         ),
       ),
       'animal_kind': instance.animalKind?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
+      'avatar_icon': instance.avatarIcon?.toJson(
         (value) => value.toJson(
           (value) => value,
         ),
