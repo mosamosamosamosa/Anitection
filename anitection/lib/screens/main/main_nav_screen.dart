@@ -33,6 +33,11 @@ class MainNavScreenState extends ConsumerState<MainNavScreen> {
             const TimelineScreen(),
             Container(
               color: Colors.yellow,
+              child: SingleChildScrollView(
+                child: Text(
+                  [for(int i = 0; i < 9999; i++) "デザインどこですか？"].join(),
+                ),
+              ),
             ),
           ],
         ),
