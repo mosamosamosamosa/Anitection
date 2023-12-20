@@ -2,6 +2,7 @@ import 'package:anitection/layout/auth_guard_layout.dart';
 import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/bottom_navigation.dart';
 import 'package:anitection/screens/home/home_screen.dart';
+import 'package:anitection/screens/timeline/timeline_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,9 +31,7 @@ class MainNavScreenState extends ConsumerState<MainNavScreen> {
             Container(
               color: Colors.blue,
             ),
-            Container(
-              color: Colors.green,
-            ),
+            const TimelineScreen(),
             Container(
               color: Colors.yellow,
             ),
