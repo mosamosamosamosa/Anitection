@@ -8,6 +8,7 @@ import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
+import 'package:anitection/providers/favorite_animals_controller.dart';
 import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
 import 'package:anitection/screens/initial_animal_filter/initial_cat_preference_selection_screen.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +111,10 @@ class AnimalSearchResultState extends ConsumerState<AnimalSearchResultScreen> {
                                     // custom dialog
                                     return AnimalDetailDialogLayout(
                                       animal: data.data[index],
+                                      addToFavoriteButtonPressed: () {
+                                        Navigator.of(context).pop();
+                                        ref.read(favoriteAnimalsControllerProvider.notifier).createFavorite(animalId: data.data[index].id);
+                                      },
                                     );
                                   });
                               // Navigator.of(context).push(MaterialPageRoute(
@@ -209,9 +214,10 @@ class AnimalAvatarCard extends StatelessWidget {
 }
 
 class AnimalDetailDialogLayout extends StatelessWidget {
-  const AnimalDetailDialogLayout({super.key, required this.animal});
+  const AnimalDetailDialogLayout({super.key, required this.animal, required this.addToFavoriteButtonPressed});
 
   final Model<AnimalAttributes> animal;
+  final VoidCallback addToFavoriteButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -391,7 +397,7 @@ class AnimalDetailDialogLayout extends StatelessWidget {
                         },
                       ),
                     ),
-                    AddToFavoriteButton(onPressed: () {})
+                    AddToFavoriteButton(onPressed: addToFavoriteButtonPressed)
                     // NormalButton(onPressed: () {}, child: Row(children: [
                     //   const Icon(Icons.chat_bubble_outline),
                     //   const SizedBox(width: 8,),

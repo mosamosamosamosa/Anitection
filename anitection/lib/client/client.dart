@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:anitection/models/animal/animal.dart';
+import 'package:anitection/models/animal/favorite/favorite.dart';
 import 'package:anitection/models/auth/auth_result.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
@@ -58,6 +59,18 @@ abstract class AnitectionClient {
   @GET("/api/animals")
   Future<PagingData<Model<AnimalAttributes>>> searchAnimals(
     @Queries() Map<String, dynamic> query,
+  );
+
+  // favorites
+  @GET("/api/favorites")
+  Future<PagingData<Model<FavoriteAttributes>>> getFavorites(
+    @Query("pagination[page]") int? page,
+  );
+
+  // create favorite
+  @POST("/api/favorites")
+  Future<void> createFavorite(
+    @Body() Map<String, dynamic> request,
   );
 }
 
