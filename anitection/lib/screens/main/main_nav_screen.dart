@@ -1,6 +1,7 @@
 import 'package:anitection/layout/auth_guard_layout.dart';
 import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/bottom_navigation.dart';
+import 'package:anitection/screens/chat_list/chat_list_screen.dart';
 import 'package:anitection/screens/home/home_screen.dart';
 import 'package:anitection/screens/timeline/timeline_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,9 +29,7 @@ class MainNavScreenState extends ConsumerState<MainNavScreen> {
           index: selectedTab.index,
           children: [
             const HomeScreen(),
-            Container(
-              color: Colors.blue,
-            ),
+            const ChatListScreen(),
             const TimelineScreen(),
             Container(
               color: Colors.yellow,
