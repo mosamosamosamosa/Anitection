@@ -50,40 +50,26 @@ class AnimalRoomProfileDialog extends StatelessWidget {
         children: [
           Positioned(
             top: -80,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 120,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(60),
-                    border: Border.all(
-                      color: const Color(0xFFC3EB89),
-                      width: 5,
-                    ),
-                  ),
+            child: Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(60),
+                border: Border.all(
+                  color: const Color(0xFFC3EB89),
+                  width: 5,
                 ),
-                // circle image
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      AppConstants.mediaServerBaseUrl +
-                          (animal.attributes.realIcon?.data.attributes.url ??
-                              ""),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(60),
+                child: Image.network(
+                  AppConstants.mediaServerBaseUrl +
+                      (animal.attributes.realIcon?.data.attributes.url ??
+                          ""),
+                  fit: BoxFit.cover,
                 ),
-              ],
+              ),
             ),
           ),
           Column(
