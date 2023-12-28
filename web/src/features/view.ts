@@ -10,7 +10,7 @@ export type View = {
 export type ViewState = View;
 
 const initialState: ViewState = {
-  loginModal: true,
+  loginModal: false,
   registerModal: false,
   sidebar: true,
   mobile: false,

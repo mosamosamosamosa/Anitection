@@ -5,6 +5,7 @@ import { SWRConfig } from 'swr';
 import { fetchInstance } from './utils/fetchInstance';
 
 import Home from './components/pages/Home';
+import AnimalRegister from './components/pages/AnimalRegister';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
     >
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/animal/register" element={<AnimalRegister />} />
       </Routes>
     </SWRConfig>
   );

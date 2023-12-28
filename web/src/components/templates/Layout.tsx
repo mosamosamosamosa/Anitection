@@ -24,16 +24,6 @@ const Component: FC<Props> = ({ children }) => {
     (state: RootState) => state.view,
   );
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1024) {
-      dispatch(viewSlice.actions.setMobile(false));
-      dispatch(viewSlice.actions.setSidebar(true));
-    } else {
-      dispatch(viewSlice.actions.setMobile(true));
-      dispatch(viewSlice.actions.setSidebar(false));
-    }
-  });
-
   useEffect(() => {
     if (window.innerWidth <= 1024) {
       dispatch(viewSlice.actions.setMobile(true));
