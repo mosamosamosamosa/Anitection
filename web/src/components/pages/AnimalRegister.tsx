@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import CanvasDraw from "react-canvas-draw";
 import cat from '../../assets/cat.png';
+import Card from '../templates/Card';
 import Layout from '../templates/Layout';
+import Button from '../atoms/Button';
 
 const Component = () => {
   const canvasRef = React.useRef<CanvasDraw | null>(null);
@@ -60,7 +62,7 @@ const Component = () => {
   return (
     <Layout>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-8 bg-white p-8 flex justify-center items-center">
+        <div className="col-span-12 md:col-span-8 bg-white p-8 flex justify-center items-center">
           <CanvasDraw
             brushColor={color}
             canvasWidth={800}
@@ -71,27 +73,54 @@ const Component = () => {
             gridColor="rgba(0,0,0,1)"
           />
         </div>
-        <div className="col-span-4 grid grid-cols-2 gap-4">
-          {/* tool */}
-          <button onClick={handleClear}>clear</button>
-          <button onClick={handleUndo}>undo</button>
-          <button onClick={handleExport}>export as png</button>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-          />
-          <input
-            type="number"
-            value={lazyRadius}
-            min={0}
-            onChange={(e) => setLazyRadius(Number(e.target.value))}
-          />
-          <input
-            type="number"
-            value={brushRadius}
-            onChange={(e) => setBrushRadius(Number(e.target.value))}
-          />
+        <div className="col-span-12 md:col-span-4">
+          <Card>
+            <div className="flex p-4 flex-col h-full justify-between items-center">
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex gap-4">
+                  <p>Lazy Radius</p>
+                  <input
+                    type="number"
+                    value={lazyRadius}
+                    min={0}
+                    onChange={(e) => setLazyRadius(Number(e.target.value))}
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <p>Brush Radius</p>
+                  <input
+                    type="number"
+                    value={brushRadius}
+                    min={0}
+                    onChange={(e) => setBrushRadius(Number(e.target.value))}
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <p>Color</p>
+                  <input
+                    type="color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                  />
+                </div>
+                <Button
+                  onClick={handleUndo}
+                  icon="mdi:undo"
+                />
+                <Button
+                  onClick={handleClear}
+                  icon="mdi:delete"
+                />
+              </div>
+              <div className="flex flex-col gap-4 w-full">
+                <Button
+                  onClick={handleExport}
+                  icon="mdi:download"
+                  highlight
+                />
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </Layout>
