@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import CanvasDraw from "react-canvas-draw";
+import CanvasDraw from 'react-canvas-draw';
 import cat from '../../assets/cat.png';
 import Card from '../templates/Card';
 import Layout from '../templates/Layout';
@@ -14,29 +14,31 @@ const Component = () => {
 
   const handleClear = () => {
     canvasRef.current?.clear();
-  }
+  };
 
   const handleUndo = () => {
     canvasRef.current?.undo();
-  }
+  };
 
   const handleExport = () => {
     if (canvas) {
       const canvasElement = canvas as HTMLCanvasElement;
-      const image = canvasElement.toDataURL("image/png");
+      const image = canvasElement.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = 'image.png';
       link.href = image;
       link.click();
     }
-  }
+  };
 
   useEffect(() => {
     setCanvas(document.querySelector('canvas:nth-child(2)'));
 
     const updateCanvas = () => {
       if (canvas) {
-        const canvasElement = document.querySelector('canvas:nth-child(1)') as HTMLCanvasElement;
+        const canvasElement = document.querySelector(
+          'canvas:nth-child(1)',
+        ) as HTMLCanvasElement;
         const ctx = canvasElement.getContext('2d');
         if (!ctx) return;
         const image = new Image();
@@ -50,9 +52,9 @@ const Component = () => {
             ctx.globalAlpha = 0.6;
             ctx.drawImage(image, x, y, imageWidth, imageHeight);
           }, 500);
-        }
+        };
       }
-    }
+    };
 
     window.addEventListener('resize', updateCanvas);
 
@@ -103,21 +105,11 @@ const Component = () => {
                     onChange={(e) => setColor(e.target.value)}
                   />
                 </div>
-                <Button
-                  onClick={handleUndo}
-                  icon="mdi:undo"
-                />
-                <Button
-                  onClick={handleClear}
-                  icon="mdi:delete"
-                />
+                <Button onClick={handleUndo} icon="mdi:undo" />
+                <Button onClick={handleClear} icon="mdi:delete" />
               </div>
               <div className="flex flex-col gap-4 w-full">
-                <Button
-                  onClick={handleExport}
-                  icon="mdi:download"
-                  highlight
-                />
+                <Button onClick={handleExport} icon="mdi:download" highlight />
               </div>
             </div>
           </Card>
