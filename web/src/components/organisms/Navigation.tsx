@@ -6,11 +6,7 @@ const Component = () => {
     <nav>
       <ul>
         <li className="mb-2">
-          <LinkButton
-            text="ホーム"
-            icon="ion:home-outline"
-            path="/"
-          />
+          <LinkButton text="ホーム" icon="ion:home-outline" path="/" />
         </li>
         <li className="mb-2">
           <LinkButton
@@ -27,11 +23,7 @@ const Component = () => {
           />
         </li>
         <li className="mb-2">
-          <LinkButton
-            text="設定"
-            icon="ion:settings-outline"
-            path="/setting"
-          />
+          <LinkButton text="設定" icon="ion:settings-outline" path="/setting" />
         </li>
       </ul>
     </nav>

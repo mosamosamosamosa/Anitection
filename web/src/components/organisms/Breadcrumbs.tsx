@@ -5,7 +5,7 @@ type Props = {
   path: string;
 };
 
-const Component:FC<Props> = ({ path }) => {
+const Component: FC<Props> = ({ path }) => {
   const paths = path.split('/').filter((p) => p);
 
   return (

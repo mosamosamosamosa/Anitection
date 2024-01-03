@@ -28,10 +28,7 @@ const Component = () => {
             />
             {/* ソート */}
             <button className="w-10 h-10 rounded-full hover:cursor-pointer hover:bg-white flex justify-center items-center">
-              <Icon
-                icon="icon-park:sort-one"
-                className="w-8 h-8 p-1"
-              />
+              <Icon icon="icon-park:sort-one" className="w-8 h-8 p-1" />
             </button>
           </div>
           <div className="grid grid-cols-12 gap-4">
@@ -39,7 +36,10 @@ const Component = () => {
               return index === 0 ? (
                 <div key={index} className="col-span-6">
                   <Card>
-                    <Link to={'/animal-register'} className="w-full h-40 flex justify-center items-center">
+                    <Link
+                      to={'/animal-register'}
+                      className="w-full h-40 flex justify-center items-center"
+                    >
                       <Icon
                         icon="ant-design:plus-outlined"
                         className="w-12 h-12"

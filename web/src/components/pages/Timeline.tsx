@@ -22,7 +22,7 @@ const Component = () => {
             className="w-full h-40 rounded-md px-4 py-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
             placeholder="今何してる？"
           ></textarea>
-            
+
           {/* ボタン */}
           <div className="flex justify-between">
             <div className="flex">
@@ -49,7 +49,7 @@ const Component = () => {
               ツイート
             </button>
           </div>
-            
+
           {/* タイムライン */}
           {[...Array(24)].map((_, index: number) => (
             <Card key={index}>
@@ -60,10 +60,7 @@ const Component = () => {
 
         <div className="col-span-12 md:col-span-3 space-y-4">
           {/* 施設投稿一覧 */}
-          <InfoHeader
-            icon="ant-design:profile-outlined"
-            title="施設投稿"
-          />
+          <InfoHeader icon="ant-design:profile-outlined" title="施設投稿" />
           {/* タイムライン */}
           {[...Array(24)].map((_, index: number) => (
             <Card key={index}>

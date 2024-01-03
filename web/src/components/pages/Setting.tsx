@@ -13,7 +13,7 @@ const Component = () => {
           <Navigation />
         </div>
 
-        <div className="col-span-12 md:col-span-2 space-y-4">            
+        <div className="col-span-12 md:col-span-2 space-y-4">
           {/* 設定なび */}
           <div className="bg-white rounded-xl shadow-md flex justify-center items-center px-2 py-4">
             <div className="w-full h-40">contents</div>
