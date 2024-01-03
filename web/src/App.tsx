@@ -7,6 +7,9 @@ import { fetchInstance } from './utils/fetchInstance';
 import Home from './components/pages/Home';
 import AnimalRegister from './components/pages/AnimalRegister';
 import Timeline from './components/pages/Timeline';
+import Notfound from './components/pages/Notfound';
+import Notifcation from './components/pages/Notification';
+import Setting from './components/pages/Setting';
 
 const App = () => {
   return (
@@ -20,8 +23,11 @@ const App = () => {
     >
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/animal/register" element={<AnimalRegister />} />
+        <Route path="/animal-register" element={<AnimalRegister />} />
         <Route path="/timeline" element={<Timeline />} />
+        <Route path="/notification" element={<Notifcation />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/*" element={<Notfound />} />
       </Routes>
     </SWRConfig>
   );

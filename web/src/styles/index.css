@@ -16,3 +16,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* スライドバー消したい */
+::-webkit-scrollbar {
+  display: none;
+}

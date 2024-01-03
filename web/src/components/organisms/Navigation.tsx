@@ -9,28 +9,28 @@ const Component = () => {
           <LinkButton
             text="ホーム"
             icon="ion:home-outline"
-            onClick={() => {}}
+            path="/"
           />
         </li>
         <li className="mb-2">
           <LinkButton
             text="タイムライン"
             icon="mingcute:time-line"
-            onClick={() => {}}
+            path="/timeline"
           />
         </li>
         <li className="mb-2">
           <LinkButton
             text="通知"
             icon="ion:notifications-outline"
-            onClick={() => {}}
+            path="/notification"
           />
         </li>
         <li className="mb-2">
           <LinkButton
             text="設定"
             icon="ion:settings-outline"
-            onClick={() => {}}
+            path="/setting"
           />
         </li>
       </ul>

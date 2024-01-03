@@ -12,7 +12,7 @@ export type ViewState = View;
 const initialState: ViewState = {
   loginModal: false,
   registerModal: false,
-  sidebar: true,
+  sidebar: false,
   mobile: false,
 };
 
