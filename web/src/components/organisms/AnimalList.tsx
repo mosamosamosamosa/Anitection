@@ -13,7 +13,10 @@ const Component: React.FC = () => {
   const [animals, setAnimals] = React.useState<any[]>([]);
   const [search, setSearch] = React.useState<string>('');
   const { institution } = useSelector((state: RootState) => state.institution);
-  const { data, error } = useSWR<any>(`/api/animals?filters[institution][id][$eq]=${institution.id}`, fetchInstanceWithToken());
+  const { data, error } = useSWR<any>(
+    `/api/animals?filters[institution][id][$eq]=${institution.id}`,
+    fetchInstanceWithToken(),
+  );
 
   useEffect(() => {
     if (!data) return;
@@ -22,7 +25,9 @@ const Component: React.FC = () => {
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    const result = data.data.data.filter((animal: any) => animal.attributes.name.includes(event.target.value));
+    const result = data.data.data.filter((animal: any) =>
+      animal.attributes.name.includes(event.target.value),
+    );
     setAnimals(result);
   };
 

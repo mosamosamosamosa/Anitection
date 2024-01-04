@@ -11,27 +11,32 @@ import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 
 const Component: FC = () => {
   const { institution } = useSelector((state: RootState) => state.institution);
-  const { data, error } = useSWR<any>(`/api/animals?filters[institution][id][$eq]=${institution.id}`, fetchInstanceWithToken());
+  const { data, error } = useSWR<any>(
+    `/api/animals?filters[institution][id][$eq]=${institution.id}`,
+    fetchInstanceWithToken(),
+  );
 
   const countKinds = (array: any) => {
     const countMap: any = {};
     array.forEach((animal: any) => {
       countMap[animal] = (countMap[animal] || 0) + 1;
     });
-  
-    const result = Object.keys(countMap).map(key => {
+
+    const result = Object.keys(countMap).map((key) => {
       return { name: key, number: countMap[key] };
     });
-  
+
     return result;
-  }  
+  };
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
   const animals = data.data.data;
   const count = animals.length;
-  const kinds = animals.map((animal: any) => animal.attributes.animal_kind.data.attributes.name);
+  const kinds = animals.map(
+    (animal: any) => animal.attributes.animal_kind.data.attributes.name,
+  );
   const kinds_count = countKinds(kinds);
 
   return (
