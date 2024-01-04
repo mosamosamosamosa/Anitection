@@ -13,7 +13,8 @@ const Component: FC<Props> = ({ text, children }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(viewSlice.actions.resetModal());
+    dispatch(viewSlice.actions.setLoginModal(false));
+    dispatch(viewSlice.actions.setRegisterModal(false));
   };
 
   return (

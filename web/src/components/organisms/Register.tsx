@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { viewSlice } from '../../features/view';
-import { userSlice } from '../../features/user';
 import { fetchInstance } from '../../utils/fetchInstance';
 
 import Modal from '../templates/Modal';
@@ -48,8 +47,8 @@ const Component: FC = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          dispatch(userSlice.actions.setToken(res.data.token));
-          dispatch(viewSlice.actions.resetModal());
+          localStorage.setItem('token', res.data.jwt);
+          dispatch(viewSlice.actions.setRegisterModal(false));
         }
       })
       .catch(() => {

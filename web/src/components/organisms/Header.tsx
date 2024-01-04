@@ -18,7 +18,7 @@ const Component: FC<Props> = ({ sidebar }) => {
   };
 
   const handleSidebar = () => {
-    dispatch(viewSlice.actions.toggleSidebar());
+    dispatch(viewSlice.actions.setSidebar(!sidebar));
   };
 
   return (

@@ -2,19 +2,19 @@ import axios from 'axios';
 
 export const fetchInstance = () => {
   return axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'https://anitection-strapi.yumekiti.net/api',
     headers: {
       'Content-Type': 'application/json',
     },
   });
 };
 
-export const fetchInstanceWithToken = (token: string) => {
+export const fetchInstanceWithToken = () => {
   return axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'https://anitection-strapi.yumekiti.net/api',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
 };

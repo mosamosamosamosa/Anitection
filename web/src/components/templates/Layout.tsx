@@ -17,6 +17,7 @@ type Props = {
 };
 
 const Component: FC<Props> = ({ children }) => {
+  const isLogin = localStorage.getItem('token') ? true : false;
   const dispatch = useDispatch();
   const { sidebar, loginModal, registerModal } = useSelector(
     (state: RootState) => state.view,
@@ -24,7 +25,6 @@ const Component: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (window.innerWidth <= 1024) {
-      dispatch(viewSlice.actions.setMobile(true));
       dispatch(viewSlice.actions.setSidebar(false));
     }
   }, []);
@@ -33,7 +33,7 @@ const Component: FC<Props> = ({ children }) => {
     <div className="App h-screen flex-grow">
       <Header sidebar={sidebar} />
       <Breadcrumbs path={window.location.pathname} />
-      <main className="flex-grow">{children}</main>
+      {isLogin && <main className="flex-grow">{children}</main>}
       {!registerModal && loginModal && <Login />}
       {registerModal && <Register />}
     </div>
