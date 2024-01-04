@@ -3,7 +3,6 @@ import Layout from '../templates/Layout';
 import Card from '../templates/Card';
 import InfoHeader from '../atoms/InfoHeader';
 import Navigation from '../organisms/Navigation';
-import UserPanel from '../organisms/UserPanel';
 
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
@@ -14,12 +13,11 @@ const Component = () => {
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-12 gap-4">
         {/* なび */}
         <div className="hidden md:block col-span-12 md:col-span-2">
-          <UserPanel />
           <Navigation />
         </div>
 
         {/* 動物 */}
-        <div className="col-span-12 md:col-span-7 space-y-4">
+        <div className="col-span-12 md:col-span-10 lg:col-span-7 space-y-4">
           <div className="flex items-center gap-4">
             <input
               type="text"

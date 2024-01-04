@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 import React, { FC } from 'react';
 
 import Navigation from '../organisms/Navigation';
-import UserPanel from '../organisms/UserPanel';
 
 import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
@@ -54,7 +53,6 @@ const Component: FC<Props> = ({ sidebar }) => {
           onClick={() => dispatch(viewSlice.actions.setSidebar(false))}
         >
           <div className="animate-slide-in-left w-3/5 bg-white h-full px-2 overflow-y-auto">
-            <UserPanel />
             <Navigation />
           </div>
           <div className="fixed top-0 right-0 w-2/5 h-full" />

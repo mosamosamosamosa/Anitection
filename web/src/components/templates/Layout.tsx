@@ -1,7 +1,7 @@
 import React, { useEffect, memo, FC, ReactNode } from 'react';
 
 import Header from '../organisms/Header';
-import Breadcrumbs from '../organisms/Breadcrumbs';
+import Breadcrumbs from '../molecules/Breadcrumbs';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';

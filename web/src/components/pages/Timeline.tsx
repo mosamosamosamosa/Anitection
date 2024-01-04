@@ -2,7 +2,6 @@ import React from 'react';
 import Layout from '../templates/Layout';
 import Card from '../templates/Card';
 import Navigation from '../organisms/Navigation';
-import UserPanel from '../organisms/UserPanel';
 import { Icon } from '@iconify/react';
 import InfoHeader from '../atoms/InfoHeader';
 
@@ -12,7 +11,6 @@ const Component = () => {
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-12 gap-4">
         {/* なび */}
         <div className="hidden md:block col-span-12 md:col-span-2">
-          <UserPanel />
           <Navigation />
         </div>
 
