@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchInstance = () => {
   return axios.create({
-    baseURL: 'https://anitection-strapi.yumekiti.net/api',
+    baseURL: `${process.env.REACT_APP_API_URL}`,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -11,7 +11,7 @@ export const fetchInstance = () => {
 
 export const fetchInstanceWithToken = () => {
   return axios.create({
-    baseURL: 'https://anitection-strapi.yumekiti.net/api',
+    baseURL: `${process.env.REACT_APP_API_URL}`,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,

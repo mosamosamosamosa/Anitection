@@ -45,8 +45,6 @@ const Component: FC = () => {
           localStorage.setItem('token', res.data.jwt);
           dispatch(viewSlice.actions.setLoginModal(false));
         }
-
-        console.log(res);
       })
       .catch(() => {
         setMessage('ログインに失敗しました');

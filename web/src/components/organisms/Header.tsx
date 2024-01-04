@@ -6,11 +6,12 @@ import Navigation from '../organisms/Navigation';
 import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
 
-type Props = {
-  sidebar: boolean;
-};
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
-const Component: FC<Props> = ({ sidebar }) => {
+const Component: FC = () => {
+  const { sidebar } = useSelector((state: RootState) => state.view);
+
   const dispatch = useDispatch();
 
   const handleReload = () => {

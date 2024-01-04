@@ -10,11 +10,11 @@ const Component = () => {
     <Layout>
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-12 gap-4">
         {/* なび */}
-        <div className="hidden md:block col-span-12 md:col-span-2">
+        <div className="hidden lg:block col-span-12 md:col-span-2">
           <Navigation />
         </div>
 
-        <div className="col-span-12 md:col-span-7 space-y-4">
+        <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
           {/* テキストエリア */}
           <textarea
             className="w-full h-40 rounded-md px-4 py-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
@@ -56,9 +56,9 @@ const Component = () => {
           ))}
         </div>
 
-        <div className="col-span-12 md:col-span-3 space-y-4">
+        <div className="col-span-12 md:col-span-4 lg:col-span-3 space-y-4 hidden md:block">
           {/* 施設投稿一覧 */}
-          <InfoHeader icon="ant-design:profile-outlined" title="施設投稿" />
+          <InfoHeader icon="ant-design:profile-outlined" title="他施設の投稿" />
           {/* タイムライン */}
           {[...Array(24)].map((_, index: number) => (
             <Card key={index}>

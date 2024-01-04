@@ -1,11 +1,8 @@
 import React from 'react';
 import Layout from '../templates/Layout';
-import Card from '../templates/Card';
-import InfoHeader from '../atoms/InfoHeader';
 import Navigation from '../organisms/Navigation';
 import AnimalList from '../organisms/AnimalList';
-
-import { Icon } from '@iconify/react';
+import InstitutionInfo from '../organisms/InstitutionInfo';
 
 const Component = () => {
   return (
@@ -23,23 +20,7 @@ const Component = () => {
 
         {/* 情報 */}
         <div className="col-span-3 space-y-4 hidden lg:block">
-          {/* 施設情報 */}
-          <InfoHeader icon="ion:home-outline" title="施設情報" />
-          <Card>
-            <div className="w-full h-40">contents</div>
-            <div className="absolute bottom-2 right-4 flex justify-end items-end">
-              <p className="text-sm">詳細へ</p>
-              <Icon icon="tdesign:swap-right" className="w-6" />
-            </div>
-          </Card>
-          {/* 動物情報 */}
-          <InfoHeader icon="cil:animal" title="動物情報" />
-          <Card>
-            <div className="w-full h-40">contents</div>
-            <div className="absolute bottom-2 right-4 flex justify-center items-center">
-              <Icon icon="tdesign:swap-right" className="mt-1 w-6" />
-            </div>
-          </Card>
+          <InstitutionInfo />
         </div>
       </div>
     </Layout>
