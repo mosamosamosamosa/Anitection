@@ -36,10 +36,7 @@ const Component: React.FC = () => {
                   to={'/animal-register'}
                   className="w-full h-40 flex justify-center items-center"
                 >
-                  <Icon
-                    icon="ant-design:plus-outlined"
-                    className="w-12 h-12"
-                  />
+                  <Icon icon="ant-design:plus-outlined" className="w-12 h-12" />
                 </Link>
               </Card>
             </div>
@@ -54,6 +51,6 @@ const Component: React.FC = () => {
       </div>
     </>
   );
-}
+};
 
 export default Component;
