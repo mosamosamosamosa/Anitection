@@ -27,3 +27,10 @@ spec:
             name: bff
             port:
               number: 8080
+      - path: /uploads
+        pathType: Prefix
+        backend:
+          service:
+            name: cms
+            port:
+              number: 1337
