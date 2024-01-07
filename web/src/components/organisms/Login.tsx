@@ -36,7 +36,7 @@ const Component: FC = () => {
     }
 
     fetchInstance()
-      .post('/auth/local', {
+      .post('/api/auth/local', {
         identifier: identifier,
         password: password,
       })

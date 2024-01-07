@@ -1,74 +1,70 @@
-import React, { useEffect } from 'react';
-import CanvasDraw from 'react-canvas-draw';
+import React, { useEffect, useState } from 'react';
+// import CanvasDraw from 'react-canvas-draw';
 import cat from '../../assets/cat.png';
 import Card from '../templates/Card';
 import Layout from '../templates/Layout';
-import Button from '../atoms/Button';
+// import Button from '../atoms/Button';
 import Navigation from '../organisms/Navigation';
 
 const Component = () => {
-  const canvasRef = React.useRef<CanvasDraw | null>(null);
-  const [color, setColor] = React.useState('#000000');
-  const [canvas, setCanvas] = React.useState<Element | null>(null);
-  const [lazyRadius, setLazyRadius] = React.useState(16);
-  const [brushRadius, setBrushRadius] = React.useState(24);
-
-  const handleClear = () => {
-    canvasRef.current?.clear();
-  };
-
-  const handleUndo = () => {
-    canvasRef.current?.undo();
-  };
-
-  const handleExport = () => {
-    if (canvas) {
-      const canvasElement = canvas as HTMLCanvasElement;
-      const image = canvasElement.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = 'image.png';
-      link.href = image;
-      link.click();
-    }
-  };
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [color, setColor] = React.useState('#ffffff');
+  const [brushRadius, setBrushRadius] = React.useState(14);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 'z') {
-        handleUndo();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    setCanvas(document.querySelector('canvas:nth-child(2)'));
-
-    if (canvas) {
-      const canvasElement = document.querySelector(
-        'canvas:nth-child(1)',
-      ) as HTMLCanvasElement;
-      const ctx = canvasElement.getContext('2d');
-      if (!ctx) return;
+    setTimeout(() => {
       const image = new Image();
       image.src = cat;
       image.onload = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
         const imageWidth = image.width * 0.95;
         const imageHeight = image.height * 0.95;
-        const x = (canvasElement.width - imageWidth) / 2;
-        const y = (canvasElement.height - imageHeight) / 2;
-        setTimeout(() => {
-          ctx.globalAlpha = 0.8;
-          ctx.drawImage(image, x, y, imageWidth, imageHeight);
-        }, 500);
+        const x = (canvas.width - imageWidth) / 2;
+        const y = (canvas.height - imageHeight) / 2;
+
+        ctx.drawImage(image, x, y, imageWidth, imageHeight);
       };
-    }
-  }, [canvas]);
+    }, 500);
+  }, []);
+
+  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    setIsDrawing(true);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = brushRadius * 2;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+  };
+
+  const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.globalCompositeOperation = 'source-atop';
+
+    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.lineCap = 'round';
+    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+  };
+
+  const endDrawing = () => {
+    setIsDrawing(false);
+  };
 
   return (
     <Layout>
@@ -81,14 +77,15 @@ const Component = () => {
         {/* 動物 */}
         <div className="col-span-12 lg:col-span-8">
           <div className="bg-white rounded-xl shadow-md flex justify-center items-center px-2 py-4">
-            <CanvasDraw
-              brushColor={color}
-              canvasWidth={800}
-              canvasHeight={600}
+            <canvas
               ref={canvasRef}
-              brushRadius={brushRadius}
-              lazyRadius={lazyRadius}
-              gridColor="rgba(0,0,0,1)"
+              onMouseDown={startDrawing}
+              onMouseUp={endDrawing}
+              onMouseOut={endDrawing}
+              onMouseMove={draw}
+              width={800}
+              height={600}
+              style={{ border: '1px solid black' }}
             />
           </div>
         </div>
@@ -96,16 +93,6 @@ const Component = () => {
         <div className="col-span-12 lg:col-span-2">
           <Card>
             <div className="flex flex-col gap-4 w-full">
-              <div className="flex gap-4">
-                <p>Lazy Radius</p>
-                <input
-                  type="number"
-                  value={lazyRadius}
-                  min={0}
-                  max={99}
-                  onChange={(e) => setLazyRadius(Number(e.target.value))}
-                />
-              </div>
               <div className="flex gap-4">
                 <p>Brush Radius</p>
                 <input
@@ -124,9 +111,9 @@ const Component = () => {
                   onChange={(e) => setColor(e.target.value)}
                 />
               </div>
-              <Button onClick={handleUndo} icon="mdi:undo" />
+              {/* <Button onClick={handleUndo} icon="mdi:undo" />
               <Button onClick={handleClear} icon="mdi:delete" />
-              <Button onClick={handleExport} icon="mdi:download" highlight />
+              <Button onClick={handleExport} icon="mdi:download" highlight /> */}
             </div>
           </Card>
         </div>
