@@ -32,18 +32,19 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 	// クエリパラメータを更新
 	c.Request().URL.RawQuery = q.Encode()
 
-	// Authorizationヘッダーの値を取得し、リクエストヘッダーに追加
-	authHeader := c.Request().Header.Get("Authorization")
-
 	// 新しいGETリクエストを作成
 	req, err := http.NewRequest(http.MethodGet, StrapiURL+c.Request().URL.Path+"?"+c.Request().URL.RawQuery, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Authorizationヘッダーを設定
-	req.Header.Set("Authorization", authHeader)
-	req.Header.Set("Content-Type", "application/json")
+	// ヘッダーを設定
+	originalReq := c.Request()
+	for key, values := range originalReq.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
 
 	// HTTPクライアントを作成してリクエストを送信
 	client := &http.Client{}
@@ -63,15 +64,18 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) PostHandler(c echo.Context) error {
-	authHeader := c.Request().Header.Get("Authorization")
 	req, err := http.NewRequest(http.MethodPost, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer req.Body.Close()
 
-	req.Header.Set("Authorization", authHeader)
-	req.Header.Set("Content-Type", "application/json")
+	originalReq := c.Request()
+	for key, values := range originalReq.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
 
 	client := &http.Client{}
 	res, err := client.Do(req)
@@ -89,14 +93,17 @@ func (h *strapiHandler) PostHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) PutHandler(c echo.Context) error {
-	authHeader := c.Request().Header.Get("Authorization")
 	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	req.Header.Set("Authorization", authHeader)
-	req.Header.Set("Content-Type", "application/json")
+	originalReq := c.Request()
+	for key, values := range originalReq.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
 
 	client := &http.Client{}
 	res, err := client.Do(req)
@@ -114,14 +121,17 @@ func (h *strapiHandler) PutHandler(c echo.Context) error {
 }
 
 func (h *strapiHandler) DeleteHandler(c echo.Context) error {
-	authHeader := c.Request().Header.Get("Authorization")
 	req, err := http.NewRequest(http.MethodDelete, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	req.Header.Set("Authorization", authHeader)
-	req.Header.Set("Content-Type", "application/json")
+	originalReq := c.Request()
+	for key, values := range originalReq.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
 
 	client := &http.Client{}
 	res, err := client.Do(req)
