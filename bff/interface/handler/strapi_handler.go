@@ -90,7 +90,7 @@ func (h *strapiHandler) PostHandler(c echo.Context) error {
 
 func (h *strapiHandler) PutHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
-	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path+"?"+c.Request().URL.RawQuery, nil)
+	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
 		log.Fatal(err)
 	}
