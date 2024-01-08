@@ -65,9 +65,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "employee": {
-      "type": "boolean"
-    },
     "icon": {
       "type": "media",
       "multiple": false,
