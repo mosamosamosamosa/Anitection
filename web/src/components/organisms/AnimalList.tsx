@@ -64,11 +64,13 @@ const Component: React.FC = () => {
           <div key={index} className="col-span-6">
             <Card>
               <div className="w-full h-40 md:h-52">
-                <img
-                  src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-                  alt=""
-                  className="w-full h-5/6 object-contain"
-                />
+                {animal.attributes.avatar_icon.data &&
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                    alt=""
+                    className="w-full h-5/6 object-contain"
+                  />
+                }
                 <div className="w-full h-1/6 flex justify-center items-center">
                   <p className="text-center text-lg">
                     {animal.attributes.name}

@@ -38,7 +38,7 @@ const Component: FC<Props> = ({ text, children }) => {
               <Icon icon="ant-design:close-outlined" className="w-6 h-6" />
             </button>
           </div>
-          <div className="py-0 md:py-24 h-full flex flex-col justify-center items-center">
+          <div className="py-8 md:py-0 md:py-24 h-full flex flex-col justify-center items-center">
             {children}
           </div>
         </div>

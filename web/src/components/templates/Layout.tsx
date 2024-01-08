@@ -36,7 +36,7 @@ const Component: FC<Props> = ({ children }) => {
           dispatch(userSlice.actions.setUser(user));
 
           fetchInstanceWithToken()
-            .get(`/api/employees?filters[users][id][$eq]=${user.id}`)
+            .get(`/api/employees?filters[user][id][$eq]=${user.id}`)
             .then((res) => {
               if (res.status === 200) {
                 const institution =

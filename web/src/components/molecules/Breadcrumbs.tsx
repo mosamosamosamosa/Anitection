@@ -18,9 +18,9 @@ const Component: FC<Props> = ({ path }) => {
         </li>
         {paths.map((p, index) => {
           return (
-            <>
+            <div className="flex items-center" key={index}>
               <li className="mx-2">/</li>
-              <li key={index}>
+              <li>
                 <Link
                   to={`/${paths.slice(0, index + 1).join('/')}`}
                   className="text-blue-500 hover:underline"
@@ -28,7 +28,7 @@ const Component: FC<Props> = ({ path }) => {
                   {p}
                 </Link>
               </li>
-            </>
+            </div>
           );
         })}
       </ol>
