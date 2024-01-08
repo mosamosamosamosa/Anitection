@@ -34,6 +34,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }

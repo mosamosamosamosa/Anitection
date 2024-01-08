@@ -659,7 +659,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    employee: Attribute.Boolean;
     icon: Attribute.Media;
     region: Attribute.String;
     createdAt: Attribute.DateTime;
@@ -694,7 +693,6 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     images: Attribute.Media;
     name: Attribute.String;
     age: Attribute.Integer & Attribute.DefaultTo<0>;
-    gender: Attribute.Enumeration<['male', 'female', 'other']>;
     personality: Attribute.Text;
     interest: Attribute.String;
     description: Attribute.Text;
@@ -722,6 +720,7 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
       'oneToOne',
       'api::pedigree.pedigree'
     >;
+    gender: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -786,7 +785,7 @@ export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
   info: {
     singularName: 'animal-log';
     pluralName: 'animal-logs';
-    displayName: 'AnimalLog';
+    displayName: 'Log';
     description: '';
   };
   options: {
@@ -798,11 +797,7 @@ export interface ApiAnimalLogAnimalLog extends Schema.CollectionType {
       'oneToOne',
       'api::animal.animal'
     >;
-    logs: Attribute.Relation<
-      'api::animal-log.animal-log',
-      'oneToMany',
-      'api::log.log'
-    >;
+    content: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -838,9 +833,9 @@ export interface ApiEmployeeEmployee extends Schema.CollectionType {
       'oneToOne',
       'api::institution.institution'
     >;
-    users: Attribute.Relation<
+    user: Attribute.Relation<
       'api::employee.employee',
-      'oneToMany',
+      'oneToOne',
       'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
@@ -878,9 +873,9 @@ export interface ApiFavoriteFavorite extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    animals: Attribute.Relation<
+    animal: Attribute.Relation<
       'api::favorite.favorite',
-      'oneToMany',
+      'oneToOne',
       'api::animal.animal'
     >;
     createdAt: Attribute.DateTime;
@@ -934,28 +929,6 @@ export interface ApiInstitutionInstitution extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiLogLog extends Schema.CollectionType {
-  collectionName: 'logs';
-  info: {
-    singularName: 'log';
-    pluralName: 'logs';
-    displayName: 'Log';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    content: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1164,6 +1137,11 @@ export interface ApiTimelineTimeline extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    institution: Attribute.Relation<
+      'api::timeline.timeline',
+      'oneToOne',
+      'api::institution.institution'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1204,7 +1182,6 @@ declare module '@strapi/types' {
       'api::employee.employee': ApiEmployeeEmployee;
       'api::favorite.favorite': ApiFavoriteFavorite;
       'api::institution.institution': ApiInstitutionInstitution;
-      'api::log.log': ApiLogLog;
       'api::message.message': ApiMessageMessage;
       'api::notification.notification': ApiNotificationNotification;
       'api::pattern.pattern': ApiPatternPattern;

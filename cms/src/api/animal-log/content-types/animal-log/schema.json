@@ -4,7 +4,7 @@
   "info": {
     "singularName": "animal-log",
     "pluralName": "animal-logs",
-    "displayName": "AnimalLog",
+    "displayName": "Log",
     "description": ""
   },
   "options": {
@@ -17,10 +17,8 @@
       "relation": "oneToOne",
       "target": "api::animal.animal"
     },
-    "logs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::log.log"
+    "content": {
+      "type": "string"
     }
   }
 }
