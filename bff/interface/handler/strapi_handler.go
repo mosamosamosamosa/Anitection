@@ -36,7 +36,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 
 	// 新しいGETリクエストを作成
-	req, err := http.NewRequest(http.MethodGet, StrapiURL+c.Request().URL.Path, nil)
+	req, err := http.NewRequest(http.MethodGet, StrapiURL+c.Request().URL.Path+"?"+c.Request().URL.RawQuery, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
