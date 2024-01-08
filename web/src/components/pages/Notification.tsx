@@ -1,8 +1,8 @@
 import React from 'react';
 import Layout from '../templates/Layout';
-import Card from '../templates/Card';
 import Navigation from '../organisms/Navigation';
 import InstitutionInfo from '../organisms/InstitutionInfo';
+import NotificationList from '../organisms/NotificationList';
 
 const Component = () => {
   return (
@@ -15,11 +15,7 @@ const Component = () => {
 
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
           {/* タイムライン */}
-          {[...Array(24)].map((_, index: number) => (
-            <Card key={index}>
-              <div className="w-full h-40">contents</div>
-            </Card>
-          ))}
+          <NotificationList />
         </div>
 
         {/* 情報 */}

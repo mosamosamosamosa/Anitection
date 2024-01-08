@@ -2,8 +2,8 @@ import React from 'react';
 import Layout from '../templates/Layout';
 import Navigation from '../organisms/Navigation';
 import InfoHeader from '../atoms/InfoHeader';
-import Timeline from '../organisms/Timeline';
-import MyTimeline from '../organisms/MyTimeline';
+import TimelineList from '../organisms/TimelineList';
+import MyTimelineList from '../organisms/MyTimelineList';
 import TimelineForm from '../organisms/TimelineForm';
 
 const Component = () => {
@@ -18,14 +18,14 @@ const Component = () => {
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
           <TimelineForm />
           {/* タイムライン */}
-          <Timeline />
+          <TimelineList />
         </div>
 
         <div className="col-span-12 md:col-span-4 lg:col-span-3 space-y-4 hidden md:block">
           {/* 施設投稿一覧 */}
           <InfoHeader icon="ant-design:profile-outlined" title="施設の投稿" />
           {/* タイムライン */}
-          <MyTimeline />
+          <MyTimelineList />
         </div>
       </div>
     </Layout>
