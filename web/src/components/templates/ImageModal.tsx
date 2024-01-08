@@ -37,6 +37,6 @@ const Component: FC<Props> = ({ children, onClick }) => {
       </div>
     </div>
   );
-}
+};
 
 export default Component;

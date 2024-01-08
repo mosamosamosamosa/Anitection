@@ -6,7 +6,7 @@ import { RootState } from '../../store';
 
 const Component = () => {
   const { user } = useSelector((state: RootState) => state.user);
-  
+
   return (
     <nav>
       <div className="mb-4 flex gap-4 items-center border-b border-gray-300 py-4">
