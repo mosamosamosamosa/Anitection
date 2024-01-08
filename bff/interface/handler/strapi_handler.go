@@ -36,26 +36,27 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 
 	// 新しいGETリクエストを作成
-	req, err := http.NewRequest("GET", StrapiURL+c.Request().URL.Path+"?"+c.Request().URL.RawQuery, nil)
+	req, err := http.NewRequest(http.MethodGet, StrapiURL+c.Request().URL.Path, nil)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	// Authorizationヘッダーを設定
 	req.Header.Set("Authorization", authHeader)
+	req.Header.Set("Content-Type", "application/json")
 
 	// HTTPクライアントを作成してリクエストを送信
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
 	// レスポンスのボディを読み取り、JSONレスポンスとして返す
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	return c.JSONBlob(resp.StatusCode, body)
@@ -63,41 +64,50 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 
 func (h *strapiHandler) PostHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
-	req, err := http.Post(StrapiURL+c.Request().URL.Path, "application/json", c.Request().Body)
+	req, err := http.NewRequest(http.MethodPost, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	defer req.Body.Close()
 
 	req.Header.Set("Authorization", authHeader)
+	req.Header.Set("Content-Type", "application/json")
 
-	body, err := ioutil.ReadAll(req.Body)
+	client := &http.Client{}
+	res, err := client.Do(req)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return c.JSONBlob(req.StatusCode, body)
+	return c.JSONBlob(res.StatusCode, body)
 }
 
 func (h *strapiHandler) PutHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	req.Header.Set("Authorization", authHeader)
+	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	return c.JSONBlob(res.StatusCode, body)
@@ -107,21 +117,22 @@ func (h *strapiHandler) DeleteHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 	req, err := http.NewRequest(http.MethodDelete, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	req.Header.Set("Authorization", authHeader)
+	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	return c.JSONBlob(res.StatusCode, body)
