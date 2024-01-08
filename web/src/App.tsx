@@ -10,6 +10,7 @@ import Timeline from './components/pages/Timeline';
 import Notfound from './components/pages/Notfound';
 import Notifcation from './components/pages/Notification';
 import Setting from './components/pages/Setting';
+import AnimalDetail from './components/pages/AnimalDetail';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/animal-register" element={<AnimalRegister />} />
+        <Route path="/animal/:id" element={<AnimalDetail />} />
         <Route path="/timeline" element={<Timeline />} />
         <Route path="/notification" element={<Notifcation />} />
         <Route path="/setting" element={<Setting />} />

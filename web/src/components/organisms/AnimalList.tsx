@@ -61,7 +61,7 @@ const Component: React.FC = () => {
           </Card>
         </div>
         {animals.map((animal: any, index: number) => (
-          <div key={index} className="col-span-6">
+          <Link to={`/animal/${animal.id}`} key={index} className="col-span-6">
             <Card>
               <div className="w-full h-40 md:h-52">
                 {animal.attributes.avatar_icon.data && (
@@ -78,7 +78,7 @@ const Component: React.FC = () => {
                 </div>
               </div>
             </Card>
-          </div>
+          </Link>
         ))}
       </div>
     </>

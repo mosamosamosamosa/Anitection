@@ -2,12 +2,13 @@ import React, { FC } from 'react';
 import { Icon } from '@iconify/react';
 
 type Props = {
+  text?: string;
   icon: string;
   highlight?: boolean;
   onClick: () => void;
 };
 
-const Component: FC<Props> = ({ icon, highlight = false, onClick }) => {
+const Component: FC<Props> = ({ text, icon, highlight, onClick }) => {
   return (
     <button
       onClick={onClick}
@@ -16,6 +17,7 @@ const Component: FC<Props> = ({ icon, highlight = false, onClick }) => {
     `}
     >
       <Icon icon={icon} height={24} />
+      {text}
     </button>
   );
 };

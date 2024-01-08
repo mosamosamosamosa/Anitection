@@ -34,9 +34,12 @@ const Component: FC = () => {
 
   const animals = data.data.data;
   const count = animals.length;
-  const kinds = animals.map(
-    (animal: any) => animal.attributes.animal_kind.data.attributes.name,
-  );
+  const kinds = animals.map((animal: any) => {
+    if (!animal.attributes.animal_kind.data) {
+      return '未登録';
+    }
+    return animal.attributes.animal_kind.data.attributes.name;
+  });
   const kinds_count = countKinds(kinds);
 
   return (
