@@ -6,6 +6,7 @@ import 'package:anitection/providers/institution.dart';
 import 'package:anitection/providers/timeline_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TimelineScreen extends ConsumerStatefulWidget {
   const TimelineScreen({super.key});
@@ -22,12 +23,73 @@ class TimelineScreenState extends ConsumerState<TimelineScreen> {
     final controller = ref.watch(timelineControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: Container(
+          child: SafeArea(
+            child: Padding(
+              // padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+              padding: const EdgeInsets.only(top: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SizedBox(
+                      width: 24,
+                      height: 18,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/ic_calendar.svg",
+                        width: 38,
+                        height: 38,
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF94CD68),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 0),
+                        child: const Text(
+                          "10月30日",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Image.asset(
+                        'assets/images/ic_setting.png',
+                        width: 24,
+                        height: 24,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           const AnimalPadBackground(),
           controller.when(data: (data) {
             return ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               separatorBuilder: (context, index) {
                 return const SizedBox(
                   height: 16,
