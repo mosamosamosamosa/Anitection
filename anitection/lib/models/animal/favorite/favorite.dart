@@ -8,9 +8,9 @@ part 'favorite.g.dart';
 @JsonSerializable()
 class FavoriteAttributes {
   FavoriteAttributes({
-    required this.animals,
+    required this.animal,
   });
-  final ArrayData<Model<AnimalAttributes>> animals;
+  final SingleData<Model<AnimalAttributes>?> animal;
 
 
   factory FavoriteAttributes.fromJson(Map<String, dynamic> json) {

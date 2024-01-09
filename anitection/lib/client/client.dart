@@ -86,9 +86,17 @@ AnitectionClient create(
       if (token != null) {
         options.headers['Authorization'] = "Bearer $token";
       }
-
+      options.headers['Content-Type'] = "application/json";
+      // add content length header
+      options.headers['Content-Length'] = options.data?.length ?? 0;
       logCurlCommand(options);
       handler.next(options);
+    },
+    onResponse: (response, handler) {
+      if (response.statusCode == 401) {
+        service.save(token: null);
+      }
+      handler.next(response);
     },
   ));
   return AnitectionClient(dio);

@@ -177,9 +177,13 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         );
                       }
+                      if (asyncValue
+                          .valueOrNull![index].attributes.animal.data == null) {
+                        return const SizedBox.shrink();
+                      }
                       return AnimalAvatarCard(
                         animal: asyncValue
-                            .valueOrNull![index].attributes.animals.data!.first,
+                            .valueOrNull![index].attributes.animal.data!,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(

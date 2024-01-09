@@ -27,7 +27,7 @@ class FavoriteAnimalsController extends AsyncNotifier<List<Model<FavoriteAttribu
       final userId = ref.read(authControllerProvider.notifier).state.valueOrNull?.id;
       await ref.read(anitectionClientProvider).createFavorite({
         "data": {
-          "animals": [animalId],
+          "animal": animalId,
           "user": userId,
         }
       });
