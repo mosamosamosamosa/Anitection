@@ -961,6 +961,7 @@ export interface ApiMessageMessage extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    read: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -997,6 +998,7 @@ export interface ApiNotificationNotification extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    read: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
