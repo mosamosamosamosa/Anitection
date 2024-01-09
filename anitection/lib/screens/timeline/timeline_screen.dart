@@ -91,7 +91,7 @@ class TimelineCard extends ConsumerWidget {
                 ),
                 Flexible(child: Text(
                   timeline.attributes.institution?.data.attributes.name ?? "",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Color(0xFF444444),
                     fontWeight: FontWeight.w700,
@@ -99,7 +99,7 @@ class TimelineCard extends ConsumerWidget {
                 )),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Row(
@@ -107,9 +107,27 @@ class TimelineCard extends ConsumerWidget {
                 Flexible(child: Text(timeline.attributes.content, textAlign: TextAlign.left,)),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
+            if (timeline.attributes.images != null)
+              ...[
+                SizedBox(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  child: PageView(
+                    children: timeline.attributes.images?.data?.map((e) {
+                      return Image.network(
+                        AppConstants.mediaServerBaseUrl + (e.attributes.url ?? ""),
+                        fit: BoxFit.cover,
+                      );
+                    }).toList() ?? [],
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+              ],
             Row(
               children: [
                 GestureDetector(
@@ -119,7 +137,7 @@ class TimelineCard extends ConsumerWidget {
                       color: Colors.grey,
                       size: 24,
                     )),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 GestureDetector(
