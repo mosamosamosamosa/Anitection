@@ -7,6 +7,7 @@ import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
 import 'package:anitection/models/pattern/pattern.dart';
 import 'package:anitection/models/pedigree/pedigree.dart';
+import 'package:anitection/models/timeline/timeline.dart';
 import 'package:anitection/models/user/user.dart';
 import 'package:anitection/repositories/token_repository.dart';
 import 'package:dio/dio.dart';
@@ -71,6 +72,12 @@ abstract class AnitectionClient {
   @POST("/api/favorites")
   Future<void> createFavorite(
     @Body() Map<String, dynamic> request,
+  );
+
+  @GET("/api/timelines")
+  Future<PagingData<Model<TimelineAttributes>>> getTimelines(
+    @Query("pagination[page]") int? page,
+    @Query("limit") int? limit,
   );
 }
 

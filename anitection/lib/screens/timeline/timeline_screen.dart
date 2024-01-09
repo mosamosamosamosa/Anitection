@@ -1,4 +1,9 @@
 import 'package:anitection/components/animal_pad_background.dart';
+import 'package:anitection/constants.dart';
+import 'package:anitection/models/base.dart';
+import 'package:anitection/models/timeline/timeline.dart';
+import 'package:anitection/providers/institution.dart';
+import 'package:anitection/providers/timeline_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,28 +19,49 @@ class TimelineScreen extends ConsumerStatefulWidget {
 class TimelineScreenState extends ConsumerState<TimelineScreen> {
   @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(timelineControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
       body: Stack(
         children: [
           const AnimalPadBackground(),
-          ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
-            children: const [
-              TimelineCard(),
-            ],
-          )
+          controller.when(data: (data) {
+            return ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 16,
+                );
+              },
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return TimelineCard(
+                  timeline: data[index],
+                );
+              },
+            );
+          }, error: (e, st) {
+            return Center(
+              child: Text(e.toString() + st.toString()),
+            );
+          }, loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          })
         ],
       ),
     );
   }
 }
 
-class TimelineCard extends StatelessWidget {
-  const TimelineCard({super.key});
+class TimelineCard extends ConsumerWidget {
+  const TimelineCard({super.key, required this.timeline});
+  final Model<TimelineAttributes> timeline;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final institution = ref.watch(institutionFutureProvider(timeline.attributes.institution?.data.id ?? 0));
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -49,33 +75,38 @@ class TimelineCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
                   radius: 24,
                   backgroundImage: NetworkImage(
-                      "https://img01.shiga-saku.net/usr/s/a/p/sapca/IMG_3912.jpg"),
+                      AppConstants.mediaServerBaseUrl + (institution.valueOrNull?.attributes.image?.data.attributes.url ?? "")),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Text(
-                  "あにまる保護施設",
+                Flexible(child: Text(
+                  timeline.attributes.institution?.data.attributes.name ?? "",
                   style: TextStyle(
                     fontSize: 16,
                     color: Color(0xFF444444),
                     fontWeight: FontWeight.w700,
                   ),
-                ),
+                )),
               ],
             ),
             SizedBox(
               height: 16,
             ),
-            Text("明日は休肝日ですので、わんちゃんねこちゃんとの面談の予約は受け付けておりません🙇\nご了承ください。"),
+            Row(
+              children: [
+                Flexible(child: Text(timeline.attributes.content, textAlign: TextAlign.left,)),
+              ],
+            ),
             SizedBox(
               height: 8,
             ),
