@@ -60,17 +60,18 @@ const Component: FC = () => {
     avatar_iconRef.current.click();
   };
 
-  const handleAvatarIconChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarIconChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (!event.target.files) return;
     if (event.target.files.length > 1) return;
     setAvatarIcon(event.target.files[0]);
-  }
+  };
 
   const handleSubmit = () => {
     // const instance = fetchInstanceWithToken();
-
     // const formData = new FormData();
-  }
+  };
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
@@ -88,7 +89,10 @@ const Component: FC = () => {
       <Card>
         {animal.attributes.avatar_icon ? (
           <>
-            <div className="w-full h-full flex justify-center items-center" onClick={handleClick}>
+            <div
+              className="w-full h-full flex justify-center items-center"
+              onClick={handleClick}
+            >
               {avatar_icon ? (
                 <img
                   src={URL.createObjectURL(avatar_icon)}
@@ -203,33 +207,44 @@ const Component: FC = () => {
             onChange={(e) => setName(e.target.value)}
           ></textarea>
         </div>
-        {kind === '猫' &&
+        {kind === '猫' && (
           <div className="flex gap-2 py-2 items-center">
             <p>柄：</p>
             <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
               {animal_patterns.map((item: any) => (
-                <option key={item.id} selected={animal.attributes.pattern.data.id === item.id}>
+                <option
+                  key={item.id}
+                  selected={animal.attributes.pattern.data.id === item.id}
+                >
                   {item.attributes.name}
                 </option>
               ))}
             </select>
           </div>
-        }
-        {kind === '犬' &&
+        )}
+        {kind === '犬' && (
           <div className="flex gap-2 py-2 items-center">
             <p>血統書：</p>
             <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
               {animal_pedigrees.map((item: any) => (
-                <option key={item.id} selected={animal.attributes.pedigree.data.id === item.id}>
+                <option
+                  key={item.id}
+                  selected={animal.attributes.pedigree.data.id === item.id}
+                >
                   {item.attributes.name}
                 </option>
               ))}
             </select>
           </div>
-        }
+        )}
       </div>
       <div className="flex justify-end items-center py-4">
-        <Button text="更新" icon='ant-design:edit-outlined' onClick={handleSubmit} highlight />
+        <Button
+          text="更新"
+          icon="ant-design:edit-outlined"
+          onClick={handleSubmit}
+          highlight
+        />
       </div>
     </>
   );
