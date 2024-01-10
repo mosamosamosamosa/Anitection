@@ -12,7 +12,7 @@ const Component: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { institution } = useSelector((state: RootState) => state.institution);
   const { data, error } = useSWR<any>(
-    `/api/timelines?filters[institution][id][$eq]=${institution.id}`,
+    `/api/timelines?filters[institution][id][$eq]=${institution.id}&sort[0]=createdAt:desc`,
     fetchInstanceWithToken(),
   );
 

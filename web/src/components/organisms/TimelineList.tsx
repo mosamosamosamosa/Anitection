@@ -13,7 +13,7 @@ const Component: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [footprintsFlagIds, setFootprintsFlagIds] = useState<number[]>([]);
   const { data, error } = useSWR<any>(
-    `/api/timelines`,
+    `/api/timelines?sort[0]=createdAt:desc`,
     fetchInstanceWithToken(),
   );
 

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
 const Component = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.user);
   const { institution } = useSelector((state: RootState) => state.institution);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,6 +35,10 @@ const Component = () => {
   };
 
   const handleSubmit = () => {
+    if (!user && !institution) return;
+    if (!text || images.length == 0) return;
+
+    setLoading(true);
     const instance = fetchInstanceWithToken();
 
     // strapiに送信する:まずは画像をjson形式で送信
@@ -62,7 +67,12 @@ const Component = () => {
           },
         };
 
-        instance.post('/api/timelines', body);
+        instance.post('/api/timelines', body).then((res) => {
+          if (res.status === 200) {
+            setLoading(false);
+            window.location.reload();
+          }
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -76,6 +86,17 @@ const Component = () => {
     <>
       {/* テキストエリア */}
       <div className="w-full bg-main rounded-md px-4 py-2 shadow-md border-2 border-main hover:shadow-lg relative hover:border-highlight">
+        {/* loading */}
+        <div
+          className={`${
+            loading ? 'flex' : 'hidden'
+          } justify-center items-center absolute top-0 left-0 w-full h-full bg-white bg-opacity-50 rounded-md`}
+        >
+          <Icon
+            icon="ant-design:loading-3-quarters-outlined"
+            className="w-8 h-8 animate-spin"
+          />
+        </div>
         <textarea
           className="w-full h-40 resize-none bg-transparent focus:outline-none"
           placeholder="今何してる？"
