@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import cat from '../../assets/cat.png';
+import head from '../../assets/animals/cat/head.png';
+import body from '../../assets/animals/cat/body.png';
+import sitting from '../../assets/animals/cat/sitting.png';
+import tail from '../../assets/animals/cat/tail.png';
 import Card from '../templates/Card';
 import Layout from '../templates/Layout';
 import Button from '../atoms/Button';
@@ -15,29 +18,89 @@ const Component = () => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = React.useState('#ffffff');
-  const [brushRadius, setBrushRadius] = React.useState(14);
+  const [brushRadius, setBrushRadius] = React.useState(24);
   const [undo, setUndo] = useState<ImageData[]>([]);
+  const [image, setImage] = useState<HTMLImageElement>(new Image());
 
-  const setImages = () => {
-    setTimeout(() => {
-      const image = new Image();
-      image.src = cat;
-      image.onload = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        const imageWidth = image.width * 0.95;
-        const imageHeight = image.height * 0.95;
-        const x = (canvas.width - imageWidth) / 2;
-        const y = (canvas.height - imageHeight) / 2;
+  const [isHead, setIsHead] = useState(true);
+  const [isBody, setIsBody] = useState(false);
+  const [isSitting, setIsSitting] = useState(false);
+  const [isTail, setIsTail] = useState(false);
 
-        ctx.drawImage(image, x, y, imageWidth, imageHeight);
-      };
-    }, 500);
+  const drawImage = (image: HTMLImageElement) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    image.onload = () => {
+      const imageWidth = image.width * 0.95;
+      const imageHeight = image.height * 0.95;
+      const x = (canvas.width - imageWidth) / 2;
+      const y = (canvas.height - imageHeight) / 2;
+
+      ctx.drawImage(image, x, y, imageWidth, imageHeight);
+    };
   };
 
-  useEffect(setImages, []);
+  useEffect(() => {
+    drawImage(image);
+  }, [image]);
+
+  useEffect(() => {
+    if (isHead) {
+      const image = new Image();
+      image.src = head;
+      setImage(image);
+    }
+
+    if (isBody) {
+      const image = new Image();
+      image.src = body;
+      setImage(image);
+    }
+
+    if (isSitting) {
+      const image = new Image();
+      image.src = sitting;
+      setImage(image);
+    }
+
+    if (isTail) {
+      const image = new Image();
+      image.src = tail;
+      setImage(image);
+    }
+  }, [isHead, isBody, isSitting, isTail]);
+
+  const handleReset = () => {
+    setIsHead(false);
+    setIsBody(false);
+    setIsSitting(false);
+    setIsTail(false);
+  }
+
+  const handleHead = () => {
+    handleReset();
+    setIsHead(true);
+  }
+
+  const handleBody = () => {
+    handleReset();
+    setIsBody(true);
+  }
+
+  const handleSitting = () => {
+    handleReset();
+    setIsSitting(true);
+  }
+
+  const handleTail = () => {
+    handleReset();
+    setIsTail(true);
+  }
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     setIsDrawing(true);
@@ -213,6 +276,31 @@ const Component = () => {
                 text="画像保存"
                 onClick={handleExport}
                 icon="mdi:download"
+              />
+              <hr className="my-2" />
+              <Button
+                text="頭"
+                onClick={handleHead}
+                icon="mdi:cat"
+                highlight={isHead}
+              />
+              <Button
+                text="体"
+                onClick={handleBody}
+                icon="solar:body-line-duotone"
+                highlight={isBody}
+              />
+              <Button
+                text="座り"
+                onClick={handleSitting}
+                icon="game-icons:sitting-dog"
+                highlight={isSitting}
+              />
+              <Button
+                text="尻尾"
+                onClick={handleTail}
+                icon="game-icons:fox-tail"
+                highlight={isTail}
               />
               <hr className="my-2" />
               <Button
