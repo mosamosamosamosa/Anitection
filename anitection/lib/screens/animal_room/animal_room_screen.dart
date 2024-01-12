@@ -23,6 +23,8 @@ class AnimalRoomScreen extends ConsumerStatefulWidget {
 }
 
 class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
+  SelectedTab selectedTab = SelectedTab.normal;
+
   @override
   Widget build(BuildContext context) {
     final animalAsyncState = ref.watch(animalFutureProvider(widget.animalId));
@@ -92,11 +94,18 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               },
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-            child: AnimalRoomBottomNavMenu(),
+            child: AnimalRoomBottomNavMenu(
+              selectedTab: selectedTab,
+              onMenuSelectedListener: (tabType) {
+                setState(() {
+                  selectedTab = tabType;
+                });
+              },
+            ),
           ),
         ],
       ),
@@ -104,8 +113,11 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   }
 }
 
+typedef OnMenuSelectedListener = void Function(SelectedTab selectedTab);
 class AnimalRoomBottomNavMenu extends StatelessWidget {
-  const AnimalRoomBottomNavMenu({super.key});
+  const AnimalRoomBottomNavMenu({super.key, this.selectedTab = SelectedTab.normal, required this.onMenuSelectedListener});
+  final SelectedTab selectedTab;
+  final OnMenuSelectedListener onMenuSelectedListener;
 
   @override
   Widget build(BuildContext context) {
@@ -113,127 +125,148 @@ class AnimalRoomBottomNavMenu extends StatelessWidget {
     final itemSize = min((width - 80) / 4 - ((width - 80) / 4 * 0.1), 70.0);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         const SizedBox(
           width: 80,
         ),
         Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: itemSize,
-                  height: itemSize,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFCF3),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFC3EB89),
-                      width: 3,
+            GestureDetector(
+              onTap: () {
+                onMenuSelectedListener(SelectedTab.food);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: itemSize,
+                    height: itemSize,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFFCF3),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFC3EB89),
+                        width: 3,
+                      ),
                     ),
                   ),
-                ),
-                SvgPicture.asset(
-                  "assets/svg/ic_dinner.svg",
-                  width: itemSize * 0.57,
-                  height: itemSize * 0.57,
-                ),
-              ],
+                  SvgPicture.asset(
+                    "assets/svg/ic_dinner.svg",
+                    width: itemSize * 0.57,
+                    height: itemSize * 0.57,
+                  ),
+                ],
+              ),
             ),
             Container(
               width: 3,
-              height: 43,
+              height: selectedTab == SelectedTab.food ? 22 : 44,
               color: const Color(0xFFC3EB89),
             )
           ],
         ),
         Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: itemSize,
-                  height: itemSize,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFCF3),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFFFB001),
-                      width: 3,
+            GestureDetector(
+              onTap: () {
+                onMenuSelectedListener(SelectedTab.stroll);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: itemSize,
+                    height: itemSize,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFFCF3),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFFFB001),
+                        width: 3,
+                      ),
                     ),
                   ),
-                ),
-                SvgPicture.asset("assets/svg/ic_tree.svg",
-                    width: itemSize * 0.57, height: itemSize * 0.57),
-              ],
+                  SvgPicture.asset("assets/svg/ic_tree.svg",
+                      width: itemSize * 0.57, height: itemSize * 0.57),
+                ],
+              ),
             ),
             Container(
               width: 3,
-              height: 43,
+              height: selectedTab == SelectedTab.stroll ? 22 : 44,
               color: const Color(0xFFFFB001),
             )
           ],
         ),
         Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: itemSize,
-                  height: itemSize,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFCF3),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFC6DEE8),
-                      width: 3,
+            GestureDetector(
+              onTap: () {
+                onMenuSelectedListener(SelectedTab.clean);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: itemSize,
+                    height: itemSize,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFFCF3),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFC6DEE8),
+                        width: 3,
+                      ),
                     ),
                   ),
-                ),
-                SvgPicture.asset(
-                  "assets/svg/ic_bucket.svg",
-                  width: itemSize * 0.57,
-                  height: itemSize * 0.57,
-                ),
-              ],
+                  SvgPicture.asset(
+                    "assets/svg/ic_bucket.svg",
+                    width: itemSize * 0.57,
+                    height: itemSize * 0.57,
+                  ),
+                ],
+              ),
             ),
             Container(
               width: 3,
-              height: 43,
+              height: selectedTab == SelectedTab.clean ? 22 : 44,
               color: const Color(0xFFC6DEE8),
             )
           ],
         ),
         Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: itemSize,
-                  height: itemSize,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFCF3),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFFFDB1D),
-                      width: 3,
+            GestureDetector(
+              onTap: () {
+                onMenuSelectedListener(SelectedTab.play);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: itemSize,
+                    height: itemSize,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFFCF3),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFFFDB1D),
+                        width: 3,
+                      ),
                     ),
                   ),
-                ),
-                SvgPicture.asset(
-                  "assets/svg/ic_stop_hand.svg",
-                  width: itemSize * 0.57,
-                  height: itemSize * 0.57,
-                ),
-              ],
+                  SvgPicture.asset(
+                    "assets/svg/ic_stop_hand.svg",
+                    width: itemSize * 0.57,
+                    height: itemSize * 0.57,
+                  ),
+                ],
+              ),
             ),
             Container(
               width: 3,
-              height: 43,
+              height: selectedTab == SelectedTab.play ? 22 : 44,
               color: const Color(0xFFFFDB1D),
             )
           ],
@@ -449,4 +482,8 @@ class AppBarCurtain extends StatelessWidget {
       ),
     );
   }
+}
+
+enum SelectedTab {
+  food, stroll, clean, play, normal,
 }
