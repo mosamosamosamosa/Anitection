@@ -112,8 +112,10 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 onFoodSelectedListener: (type) {
                   ref.read(selectedFoodProvider.notifier).state = type;
                   ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-                  Future.delayed(const Duration(milliseconds: 800), () {
+                  ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+                  Future.delayed(const Duration(milliseconds: 1500), () {
                     ref.read(effectStateProvider.notifier).state = EffectType.none;
+                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
                   });
                   Future.delayed(const Duration(milliseconds: 1000), () {
                     ref.read(selectedFoodProvider.notifier).state = FoodType.none;
