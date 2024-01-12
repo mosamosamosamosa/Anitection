@@ -80,27 +80,27 @@ const Component = () => {
     setIsBody(false);
     setIsSitting(false);
     setIsTail(false);
-  }
+  };
 
   const handleHead = () => {
     handleReset();
     setIsHead(true);
-  }
+  };
 
   const handleBody = () => {
     handleReset();
     setIsBody(true);
-  }
+  };
 
   const handleSitting = () => {
     handleReset();
     setIsSitting(true);
-  }
+  };
 
   const handleTail = () => {
     handleReset();
     setIsTail(true);
-  }
+  };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     setIsDrawing(true);
