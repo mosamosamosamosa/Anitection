@@ -103,6 +103,13 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               },
             ),
           ),
+          if (selectedTab == SelectedTab.food)
+            const Positioned(
+              bottom: 140,
+              left: 30,
+              right: 30,
+              child: FoodSelectionPain()
+            ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -492,6 +499,50 @@ class AppBarCurtain extends StatelessWidget {
               left: index * 50 - 25,
               child: const AppBarCurtainItem());
         }),
+      ),
+    );
+  }
+}
+
+class FoodSelectionPain extends StatelessWidget {
+  const FoodSelectionPain({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 2,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFFAE2),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  offset: const Offset(0, 4),
+                  blurRadius: 2,
+                )
+              ],
+            ),
+            child: SvgPicture.asset("assets/svg/ic_add_animal.svg"),
+          )
+        ],
       ),
     );
   }
