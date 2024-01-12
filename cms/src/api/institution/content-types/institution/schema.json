@@ -31,14 +31,21 @@
       "type": "text"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "point": {
+      "type": "biginteger"
+    },
+    "send_point": {
+      "type": "biginteger"
     }
   }
 }
