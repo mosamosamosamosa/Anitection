@@ -661,6 +661,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     icon: Attribute.Media;
     region: Attribute.String;
+    point: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -721,6 +722,9 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
       'api::pedigree.pedigree'
     >;
     gender: Attribute.String;
+    avatar_head: Attribute.Media;
+    avatar_body: Attribute.Media;
+    avatar_tail: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -915,6 +919,8 @@ export interface ApiInstitutionInstitution extends Schema.CollectionType {
     needs_url: Attribute.String;
     description: Attribute.Text;
     image: Attribute.Media;
+    point: Attribute.BigInteger;
+    send_point: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
