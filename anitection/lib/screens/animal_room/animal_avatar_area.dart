@@ -6,8 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
-class AnimalAvatarArea extends StatefulWidget {
+class AnimalAvatarArea extends ConsumerStatefulWidget {
   const AnimalAvatarArea({
     super.key,
     required this.size,
@@ -28,12 +30,12 @@ class AnimalAvatarArea extends StatefulWidget {
   final String avatarTailImageUrl;
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return AnimalAvatarAreaState();
   }
 }
 
-class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
+class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   final Point _position = Point(0, 0);
   final avatarWidth = 171.0;
   late double avatarHeight;
@@ -63,6 +65,7 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
 
   @override
   Widget build(BuildContext context) {
+    final faceState = ref.watch(faceStateProvider);
     return GestureDetector(
       onTapDown: (details) {
         log("onTapDown, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
@@ -84,33 +87,96 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
               left: _position.x - avatarWidth / 2,
               child: GestureDetector(
                 onTap: widget.onAvatarTap,
-                child: SizedBox(
-                  width: avatarWidth,
-                  height: avatarHeight,
-                  child: Stack(
-                    children: [
-                      Image.network(
-                        widget.avatarHeadImageUrl,
-                        width: avatarWidth,
-                        height: avatarHeight,
-                      ),
-                      Image.network(
-                        widget.avatarBodyImageUrl,
-                        width: avatarWidth,
-                        height: avatarHeight,
-                      ),
-                      Image.network(
-                        widget.avatarTailImageUrl,
-                        width: avatarWidth,
-                        height: avatarHeight,
-                      )
-                    ],
-                  ),
+                child: AnimalView(
+                  avatarWidth: avatarWidth,
+                  avatarHeight: avatarHeight,
+                  avatarTailImageUrl: widget.avatarTailImageUrl,
+                  avatarBodyImageUrl: widget.avatarBodyImageUrl,
+                  avatarHeadImageUrl: widget.avatarHeadImageUrl,
+                  faceState: faceState,
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimalView extends StatelessWidget {
+  const AnimalView({
+    super.key,
+    required this.avatarWidth,
+    required this.avatarHeight,
+    required this.avatarTailImageUrl,
+    required this.avatarBodyImageUrl,
+    required this.avatarHeadImageUrl,
+    required this.faceState,
+  });
+  final double avatarWidth;
+  final double avatarHeight;
+  final String avatarTailImageUrl;
+  final String avatarBodyImageUrl;
+  final String avatarHeadImageUrl;
+  final FaceStateType faceState;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: avatarWidth,
+      height: avatarHeight,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            top: 0,
+            left: avatarWidth * 0.265,
+            child: Image.network(
+              avatarTailImageUrl,
+              width: avatarWidth,
+              height: avatarHeight,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Image.network(
+              avatarBodyImageUrl,
+              width: avatarWidth,
+              height: avatarHeight,
+            ),
+          ),
+
+          Positioned(
+            top: -(avatarHeight * 0.3),
+            left: -(avatarWidth * 0.1),
+            child: Image.network(
+              avatarHeadImageUrl,
+              width: avatarWidth,
+              height: avatarHeight,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Lottie.asset(
+              'assets/lottie/${() {
+                switch(faceState) {
+                  case FaceStateType.blink:
+                    return 'blink_cat1';
+                  case FaceStateType.sad:
+                    return 'sad_cat';
+                  case FaceStateType.smile:
+                    return 'smile_cat';
+                }
+              }()
+              }.json',
+              width: avatarWidth,
+              height: avatarHeight,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -138,3 +204,9 @@ class Point {
     y += dy * speed;
   }
 }
+
+enum FaceStateType {
+  blink, sad, smile,
+}
+
+final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
