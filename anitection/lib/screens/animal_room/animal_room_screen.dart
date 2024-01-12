@@ -51,14 +51,16 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             child: Container(
               alignment: Alignment.center,
               width: size.width,
-              child: AnimalNameLabel(
+              child: selectedTab == SelectedTab.stroll ? const AnimalNameLabel(
+                name: "お散歩中・・・",
+              ):  AnimalNameLabel(
                 name: animalAsyncState.valueOrNull?.data.attributes.name ?? "",
               ),
             ),
           ),
           Positioned(
             top: size.height * 0.5,
-            child: Container(
+            child: selectedTab == SelectedTab.stroll ? Container() : Container(
               width: size.width,
               alignment: Alignment.center,
               child: AnimalAvatarArea(
@@ -73,10 +75,17 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                   }
                   return const Size(0, 0);
                 }(),
-                onAvatarTap: () {
+                onAvatarTap: () async {
                   final data = animalAsyncState.valueOrNull;
-                  if (data != null) {
+                  if (data != null && selectedTab != SelectedTab.play) {
                     showAnimalRoomProfileDialog(context, size, data.data);
+                  }  else {
+                    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+                    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+                    Future.delayed(const Duration(milliseconds: 800), () {
+                      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+                      ref.read(effectStateProvider.notifier).state = EffectType.none;
+                    });
                   }
                 },
                 avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
@@ -102,7 +111,11 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               selectedTab: selectedTab,
               onMenuSelectedListener: (tabType) {
                 setState(() {
-                  selectedTab = tabType;
+                  if (selectedTab == tabType) {
+                    selectedTab = SelectedTab.normal;
+                  } else {
+                    selectedTab = tabType;
+                  }
                 });
               },
             ),

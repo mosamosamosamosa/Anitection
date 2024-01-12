@@ -94,6 +94,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                   avatarBodyImageUrl: widget.avatarBodyImageUrl,
                   avatarHeadImageUrl: widget.avatarHeadImageUrl,
                   faceState: faceState,
+                  effectType: ref.watch(effectStateProvider),
                 ),
               ),
             ),
@@ -113,6 +114,7 @@ class AnimalView extends StatelessWidget {
     required this.avatarBodyImageUrl,
     required this.avatarHeadImageUrl,
     required this.faceState,
+    required this.effectType,
   });
   final double avatarWidth;
   final double avatarHeight;
@@ -120,6 +122,7 @@ class AnimalView extends StatelessWidget {
   final String avatarBodyImageUrl;
   final String avatarHeadImageUrl;
   final FaceStateType faceState;
+  final EffectType effectType;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +178,17 @@ class AnimalView extends StatelessWidget {
               width: avatarWidth,
               height: avatarHeight,
             ),
-          )
+          ),
+          if (effectType == EffectType.kirakira)
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Lottie.asset(
+                'assets/lottie/kirakira.json',
+                width: avatarWidth,
+                height: avatarHeight,
+              ),
+            ),
         ],
       ),
     );
@@ -209,4 +222,8 @@ enum FaceStateType {
   blink, sad, smile,
 }
 
+enum EffectType {
+  none, kirakira,
+}
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
+final effectStateProvider = StateProvider((ref) => EffectType.none);
