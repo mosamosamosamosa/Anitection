@@ -725,6 +725,8 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     avatar_head: Attribute.Media;
     avatar_body: Attribute.Media;
     avatar_tail: Attribute.Media;
+    avatar_body_sitting: Attribute.Media;
+    sitting: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
