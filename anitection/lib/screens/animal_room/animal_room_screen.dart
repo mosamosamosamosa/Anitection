@@ -77,6 +77,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     showAnimalRoomProfileDialog(context, size, data.data);
                   }
                 },
+                avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
+                avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
+                avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
               ),
             ),
           ),

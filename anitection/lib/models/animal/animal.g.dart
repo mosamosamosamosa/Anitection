@@ -62,6 +62,30 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
                   value as Map<String, dynamic>,
                   (value) =>
                       MediaAttributes.fromJson(value as Map<String, dynamic>))),
+      avatarBody: json['avatar_body'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['avatar_body'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+      avatarHead: json['avatar_head'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['avatar_head'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+      avatarTail: json['avatar_tail'] == null
+          ? null
+          : SingleData<Model<MediaAttributes>>.fromJson(
+              json['avatar_tail'] as Map<String, dynamic>,
+              (value) => Model<MediaAttributes>.fromJson(
+                  value as Map<String, dynamic>,
+                  (value) =>
+                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
@@ -101,4 +125,19 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
       ),
       'hair_length': instance.hairLength,
       'size': instance.size,
+      'avatar_head': instance.avatarHead?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
+      'avatar_body': instance.avatarBody?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
+      'avatar_tail': instance.avatarTail?.toJson(
+        (value) => value.toJson(
+          (value) => value,
+        ),
+      ),
     };

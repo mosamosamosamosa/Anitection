@@ -8,12 +8,24 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class AnimalAvatarArea extends StatefulWidget {
-  const AnimalAvatarArea({super.key, required this.size, required this.onAvatarTap, required this.avatarImageUrl, required this.avatarSize});
+  const AnimalAvatarArea({
+    super.key,
+    required this.size,
+    required this.onAvatarTap,
+    required this.avatarImageUrl,
+    required this.avatarSize,
+    required this.avatarHeadImageUrl,
+    required this.avatarBodyImageUrl,
+    required this.avatarTailImageUrl,
+  });
 
   final Size size;
   final VoidCallback onAvatarTap;
   final Size avatarSize;
   final String avatarImageUrl;
+  final String avatarHeadImageUrl;
+  final String avatarBodyImageUrl;
+  final String avatarTailImageUrl;
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +42,8 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
 
   @override
   void initState() {
-    avatarHeight = (widget.avatarSize.height / widget.avatarSize.width * avatarWidth);
+    avatarHeight =
+        (widget.avatarSize.height / widget.avatarSize.width * avatarWidth);
     super.initState();
   }
 
@@ -71,10 +84,28 @@ class AnimalAvatarAreaState extends State<AnimalAvatarArea> {
               left: _position.x - avatarWidth / 2,
               child: GestureDetector(
                 onTap: widget.onAvatarTap,
-                child: Image.network(
-                  widget.avatarImageUrl,
+                child: SizedBox(
                   width: avatarWidth,
                   height: avatarHeight,
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        widget.avatarHeadImageUrl,
+                        width: avatarWidth,
+                        height: avatarHeight,
+                      ),
+                      Image.network(
+                        widget.avatarBodyImageUrl,
+                        width: avatarWidth,
+                        height: avatarHeight,
+                      ),
+                      Image.network(
+                        widget.avatarTailImageUrl,
+                        width: avatarWidth,
+                        height: avatarHeight,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -24,6 +24,9 @@ class AnimalAttributes {
     required this.hairLength,
     required this.size,
     required this.avatarIcon,
+    required this.avatarBody,
+    required this.avatarHead,
+    required this.avatarTail,
   });
 
   final String? name;
@@ -48,6 +51,12 @@ class AnimalAttributes {
   @JsonKey(name: 'hair_length') final String? hairLength;
 
   @JsonKey(name: 'size') final String? size;
+
+  @JsonKey(name: 'avatar_head') final SingleData<Model<MediaAttributes>>? avatarHead;
+
+  @JsonKey(name: 'avatar_body') final SingleData<Model<MediaAttributes>>? avatarBody;
+
+  @JsonKey(name: 'avatar_tail') final SingleData<Model<MediaAttributes>>? avatarTail;
 
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {
