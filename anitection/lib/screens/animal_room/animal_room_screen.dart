@@ -104,11 +104,22 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             ),
           ),
           if (selectedTab == SelectedTab.food)
-            const Positioned(
+            Positioned(
               bottom: 140,
               left: 30,
               right: 30,
-              child: FoodSelectionPain()
+              child: FoodSelectionPain(
+                onFoodSelectedListener: (type) {
+                  ref.read(selectedFoodProvider.notifier).state = type;
+                  ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+                  Future.delayed(const Duration(milliseconds: 800), () {
+                    ref.read(effectStateProvider.notifier).state = EffectType.none;
+                  });
+                  Future.delayed(const Duration(milliseconds: 1000), () {
+                    ref.read(selectedFoodProvider.notifier).state = FoodType.none;
+                  });
+                },
+              )
             ),
           Positioned(
             bottom: 0,
@@ -504,8 +515,10 @@ class AppBarCurtain extends StatelessWidget {
   }
 }
 
+typedef OnFoodSelectedListener = void Function(FoodType type);
 class FoodSelectionPain extends StatelessWidget {
-  const FoodSelectionPain({super.key});
+  const FoodSelectionPain({super.key, required this.onFoodSelectedListener});
+  final OnFoodSelectedListener onFoodSelectedListener;
 
   @override
   Widget build(BuildContext context) {
@@ -527,6 +540,24 @@ class FoodSelectionPain extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(),
+          GestureDetector(
+            onTap: () {
+              onFoodSelectedListener(FoodType.karikari);
+            },
+            child: Image.asset("assets/images/img_karikari.png", height: 40),
+          ),
+          GestureDetector(
+            onTap: () {
+              onFoodSelectedListener(FoodType.maguro);
+            },
+            child: Image.asset("assets/images/img_maguro.png", height: 40),
+          ),
+          GestureDetector(
+            onTap: () {
+              onFoodSelectedListener(FoodType.nekocan);
+            },
+            child: Image.asset("assets/images/img_nekocan.png", height: 40),
+          ),
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(

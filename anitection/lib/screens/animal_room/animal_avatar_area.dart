@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 
 // math import
 import 'dart:math' as math;
@@ -95,6 +94,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                   avatarHeadImageUrl: widget.avatarHeadImageUrl,
                   faceState: faceState,
                   effectType: ref.watch(effectStateProvider),
+                  foodType: ref.watch(selectedFoodProvider),
                 ),
               ),
             ),
@@ -115,6 +115,7 @@ class AnimalView extends StatelessWidget {
     required this.avatarHeadImageUrl,
     required this.faceState,
     required this.effectType,
+    required this.foodType,
   });
   final double avatarWidth;
   final double avatarHeight;
@@ -123,6 +124,7 @@ class AnimalView extends StatelessWidget {
   final String avatarHeadImageUrl;
   final FaceStateType faceState;
   final EffectType effectType;
+  final FoodType foodType;
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +181,7 @@ class AnimalView extends StatelessWidget {
               height: avatarHeight,
             ),
           ),
+
           if (effectType == EffectType.kirakira)
             Positioned(
               top: 0,
@@ -189,9 +192,33 @@ class AnimalView extends StatelessWidget {
                 height: avatarHeight,
               ),
             ),
+          if (foodType != FoodType.none)
+            Positioned(
+              top: avatarHeight * 0.5,
+              left: avatarWidth * 0.28,
+              child: FoodRender(foodType),
+            ),
         ],
       ),
     );
+  }
+}
+
+class FoodRender extends StatelessWidget {
+  final FoodType foodType;
+  const FoodRender(this.foodType, {super.key});
+  @override
+  Widget build(BuildContext context) {
+    switch(foodType) {
+      case FoodType.karikari:
+        return Image.asset('assets/images/img_karikari.png', width: 40);
+      case FoodType.maguro:
+        return Image.asset('assets/images/img_maguro.png', width: 40);
+      case FoodType.nekocan:
+        return Image.asset('assets/images/img_nekocan.png', width: 40);
+      case FoodType.none:
+        return Container();
+    }
   }
 }
 
@@ -225,5 +252,11 @@ enum FaceStateType {
 enum EffectType {
   none, kirakira,
 }
+
+enum FoodType {
+  karikari, maguro, nekocan, none,
+}
+
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
+final selectedFoodProvider = StateProvider((ref) => FoodType.none);
