@@ -45,6 +45,10 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   void initState() {
     avatarHeight =
         (widget.avatarSize.height / widget.avatarSize.width * avatarWidth);
+    setState(() {
+      _position.x = widget.size.width / 2;
+      _position.y = widget.size.height / 6;
+    });
     super.initState();
   }
 
