@@ -49,6 +49,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   }
 
   void moveToPosition(Offset position) async {
+    updateRandomSpeechBubbleState();
     const double tolerance = 10.0; // 許容される誤差の範囲
     final current = DateTime.now().microsecondsSinceEpoch;
     animationSession = current;
@@ -59,6 +60,20 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
         _position.moveTowards(Point(position.dx, position.dy), 5);
       });
       await Future.delayed(const Duration(milliseconds: 10));
+    }
+  }
+
+  void updateRandomSpeechBubbleState() {
+    // 確率計算
+    final random = math.Random();
+    // 1/10の確率でSpeechStateType.needClean
+    final n = random.nextInt(25);
+    if (n == 0) {
+      ref.read(speechStateProvider.notifier).state = SpeechStateType.needClean;
+    } else if (n == 1){
+      ref.read(speechStateProvider.notifier).state = SpeechStateType.needFood;
+    } else {
+      ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
     }
   }
 
@@ -200,7 +215,7 @@ class AnimalView extends StatelessWidget {
               left: avatarWidth * 0.28,
               child: FoodRender(foodType),
             ),
-          if (foodType != FoodType.none)
+          if (speechState != SpeechStateType.none)
             Positioned(
                 top: -(avatarHeight * 0.45),
                 left: (avatarWidth * 0.23),
@@ -337,4 +352,4 @@ enum SpeechStateType {
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
 final selectedFoodProvider = StateProvider((ref) => FoodType.none);
-final speechStateProvider = StateProvider((ref) => SpeechStateType.needFood);
+final speechStateProvider = StateProvider.autoDispose((ref) => SpeechStateType.none);
