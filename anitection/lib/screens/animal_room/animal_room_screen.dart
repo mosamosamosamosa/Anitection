@@ -40,6 +40,8 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       body: Stack(
         children: [
           const AnimalRoomBackground(),
+          if (selectedTab == SelectedTab.clean)
+            CleanBackgrond(size: size),
           const AppBarCurtain(),
           const Positioned(
             top: 40,
@@ -592,6 +594,35 @@ class FoodSelectionPain extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class CleanBackgrond extends StatelessWidget {
+  final Size size;
+
+  const CleanBackgrond({super.key, required this.size});
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          top: size.height * 0.15,
+          left: -size.width * 0.05,
+          child: SvgPicture.asset("assets/svg/img_trush.svg"),
+        ),
+        Positioned(
+          top: size.height * 0.3,
+          right: -size.width * 0.05,
+          child: SvgPicture.asset("assets/svg/img_trush.svg"),
+        ),
+        Positioned(
+            bottom: size.height * 0.15,
+            left: -size.width * 0.03,
+            child: SvgPicture.asset("assets/svg/img_trush.svg")
+        ),
+      ],
     );
   }
 }
