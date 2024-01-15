@@ -36,7 +36,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
 
 class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   final Point _position = Point(0, 0);
-  final avatarWidth = 171.0;
+  final avatarWidth = 250.0;
   late double avatarHeight;
 
   int animationSession = DateTime.now().microsecondsSinceEpoch;
@@ -163,8 +163,8 @@ class AnimalView extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0,
-            left: 0,
+            top: -(avatarHeight * 0.057),
+            left: (avatarWidth * 0.115),
             child: Lottie.asset(
               'assets/lottie/${() {
                 switch(faceState) {
@@ -177,8 +177,9 @@ class AnimalView extends StatelessWidget {
                 }
               }()
               }.json',
-              width: avatarWidth,
-              height: avatarHeight,
+              width: avatarWidth * 0.85,
+              height: avatarHeight * 0.85,
+              fit: BoxFit.cover,
             ),
           ),
 
