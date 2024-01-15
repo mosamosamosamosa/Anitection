@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-
 // math import
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 
 class AnimalAvatarArea extends ConsumerStatefulWidget {
@@ -95,6 +95,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                   faceState: faceState,
                   effectType: ref.watch(effectStateProvider),
                   foodType: ref.watch(selectedFoodProvider),
+                  speechState: ref.watch(speechStateProvider),
                 ),
               ),
             ),
@@ -116,7 +117,9 @@ class AnimalView extends StatelessWidget {
     required this.faceState,
     required this.effectType,
     required this.foodType,
+    required this.speechState,
   });
+
   final double avatarWidth;
   final double avatarHeight;
   final String avatarTailImageUrl;
@@ -125,6 +128,7 @@ class AnimalView extends StatelessWidget {
   final FaceStateType faceState;
   final EffectType effectType;
   final FoodType foodType;
+  final SpeechStateType speechState;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +156,6 @@ class AnimalView extends StatelessWidget {
               height: avatarHeight,
             ),
           ),
-
           Positioned(
             top: -(avatarHeight * 0.3),
             left: -(avatarWidth * 0.1),
@@ -167,7 +170,7 @@ class AnimalView extends StatelessWidget {
             left: (avatarWidth * 0.115),
             child: Lottie.asset(
               'assets/lottie/${() {
-                switch(faceState) {
+                switch (faceState) {
                   case FaceStateType.blink:
                     return 'blink_cat1';
                   case FaceStateType.sad:
@@ -175,14 +178,12 @@ class AnimalView extends StatelessWidget {
                   case FaceStateType.smile:
                     return 'smile_cat';
                 }
-              }()
-              }.json',
+              }()}.json',
               width: avatarWidth * 0.85,
               height: avatarHeight * 0.85,
               fit: BoxFit.cover,
             ),
           ),
-
           if (effectType == EffectType.kirakira)
             Positioned(
               top: 0,
@@ -199,6 +200,16 @@ class AnimalView extends StatelessWidget {
               left: avatarWidth * 0.28,
               child: FoodRender(foodType),
             ),
+          if (foodType != FoodType.none)
+            Positioned(
+                top: -(avatarHeight * 0.45),
+                left: (avatarWidth * 0.23),
+                child: SpeechBubble(
+                  avatarHeight: avatarHeight,
+                  avatarWidth: avatarWidth,
+                  speechState: speechState,
+                )
+            ),
         ],
       ),
     );
@@ -207,10 +218,12 @@ class AnimalView extends StatelessWidget {
 
 class FoodRender extends StatelessWidget {
   final FoodType foodType;
+
   const FoodRender(this.foodType, {super.key});
+
   @override
   Widget build(BuildContext context) {
-    switch(foodType) {
+    switch (foodType) {
       case FoodType.karikari:
         return Image.asset('assets/images/img_karikari.png', width: 40);
       case FoodType.maguro:
@@ -220,6 +233,56 @@ class FoodRender extends StatelessWidget {
       case FoodType.none:
         return Container();
     }
+  }
+}
+
+class SpeechBubble extends StatelessWidget {
+  const SpeechBubble({super.key, required this.avatarHeight, required this.avatarWidth, required this.speechState});
+  final double avatarHeight;
+  final double avatarWidth;
+  final SpeechStateType speechState;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: avatarHeight * 0.5,
+      width: avatarHeight * 0.5 * 0.83333333333,
+      child: Stack(
+        children: [
+          SvgPicture.asset(
+            'assets/svg/ic_speech_background.svg',
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: avatarHeight * 0.5 * 0.83333333333,
+            height: avatarHeight * 0.5 * 0.83333333333,
+            alignment: Alignment.topCenter,
+            padding: EdgeInsets.only(top: (avatarHeight * 0.1)),
+            child: () {
+              switch(speechState) {
+                case SpeechStateType.none:
+                  return Container();
+                case SpeechStateType.needClean:
+                  return SvgPicture.asset(
+                    'assets/svg/ic_speech_need_clean.svg',
+                    fit: BoxFit.cover,
+                  );
+                case SpeechStateType.needFood:
+                  return SvgPicture.asset(
+                    'assets/svg/ic_speech_need_food.svg',
+                    fit: BoxFit.cover,
+                  );
+                case SpeechStateType.present4You:
+                  return SvgPicture.asset(
+                    'assets/svg/ic_speech_present_4_you.svg',
+                    fit: BoxFit.cover,
+                  );
+              }
+            }(),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -247,17 +310,31 @@ class Point {
 }
 
 enum FaceStateType {
-  blink, sad, smile,
+  blink,
+  sad,
+  smile,
 }
 
 enum EffectType {
-  none, kirakira,
+  none,
+  kirakira,
 }
 
 enum FoodType {
-  karikari, maguro, nekocan, none,
+  karikari,
+  maguro,
+  nekocan,
+  none,
+}
+
+enum SpeechStateType {
+  none,
+  needClean,
+  needFood,
+  present4You,
 }
 
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
 final selectedFoodProvider = StateProvider((ref) => FoodType.none);
+final speechStateProvider = StateProvider((ref) => SpeechStateType.needFood);
