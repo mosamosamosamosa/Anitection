@@ -18,15 +18,19 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
     required this.avatarHeadImageUrl,
     required this.avatarBodyImageUrl,
     required this.avatarTailImageUrl,
+    required this.isCleanMode,
+    required this.onCleanComplete,
   });
 
   final Size size;
   final VoidCallback onAvatarTap;
+  final VoidCallback onCleanComplete;
   final Size avatarSize;
   final String avatarImageUrl;
   final String avatarHeadImageUrl;
   final String avatarBodyImageUrl;
   final String avatarTailImageUrl;
+  final bool isCleanMode;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -36,8 +40,11 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
 
 class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   final Point _position = Point(0, 0);
+  final Point _dustClothPosition = Point(0, 0);
   final avatarWidth = 250.0;
   late double avatarHeight;
+
+  DateTime? cleanStartTime;
 
   int animationSession = DateTime.now().microsecondsSinceEpoch;
 
@@ -74,7 +81,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
     final n = random.nextInt(25);
     if (n == 0) {
       ref.read(speechStateProvider.notifier).state = SpeechStateType.needClean;
-    } else if (n == 1){
+    } else if (n == 1) {
       ref.read(speechStateProvider.notifier).state = SpeechStateType.needFood;
     } else {
       ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
@@ -88,9 +95,38 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
       onTapDown: (details) {
         log("onTapDown, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
 
-        moveToPosition(details.localPosition);
-
+        if (!widget.isCleanMode) {
+          moveToPosition(details.localPosition);
+        }
         // moveToPosition(details.localPosition);
+      },
+      onPanUpdate: (details) {
+        log("onPanUpdate, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
+        if (widget.isCleanMode) {
+          setState(() {
+            _dustClothPosition.x = details.localPosition.dx;
+            _dustClothPosition.y = details.localPosition.dy;
+          });
+          final cleanEndTime = DateTime.now();
+          final cleanDuration = cleanEndTime.difference(cleanStartTime!);
+          log("cleanDuration: ${cleanDuration.inSeconds}");
+          if (cleanDuration.inSeconds == 2) {
+            widget.onCleanComplete();
+            cleanStartTime = null;
+          }
+        }
+      },
+      onPanStart: (details) {
+        log("onPanStart, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
+        if (widget.isCleanMode) {
+          cleanStartTime = DateTime.now();
+        }
+      },
+      onPanEnd: (details) {
+        cleanStartTime = null;
+      },
+      onPanCancel: () {
+        cleanStartTime = null;
       },
       child: Container(
         width: widget.size.width,
@@ -118,6 +154,22 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                 ),
               ),
             ),
+            if (widget.isCleanMode)
+              Positioned(
+                top: (_dustClothPosition.y - avatarHeight / 2) + 100,
+                left: _dustClothPosition.x - avatarWidth / 2,
+                child: GestureDetector(
+                  onTap: widget.onAvatarTap,
+                  child: Transform.rotate(
+                    angle: 10,
+                    child: Image.asset(
+                      "assets/images/img_dust_cloth.png",
+                      width: 78,
+                      height: 58,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -227,8 +279,7 @@ class AnimalView extends StatelessWidget {
                   avatarHeight: avatarHeight,
                   avatarWidth: avatarWidth,
                   speechState: speechState,
-                )
-            ),
+                )),
         ],
       ),
     );
@@ -256,7 +307,12 @@ class FoodRender extends StatelessWidget {
 }
 
 class SpeechBubble extends StatelessWidget {
-  const SpeechBubble({super.key, required this.avatarHeight, required this.avatarWidth, required this.speechState});
+  const SpeechBubble(
+      {super.key,
+      required this.avatarHeight,
+      required this.avatarWidth,
+      required this.speechState});
+
   final double avatarHeight;
   final double avatarWidth;
   final SpeechStateType speechState;
@@ -278,7 +334,7 @@ class SpeechBubble extends StatelessWidget {
             alignment: Alignment.topCenter,
             padding: EdgeInsets.only(top: (avatarHeight * 0.1)),
             child: () {
-              switch(speechState) {
+              switch (speechState) {
                 case SpeechStateType.none:
                   return Container();
                 case SpeechStateType.needClean:
@@ -356,4 +412,5 @@ enum SpeechStateType {
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
 final selectedFoodProvider = StateProvider((ref) => FoodType.none);
-final speechStateProvider = StateProvider.autoDispose((ref) => SpeechStateType.none);
+final speechStateProvider =
+    StateProvider.autoDispose((ref) => SpeechStateType.none);

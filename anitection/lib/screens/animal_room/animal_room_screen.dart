@@ -77,6 +77,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 }(),
                 onAvatarTap: () async {
                   final data = animalAsyncState.valueOrNull;
+                  if (selectedTab == SelectedTab.clean) {
+                    return;
+                  }
                   if (data != null && selectedTab != SelectedTab.play) {
                     showAnimalRoomProfileDialog(context, size, data.data);
                   }  else {
@@ -88,9 +91,21 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     });
                   }
                 },
+                onCleanComplete: () {
+                  ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+                  ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+                  Future.delayed(const Duration(milliseconds: 1500), () {
+                    ref.read(effectStateProvider.notifier).state = EffectType.none;
+                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+                  });
+                  setState(() {
+                    selectedTab = SelectedTab.normal;
+                  });
+                },
                 avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
                 avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
                 avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
+                isCleanMode: selectedTab == SelectedTab.clean,
               ),
             ),
           ),
