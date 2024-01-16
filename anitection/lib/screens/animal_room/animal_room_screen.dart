@@ -5,6 +5,7 @@ import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
+import 'package:anitection/repositories/clean_history_repository.dart';
 import 'package:anitection/screens/animal_room/animal_avatar_area.dart';
 import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,17 @@ class AnimalRoomScreen extends ConsumerStatefulWidget {
 
 class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   SelectedTab selectedTab = SelectedTab.normal;
+  DateTime? lastCleanDateTime;
 
+  @override
+  void initState() {
+    ref.read(cleanHistoryRepository).getLastCleanDateTime(widget.animalId).then((value) {
+      setState(() {
+        lastCleanDateTime = value;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final animalAsyncState = ref.watch(animalFutureProvider(widget.animalId));
@@ -40,8 +51,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       body: Stack(
         children: [
           const AnimalRoomBackground(),
-          if (selectedTab == SelectedTab.clean)
-            CleanBackgrond(size: size),
+            CleanBackground(size: size, lastCleanDateTime: lastCleanDateTime,),
           const AppBarCurtain(),
           const Positioned(
             top: 40,
@@ -101,8 +111,11 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     ref.read(effectStateProvider.notifier).state = EffectType.none;
                     ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
                   });
+                  final now = DateTime.now();
+                  ref.read(cleanHistoryRepository).setLastCleanDateTime(widget.animalId, now);
                   setState(() {
                     selectedTab = SelectedTab.normal;
+                    lastCleanDateTime = now;
                   });
                 },
                 avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
@@ -599,29 +612,57 @@ class FoodSelectionPain extends StatelessWidget {
   }
 }
 
-class CleanBackgrond extends StatelessWidget {
+class CleanBackground extends StatefulWidget {
   final Size size;
+  final DateTime? lastCleanDateTime;
 
-  const CleanBackgrond({super.key, required this.size});
+  const CleanBackground({super.key, required this.size, required this.lastCleanDateTime});
+  @override
+  State<StatefulWidget> createState() {
+    return CleanBackgroundState();
+  }
+}
+
+class CleanBackgroundState extends State<CleanBackground> {
+
+  DateTime now = DateTime.now();
+  @override
+  void initState() {
+    Future.microtask(() async {
+      while(true) {
+        await Future.delayed(const Duration(seconds: 1), () {
+          setState(() {
+            now = DateTime.now();
+          });
+        });
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final alpha = (widget.lastCleanDateTime == null ? 255 : ((now.difference(widget.lastCleanDateTime!).inSeconds / 1).floor())).clamp(0, 255);
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Positioned(
-          top: size.height * 0.15,
-          left: -size.width * 0.05,
-          child: SvgPicture.asset("assets/svg/img_trush.svg"),
+          top: widget.size.height * 0.15,
+          left: -widget.size.width * 0.05,
+          child: SvgPicture.asset("assets/svg/img_trush.svg", colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),),
         ),
         Positioned(
-          top: size.height * 0.3,
-          right: -size.width * 0.05,
-          child: SvgPicture.asset("assets/svg/img_trush.svg"),
+          top: widget.size.height * 0.3,
+          right: -widget.size.width * 0.05,
+          child: SvgPicture.asset("assets/svg/img_trush.svg", colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),),
         ),
         Positioned(
-            bottom: size.height * 0.15,
-            left: -size.width * 0.03,
-            child: SvgPicture.asset("assets/svg/img_trush.svg")
+            bottom: widget.size.height * 0.15,
+            left: -widget.size.width * 0.03,
+            child: SvgPicture.asset(
+              "assets/svg/img_trush.svg",
+              colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),
+            ),
         ),
       ],
     );
