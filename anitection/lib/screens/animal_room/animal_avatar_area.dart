@@ -20,6 +20,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
     required this.avatarTailImageUrl,
     required this.isCleanMode,
     required this.onCleanComplete,
+    required this.selectedToyType,
   });
 
   final Size size;
@@ -31,6 +32,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
   final String avatarBodyImageUrl;
   final String avatarTailImageUrl;
   final bool isCleanMode;
+  final ToyType? selectedToyType;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -45,6 +47,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
   late double avatarHeight;
 
   DateTime? cleanStartTime;
+  Offset? lastTapDownPosition;
 
   int animationSession = DateTime.now().microsecondsSinceEpoch;
 
@@ -74,6 +77,9 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
     }
   }
 
+  void renderToy(Offset position) async {
+  }
+
   void updateRandomSpeechBubbleState() {
     // 確率計算
     final random = math.Random();
@@ -95,6 +101,12 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
       onTapDown: (details) {
         log("onTapDown, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
 
+        setState(() {
+          lastTapDownPosition = details.localPosition;
+        });
+        if (widget.selectedToyType != null) {
+          renderToy(details.localPosition);
+        }
         if (!widget.isCleanMode) {
           moveToPosition(details.localPosition);
         }
@@ -169,6 +181,12 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                     ),
                   ),
                 ),
+              ),
+            if (widget.selectedToyType != null && lastTapDownPosition != null)
+              Positioned(
+                top: (lastTapDownPosition!.dy - avatarHeight / 2) + 100,
+                left: lastTapDownPosition!.dx - avatarWidth / 2,
+                child: ToyRender(selectedToyType: widget.selectedToyType),
               ),
           ],
         ),
@@ -361,6 +379,37 @@ class SpeechBubble extends StatelessWidget {
   }
 }
 
+class ToyRender extends StatelessWidget {
+  const ToyRender({super.key, required this.selectedToyType});
+  final ToyType? selectedToyType;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (selectedToyType) {
+      case ToyType.nekojarashi:
+        return SvgPicture.asset(
+          "assets/svg/img_nekojarashi.svg",
+          width: 78,
+          height: 58,
+        );
+      case ToyType.ball:
+        return SvgPicture.asset(
+          "assets/svg/img_ball.svg",
+          width: 78,
+          height: 58,
+        );
+      case ToyType.fish:
+        return SvgPicture.asset(
+          "assets/svg/img_fish.svg",
+          width: 78,
+          height: 58,
+        );
+      default:
+        return Container();
+    }
+  }
+}
+
 class Point {
   double x, y;
 
@@ -409,8 +458,15 @@ enum SpeechStateType {
   present4You,
 }
 
+enum ToyType {
+  nekojarashi,
+  ball,
+  fish,
+}
+
 final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
 final selectedFoodProvider = StateProvider((ref) => FoodType.none);
 final speechStateProvider =
     StateProvider.autoDispose((ref) => SpeechStateType.none);
+final toyStateProvider = StateProvider.autoDispose((ref) => ToyType.nekojarashi);

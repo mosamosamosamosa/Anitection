@@ -26,6 +26,7 @@ class AnimalRoomScreen extends ConsumerStatefulWidget {
 class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   SelectedTab selectedTab = SelectedTab.normal;
   DateTime? lastCleanDateTime;
+  ToyType? selectedToy;
 
   @override
   void initState() {
@@ -122,6 +123,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
                 avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
                 isCleanMode: selectedTab == SelectedTab.clean,
+                selectedToyType: selectedToy,
               ),
             ),
           ),
@@ -154,6 +156,19 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 },
               )
             ),
+          if (selectedTab == SelectedTab.play && selectedToy == null)
+            Positioned(
+              bottom: 140,
+              left: 30,
+              right: 30,
+              child: ToySelectionPain(
+                onToySelectedListener: (type) {
+                  setState(() {
+                    selectedToy = type;
+                  });
+                },
+              )
+            ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -167,6 +182,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                   } else {
                     selectedTab = tabType;
                   }
+                  selectedToy = null;
                 });
               },
             ),
@@ -590,6 +606,70 @@ class FoodSelectionPain extends StatelessWidget {
               onFoodSelectedListener(FoodType.nekocan);
             },
             child: Image.asset("assets/images/img_nekocan.png", height: 40),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFFAE2),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  offset: const Offset(0, 4),
+                  blurRadius: 2,
+                )
+              ],
+            ),
+            child: SvgPicture.asset("assets/svg/ic_add_animal.svg"),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+typedef OnToySelectionListener = void Function(ToyType type);
+class ToySelectionPain extends StatelessWidget {
+  const ToySelectionPain({super.key, required this.onToySelectedListener});
+  final OnToySelectionListener onToySelectedListener;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 2,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(),
+          GestureDetector(
+            onTap: () {
+              onToySelectedListener(ToyType.nekojarashi);
+            },
+            child: SvgPicture.asset("assets/svg/img_nekojarashi.svg", height: 40),
+          ),
+          GestureDetector(
+            onTap: () {
+              onToySelectedListener(ToyType.ball);
+            },
+            child: SvgPicture.asset("assets/svg/img_ball.svg", height: 40),
+          ),
+          GestureDetector(
+            onTap: () {
+              onToySelectedListener(ToyType.fish);
+            },
+            child: SvgPicture.asset("assets/svg/img_fish.svg", height: 40),
           ),
           Container(
             padding: const EdgeInsets.all(10),
