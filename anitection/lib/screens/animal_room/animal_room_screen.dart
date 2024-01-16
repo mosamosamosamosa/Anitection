@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
@@ -7,7 +5,13 @@ import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
 import 'package:anitection/repositories/clean_history_repository.dart';
 import 'package:anitection/screens/animal_room/animal_avatar_area.dart';
+import 'package:anitection/screens/animal_room/animal_room_bottom_nav_menu.dart';
+import 'package:anitection/screens/animal_room/animal_room_door_icon.dart';
+import 'package:anitection/screens/animal_room/animal_room_food_selection_pain.dart';
 import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
+import 'package:anitection/screens/animal_room/animal_room_right_nav_menu.dart';
+import 'package:anitection/screens/animal_room/animal_room_trush_background.dart';
+import 'package:anitection/screens/animal_room/animal_toy_selection_pain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,7 +56,13 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       body: Stack(
         children: [
           const AnimalRoomBackground(),
-            CleanBackground(size: size, lastCleanDateTime: lastCleanDateTime,),
+          CleanBackground(
+            size: size,
+            lastCleanDateTime: lastCleanDateTime,
+            onRoomDirty: () {
+              cryAnimal();
+            },
+          ),
           const AppBarCurtain(),
           const Positioned(
             top: 40,
@@ -220,6 +230,12 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     });
   }
 
+  void cryAnimal() {
+    ref.read(faceStateProvider.notifier).state = FaceStateType.sad;
+    ref.read(effectStateProvider.notifier).state = EffectType.none;
+    ref.read(selectedFoodProvider.notifier).state = FoodType.none;
+  }
+
   void giveFood(FoodType type) {
     ref.read(selectedFoodProvider.notifier).state = type;
     ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
@@ -231,212 +247,6 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     Future.delayed(const Duration(milliseconds: 1000), () {
       ref.read(selectedFoodProvider.notifier).state = FoodType.none;
     });
-  }
-}
-
-typedef OnMenuSelectedListener = void Function(SelectedTab selectedTab);
-class AnimalRoomBottomNavMenu extends StatelessWidget {
-  const AnimalRoomBottomNavMenu({super.key, this.selectedTab = SelectedTab.normal, required this.onMenuSelectedListener});
-  final SelectedTab selectedTab;
-  final OnMenuSelectedListener onMenuSelectedListener;
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final itemSize = min((width - 80) / 4 - ((width - 80) / 4 * 0.1), 70.0);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const SizedBox(
-          width: 80,
-        ),
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                onMenuSelectedListener(SelectedTab.food);
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: itemSize,
-                    height: itemSize,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFCF3),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFC3EB89),
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    "assets/svg/ic_dinner.svg",
-                    width: itemSize * 0.57,
-                    height: itemSize * 0.57,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 3,
-              height: selectedTab == SelectedTab.food ? 22 : 44,
-              color: const Color(0xFFC3EB89),
-            )
-          ],
-        ),
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                onMenuSelectedListener(SelectedTab.stroll);
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: itemSize,
-                    height: itemSize,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFCF3),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFFFB001),
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset("assets/svg/ic_tree.svg",
-                      width: itemSize * 0.57, height: itemSize * 0.57),
-                ],
-              ),
-            ),
-            Container(
-              width: 3,
-              height: selectedTab == SelectedTab.stroll ? 22 : 44,
-              color: const Color(0xFFFFB001),
-            )
-          ],
-        ),
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                onMenuSelectedListener(SelectedTab.clean);
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: itemSize,
-                    height: itemSize,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFCF3),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFC6DEE8),
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    "assets/svg/ic_bucket.svg",
-                    width: itemSize * 0.57,
-                    height: itemSize * 0.57,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 3,
-              height: selectedTab == SelectedTab.clean ? 22 : 44,
-              color: const Color(0xFFC6DEE8),
-            )
-          ],
-        ),
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                onMenuSelectedListener(SelectedTab.play);
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: itemSize,
-                    height: itemSize,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFCF3),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFFFDB1D),
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    "assets/svg/ic_stop_hand.svg",
-                    width: itemSize * 0.57,
-                    height: itemSize * 0.57,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 3,
-              height: selectedTab == SelectedTab.play ? 22 : 44,
-              color: const Color(0xFFFFDB1D),
-            )
-          ],
-        )
-      ],
-    );
-  }
-}
-
-class DoorIcon extends StatelessWidget {
-  const DoorIcon({super.key, required this.onPressed});
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:onPressed,
-      child: Container(
-        // 楕円
-        width: 209,
-        height: 177,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE4E4E4),
-          borderRadius: const BorderRadius.all(
-            Radius.elliptical(209, 177),
-          ),
-          border: Border.all(
-            color: const Color(0xFFFFFFFF),
-            width: 3,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: const Offset(4, -4),
-              blurRadius: 4,
-            )
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 27,
-              right: 34,
-              child: SvgPicture.asset("assets/svg/ic_door.svg"),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -463,45 +273,6 @@ class AnimalNameLabel extends StatelessWidget {
           offset: Offset(2, 2),
         )
       ],
-    );
-  }
-}
-
-class RightNavMenu extends StatelessWidget {
-  const RightNavMenu({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 130,
-      width: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xB2D9D9D9),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            offset: const Offset(0, 4),
-            blurRadius: 2,
-          )
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            height: 50,
-            width: 50,
-            padding: const EdgeInsets.all(4),
-            child: SvgPicture.asset("assets/svg/ic_heart.svg"),
-          ),
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: Image.asset("assets/images/img_offering_box.png"),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -605,190 +376,6 @@ class AppBarCurtain extends StatelessWidget {
   }
 }
 
-typedef OnFoodSelectedListener = void Function(FoodType type);
-class FoodSelectionPain extends StatelessWidget {
-  const FoodSelectionPain({super.key, required this.onFoodSelectedListener});
-  final OnFoodSelectedListener onFoodSelectedListener;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            offset: const Offset(0, 4),
-            blurRadius: 2,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(),
-          GestureDetector(
-            onTap: () {
-              onFoodSelectedListener(FoodType.karikari);
-            },
-            child: Image.asset("assets/images/img_karikari.png", height: 40),
-          ),
-          GestureDetector(
-            onTap: () {
-              onFoodSelectedListener(FoodType.maguro);
-            },
-            child: Image.asset("assets/images/img_maguro.png", height: 40),
-          ),
-          GestureDetector(
-            onTap: () {
-              onFoodSelectedListener(FoodType.nekocan);
-            },
-            child: Image.asset("assets/images/img_nekocan.png", height: 40),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFAE2),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: const Offset(0, 4),
-                  blurRadius: 2,
-                )
-              ],
-            ),
-            child: SvgPicture.asset("assets/svg/ic_add_animal.svg"),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-typedef OnToySelectionListener = void Function(ToyType type);
-class ToySelectionPain extends StatelessWidget {
-  const ToySelectionPain({super.key, required this.onToySelectedListener});
-  final OnToySelectionListener onToySelectedListener;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            offset: const Offset(0, 4),
-            blurRadius: 2,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(),
-          GestureDetector(
-            onTap: () {
-              onToySelectedListener(ToyType.nekojarashi);
-            },
-            child: SvgPicture.asset("assets/svg/img_nekojarashi.svg", height: 40),
-          ),
-          GestureDetector(
-            onTap: () {
-              onToySelectedListener(ToyType.ball);
-            },
-            child: SvgPicture.asset("assets/svg/img_ball.svg", height: 40),
-          ),
-          GestureDetector(
-            onTap: () {
-              onToySelectedListener(ToyType.fish);
-            },
-            child: SvgPicture.asset("assets/svg/img_fish.svg", height: 40),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFAE2),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: const Offset(0, 4),
-                  blurRadius: 2,
-                )
-              ],
-            ),
-            child: SvgPicture.asset("assets/svg/ic_add_animal.svg"),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CleanBackground extends StatefulWidget {
-  final Size size;
-  final DateTime? lastCleanDateTime;
-
-  const CleanBackground({super.key, required this.size, required this.lastCleanDateTime});
-  @override
-  State<StatefulWidget> createState() {
-    return CleanBackgroundState();
-  }
-}
-
-class CleanBackgroundState extends State<CleanBackground> {
-
-  DateTime now = DateTime.now();
-  @override
-  void initState() {
-    Future.microtask(() async {
-      while(true) {
-        await Future.delayed(const Duration(seconds: 1), () {
-          setState(() {
-            now = DateTime.now();
-          });
-        });
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final alpha = (widget.lastCleanDateTime == null ? 255 : ((now.difference(widget.lastCleanDateTime!).inSeconds / 1).floor())).clamp(0, 255);
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          top: widget.size.height * 0.15,
-          left: -widget.size.width * 0.05,
-          child: SvgPicture.asset("assets/svg/img_trush.svg", colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),),
-        ),
-        Positioned(
-          top: widget.size.height * 0.3,
-          right: -widget.size.width * 0.05,
-          child: SvgPicture.asset("assets/svg/img_trush.svg", colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),),
-        ),
-        Positioned(
-            bottom: widget.size.height * 0.15,
-            left: -widget.size.width * 0.03,
-            child: SvgPicture.asset(
-              "assets/svg/img_trush.svg",
-              colorFilter: ColorFilter.mode(Colors.grey.withAlpha(alpha), BlendMode.srcIn),
-            ),
-        ),
-      ],
-    );
-  }
-}
 
 enum SelectedTab {
   food, stroll, clean, play, normal,
