@@ -1,10 +1,11 @@
-import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
 import 'package:anitection/repositories/clean_history_repository.dart';
 import 'package:anitection/screens/animal_room/animal_avatar_area.dart';
+import 'package:anitection/screens/animal_room/animal_room_animal_name_label.dart';
+import 'package:anitection/screens/animal_room/animal_room_app_bar_curtain.dart';
 import 'package:anitection/screens/animal_room/animal_room_bottom_nav_menu.dart';
 import 'package:anitection/screens/animal_room/animal_room_door_icon.dart';
 import 'package:anitection/screens/animal_room/animal_room_food_selection_pain.dart';
@@ -117,16 +118,6 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 onCleanComplete: () {
                   whenCleanCompleted();
                 },
-                // onAnimalMovedListener: (offset) {
-                //   movedCount++;
-                //   final currentState = ref.read(faceStateProvider.notifier).state;
-                //   if (movedCount % 13 == 0 && selectedTab == SelectedTab.play) {
-                //     // 疲れて寝る
-                //     sleepAnimal();
-                //   } else if (currentState == FaceStateType.sleeping) {
-                //     ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-                //   }
-                // },
               ),
             ),
           ),
@@ -250,33 +241,6 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   }
 }
 
-class AnimalNameLabel extends StatelessWidget {
-  const AnimalNameLabel({super.key, required this.name});
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return StrokeText(
-      text: name,
-      strokeColor: Colors.white,
-      textColor: const Color(0xFF573F1B),
-      textAlign: TextAlign.center,
-      strokeWidth: 4,
-      textStyle: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
-      shadows: const [
-        Shadow(
-          blurRadius: 10,
-          color: Colors.black,
-          offset: Offset(2, 2),
-        )
-      ],
-    );
-  }
-}
-
 Future<void> showAnimalRoomProfileDialog(
   BuildContext context,
   Size screenSize,
@@ -313,68 +277,7 @@ class AnimalRoomBackground extends StatelessWidget {
   }
 }
 
-class AppBarCurtainItem extends StatelessWidget {
-  const AppBarCurtainItem({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 39,
-      width: 50,
-      decoration: BoxDecoration(
-          color: const Color(0xFFC3EB89),
-          borderRadius: const BorderRadius.all(
-            Radius.elliptical(50, 39),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: const Offset(0, 4),
-              blurRadius: 2,
-            )
-          ]),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 19,
-            left: 20,
-            child: Container(
-              width: 10,
-              height: 10,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class AppBarCurtain extends StatelessWidget {
-  const AppBarCurtain({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    // ignore: unnecessary_null_comparison
-    final count = size == null ? 0 : size.width ~/ 50;
-
-    return Container(
-      clipBehavior: Clip.none,
-      child: Stack(
-        children: List.generate(count + 2, (index) {
-          return Positioned(
-              top: -19,
-              left: index * 50 - 25,
-              child: const AppBarCurtainItem());
-        }),
-      ),
-    );
-  }
-}
 
 
 enum SelectedTab {
