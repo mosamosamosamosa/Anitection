@@ -15,7 +15,7 @@ class PedigreeAttributes {
   });
   final String name;
   final SingleData<Model<MediaAttributes>>? image;
-  @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>>? animalKind;
+  @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>?>? animalKind;
 
   factory PedigreeAttributes.fromJson(Map<String, dynamic> json) {
     return _$PedigreeAttributesFromJson(json);
