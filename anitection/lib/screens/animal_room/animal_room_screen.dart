@@ -96,6 +96,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 onCleanComplete: () {
                   ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
                   ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+                  ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
                   Future.delayed(const Duration(milliseconds: 1500), () {
                     ref.read(effectStateProvider.notifier).state = EffectType.none;
                     ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
