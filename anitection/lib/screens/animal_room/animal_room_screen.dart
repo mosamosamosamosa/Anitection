@@ -27,7 +27,6 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   SelectedTab selectedTab = SelectedTab.normal;
   DateTime? lastCleanDateTime;
   ToyType? selectedToy;
-  int movedCount = 0;
 
   @override
   void initState() {
@@ -108,15 +107,16 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 onCleanComplete: () {
                   whenCleanCompleted();
                 },
-                onAnimalMovedListener: (offset) {
-                  movedCount++;
-                  final currentState = ref.read(faceStateProvider.notifier).state;
-                  if (movedCount % 5 ==0 ) {
-                    sleepAnimal();
-                  } else if (currentState == FaceStateType.sleeping) {
-                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-                  }
-                },
+                // onAnimalMovedListener: (offset) {
+                //   movedCount++;
+                //   final currentState = ref.read(faceStateProvider.notifier).state;
+                //   if (movedCount % 13 == 0 && selectedTab == SelectedTab.play) {
+                //     // 疲れて寝る
+                //     sleepAnimal();
+                //   } else if (currentState == FaceStateType.sleeping) {
+                //     ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+                //   }
+                // },
               ),
             ),
           ),
@@ -162,9 +162,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               onMenuSelectedListener: (tabType) {
                 setState(() {
                   if (selectedTab == tabType) {
-                    selectedTab = SelectedTab.normal;
+                    updateTabType(SelectedTab.normal);
                   } else {
-                    selectedTab = tabType;
+                    updateTabType(tabType);
                   }
                   selectedToy = null;
                 });
@@ -176,6 +176,17 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     );
   }
 
+  void updateTabType(SelectedTab tabType) {
+    if (selectedTab == SelectedTab.play) {
+        ref.read(faceStateProvider.notifier).state = FaceStateType.sleeping;
+        Future.delayed(const Duration(milliseconds: 5000), () {
+          ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+        });
+    }
+    setState(() {
+      selectedTab = tabType;
+    });
+  }
   void sleepAnimal() async {
     final currentState = ref.read(faceStateProvider.notifier).state;
     ref.read(faceStateProvider.notifier).state = FaceStateType.sleeping;
@@ -194,8 +205,8 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     });
     final now = DateTime.now();
     ref.read(cleanHistoryRepository).setLastCleanDateTime(widget.animalId, now);
+    updateTabType(SelectedTab.normal);
     setState(() {
-      selectedTab = SelectedTab.normal;
       lastCleanDateTime = now;
     });
   }
