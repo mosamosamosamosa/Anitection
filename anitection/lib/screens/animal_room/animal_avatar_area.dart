@@ -21,6 +21,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
     required this.isCleanMode,
     required this.onCleanComplete,
     required this.selectedToyType,
+    this.onAnimalMovedListener,
   });
 
   final Size size;
@@ -33,6 +34,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
   final String avatarTailImageUrl;
   final bool isCleanMode;
   final ToyType? selectedToyType;
+  final OnAnimalMovedListener? onAnimalMovedListener;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -75,6 +77,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
       });
       await Future.delayed(const Duration(milliseconds: 10));
     }
+    widget.onAnimalMovedListener?.call(Offset(_position.x, _position.y));
   }
 
   void renderToy(Offset position) async {
@@ -266,6 +269,8 @@ class AnimalView extends StatelessWidget {
                     return 'sad_cat';
                   case FaceStateType.smile:
                     return 'smile_cat';
+                  case FaceStateType.sleeping:
+                    return 'sleep_cat';
                 }
               }()}.json',
               width: avatarWidth * 0.85,
@@ -273,6 +278,17 @@ class AnimalView extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          if (faceState == FaceStateType.sleeping)
+            Positioned(
+              top: -(avatarHeight * 0.3),
+              left: -(avatarWidth * 0.25),
+              child: Lottie.asset(
+                'assets/lottie/zzz.json',
+                width: avatarWidth * 0.85,
+                height: avatarHeight * 0.85,
+                fit: BoxFit.cover,
+              ),
+            ),
           if (effectType == EffectType.kirakira)
             Positioned(
               top: 0,
@@ -433,10 +449,13 @@ class Point {
   }
 }
 
+typedef OnAnimalMovedListener = void Function(Offset position);
+
 enum FaceStateType {
   blink,
   sad,
   smile,
+  sleeping,
 }
 
 enum EffectType {

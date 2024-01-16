@@ -27,6 +27,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   SelectedTab selectedTab = SelectedTab.normal;
   DateTime? lastCleanDateTime;
   ToyType? selectedToy;
+  int movedCount = 0;
 
   @override
   void initState() {
@@ -79,6 +80,11 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               child: AnimalAvatarArea(
                 size: Size(size.width, size.height),
                 avatarImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarIcon?.data.attributes.url ?? ""),
+                avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
+                avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
+                avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
+                isCleanMode: selectedTab == SelectedTab.clean,
+                selectedToyType: selectedToy,
                 avatarSize: () {
                   final data = animalAsyncState.valueOrNull;
                   if (data != null) {
@@ -96,34 +102,21 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                   if (data != null && selectedTab != SelectedTab.play) {
                     showAnimalRoomProfileDialog(context, size, data.data);
                   }  else {
-                    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
-                    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-                    Future.delayed(const Duration(milliseconds: 800), () {
-                      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-                      ref.read(effectStateProvider.notifier).state = EffectType.none;
-                    });
+                    happyAnimal();
                   }
                 },
                 onCleanComplete: () {
-                  ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-                  ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
-                  ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
-                  Future.delayed(const Duration(milliseconds: 1500), () {
-                    ref.read(effectStateProvider.notifier).state = EffectType.none;
-                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-                  });
-                  final now = DateTime.now();
-                  ref.read(cleanHistoryRepository).setLastCleanDateTime(widget.animalId, now);
-                  setState(() {
-                    selectedTab = SelectedTab.normal;
-                    lastCleanDateTime = now;
-                  });
+                  whenCleanCompleted();
                 },
-                avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
-                avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
-                avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
-                isCleanMode: selectedTab == SelectedTab.clean,
-                selectedToyType: selectedToy,
+                onAnimalMovedListener: (offset) {
+                  movedCount++;
+                  final currentState = ref.read(faceStateProvider.notifier).state;
+                  if (movedCount % 5 ==0 ) {
+                    sleepAnimal();
+                  } else if (currentState == FaceStateType.sleeping) {
+                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+                  }
+                },
               ),
             ),
           ),
@@ -143,16 +136,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               right: 30,
               child: FoodSelectionPain(
                 onFoodSelectedListener: (type) {
-                  ref.read(selectedFoodProvider.notifier).state = type;
-                  ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-                  ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
-                  Future.delayed(const Duration(milliseconds: 1500), () {
-                    ref.read(effectStateProvider.notifier).state = EffectType.none;
-                    ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-                  });
-                  Future.delayed(const Duration(milliseconds: 1000), () {
-                    ref.read(selectedFoodProvider.notifier).state = FoodType.none;
-                  });
+                  giveFood(type);
                 },
               )
             ),
@@ -190,6 +174,52 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
         ],
       ),
     );
+  }
+
+  void sleepAnimal() async {
+    final currentState = ref.read(faceStateProvider.notifier).state;
+    ref.read(faceStateProvider.notifier).state = FaceStateType.sleeping;
+    Future.delayed(const Duration(milliseconds: 5000), () {
+      ref.read(faceStateProvider.notifier).state = currentState;
+    });
+  }
+
+  void whenCleanCompleted() {
+    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+    ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      ref.read(effectStateProvider.notifier).state = EffectType.none;
+      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+    });
+    final now = DateTime.now();
+    ref.read(cleanHistoryRepository).setLastCleanDateTime(widget.animalId, now);
+    setState(() {
+      selectedTab = SelectedTab.normal;
+      lastCleanDateTime = now;
+    });
+  }
+
+  void happyAnimal() {
+    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+    Future.delayed(const Duration(milliseconds: 800), () {
+      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+      ref.read(effectStateProvider.notifier).state = EffectType.none;
+    });
+  }
+
+  void giveFood(FoodType type) {
+    ref.read(selectedFoodProvider.notifier).state = type;
+    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      ref.read(effectStateProvider.notifier).state = EffectType.none;
+      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+    });
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      ref.read(selectedFoodProvider.notifier).state = FoodType.none;
+    });
   }
 }
 
