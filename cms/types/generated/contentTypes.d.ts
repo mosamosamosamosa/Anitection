@@ -884,6 +884,7 @@ export interface ApiFavoriteFavorite extends Schema.CollectionType {
       'oneToOne',
       'api::animal.animal'
     >;
+    name: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
