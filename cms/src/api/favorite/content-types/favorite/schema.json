@@ -21,6 +21,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::animal.animal"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

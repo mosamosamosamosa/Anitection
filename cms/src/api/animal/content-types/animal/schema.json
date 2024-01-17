@@ -91,16 +91,39 @@
       "type": "string"
     },
     "avatar_head": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "avatar_body": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "avatar_tail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "avatar_body_sitting": {
       "allowedTypes": [
         "images",
         "files",
@@ -110,15 +133,8 @@
       "type": "media",
       "multiple": false
     },
-    "avatar_tail": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": false
+    "sitting": {
+      "type": "boolean"
     }
   }
 }
