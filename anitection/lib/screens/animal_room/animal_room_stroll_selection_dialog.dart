@@ -2,6 +2,7 @@
 import 'package:anitection/components/normal_button.dart';
 import 'package:anitection/components/stroke_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class StrollSelectionDialogLayout extends StatefulWidget {
   const StrollSelectionDialogLayout({super.key});
@@ -154,11 +155,38 @@ class StrollSelectionDialogLayoutState extends State<StrollSelectionDialogLayout
                               width: 2,
                             ) : null,
                           ),
-                          child: Image.asset(
-                            "assets/images/img_shopping_street.png",
-                            fit: BoxFit.cover,
-                            width: width * aspect,
-                            height: (width * aspect) * (90 / 120),
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                "assets/images/img_shopping_street.png",
+                                fit: BoxFit.cover,
+                                width: width * aspect,
+                                height: (width * aspect) * (90 / 120),
+                              ),
+                              Container(
+                                width: width * aspect,
+                                height: (width * aspect) * (90 / 120),
+                                decoration: BoxDecoration(
+                                  color: const Color(0x80000000),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset("assets/svg/ic_point.svg", width: 26, height: 26,),
+                                    const SizedBox(width: 8,),
+                                    const Text(
+                                      "1200",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontFamily: "Anek Bangle"
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -191,11 +219,38 @@ class StrollSelectionDialogLayoutState extends State<StrollSelectionDialogLayout
                               width: 2,
                             ) : null,
                           ),
-                          child: Image.asset(
-                            "assets/images/img_seaside.png",
-                            fit: BoxFit.cover,
-                            width: width * aspect,
-                            height: (width * aspect) * (90 / 120),
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                "assets/images/img_seaside.png",
+                                fit: BoxFit.cover,
+                                width: width * aspect,
+                                height: (width * aspect) * (90 / 120),
+                              ),
+                              Container(
+                                width: width * aspect,
+                                height: (width * aspect) * (90 / 120),
+                                decoration: const BoxDecoration(
+                                  color: Color(0x80000000),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset("assets/svg/ic_point.svg", width: 26, height: 26,),
+                                    const SizedBox(width: 8,),
+                                    const Text(
+                                      "2400",
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontFamily: "Anek Bangle"
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
