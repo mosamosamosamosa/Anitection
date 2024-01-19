@@ -186,7 +186,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
         });
     }
     if (tabType == SelectedTab.stroll) {
-      await showDialog(context: context, builder: (BuildContext context) {
+      final result = await showDialog<StrollLocation?>(context: context, builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -194,6 +194,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
           child: const StrollSelectionDialogLayout(),
         );
       });
+      if (result == null) {
+        return;
+      }
     }
     setState(() {
       selectedTab = tabType;
