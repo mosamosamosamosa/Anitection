@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/providers/animal.dart';
 import 'package:anitection/repositories/clean_history_repository.dart';
+import 'package:anitection/repositories/stroll_repository.dart';
 import 'package:anitection/screens/animal_room/animal_avatar_area.dart';
 import 'package:anitection/screens/animal_room/animal_room_animal_name_label.dart';
 import 'package:anitection/screens/animal_room/animal_room_app_bar_curtain.dart';
@@ -33,6 +36,8 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   SelectedTab selectedTab = SelectedTab.normal;
   DateTime? lastCleanDateTime;
   ToyType? selectedToy;
+  bool isStroll = false;
+  StreamSubscription<bool>? isStrolledStreamSubscription;
 
   @override
   void initState() {
@@ -41,7 +46,22 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
         lastCleanDateTime = value;
       });
     });
+    ref.read(strollRepositoryProvider).isStrolled(animalId: widget.animalId).then((value) {
+      setState(() {
+        isStroll = value;
+      });
+    });
+    isStrolledStreamSubscription = ref.read(strollRepositoryProvider).isStrolledStream(animalId: widget.animalId).listen((event) {
+      setState(() {
+        isStroll = event;
+      });
+    });
     super.initState();
+  }
+  @override
+  void dispose() {
+    isStrolledStreamSubscription?.cancel();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -76,7 +96,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
             child: Container(
               alignment: Alignment.center,
               width: size.width,
-              child: selectedTab == SelectedTab.stroll ? const AnimalNameLabel(
+              child: isStroll ? const AnimalNameLabel(
                 name: "お散歩中・・・",
               ):  AnimalNameLabel(
                 name: animalAsyncState.valueOrNull?.data.attributes.name ?? "",
@@ -85,7 +105,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
           ),
           Positioned(
             top: size.height * 0.5,
-            child: selectedTab == SelectedTab.stroll ? Container() : Container(
+            child: isStroll ? Container() : Container(
               width: size.width,
               alignment: Alignment.center,
               child: AnimalAvatarArea(
@@ -196,6 +216,12 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       });
       if (result == null) {
         return;
+      } else {
+        await ref.read(strollRepositoryProvider).create(animalId: widget.animalId);
+        final isStrolled = await ref.read(strollRepositoryProvider).isStrolled(animalId: widget.animalId);
+        setState(() {
+          isStroll = isStrolled;
+        });
       }
     }
     setState(() {
