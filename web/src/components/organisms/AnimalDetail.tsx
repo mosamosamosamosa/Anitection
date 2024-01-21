@@ -72,7 +72,7 @@ const Component: FC = () => {
   return (
     <>
       <Card>
-        <Link to={`/register/${id}`} className="w-full h-40 md:h-52">        
+        <Link to={`/register/${id}`} className="w-full h-40 md:h-52">
           <div className="w-36 h-36 md:w-52 md:h-52 flex justify-center items-center relative">
             {animal.attributes.avatar_head.data && (
               <img
@@ -95,7 +95,7 @@ const Component: FC = () => {
                 className="w-full h-full object-cover rounded-md absolute"
               />
             )}
-          </div>  
+          </div>
         </Link>
       </Card>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">

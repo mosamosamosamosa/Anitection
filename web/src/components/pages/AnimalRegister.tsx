@@ -39,7 +39,11 @@ const Component = () => {
     });
   }, [id]);
 
-  const drawImage = (image: HTMLImageElement, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+  const drawImage = (
+    image: HTMLImageElement,
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+  ) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const imageWidth = image.width * 1;
@@ -67,25 +71,22 @@ const Component = () => {
     image.crossOrigin = 'Anonymous';
 
     if (animal.attributes) {
-      if (isHead && animal.attributes.avatar_head.data) 
+      if (isHead && animal.attributes.avatar_head.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
-      else if (isHead && !animal.attributes.avatar_head.data)
-        image.src = head;
-  
+      else if (isHead && !animal.attributes.avatar_head.data) image.src = head;
+
       if (isBody && animal.attributes.avatar_body.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
-      else if (isBody && !animal.attributes.avatar_body.data)
-        image.src = body;
-  
+      else if (isBody && !animal.attributes.avatar_body.data) image.src = body;
+
       if (isSitting && animal.attributes.avatar_sitting.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
       else if (isSitting && !animal.attributes.avatar_sitting.data)
         image.src = sitting;
-  
+
       if (isTail && animal.attributes.avatar_tail.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
-      else if (isTail && !animal.attributes.avatar_tail.data)
-        image.src = tail;
+      else if (isTail && !animal.attributes.avatar_tail.data) image.src = tail;
     } else {
       if (isHead) image.src = head;
       if (isBody) image.src = body;
@@ -137,11 +138,9 @@ const Component = () => {
 
     console.log(animal);
     // const head_image = new Image();
-    if (!animal.attributes.avatar_head.data) (
-      alert('頭を登録してください')
-    )
+    if (!animal.attributes.avatar_head.data) alert('頭を登録してください');
     // head_image.src = animal.attributes.avatar_head.data.attributes.url;
-  }
+  };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     setIsDrawing(true);
@@ -251,12 +250,12 @@ const Component = () => {
         })
         .then((res) => {
           const imageId = res.data[0].id;
-          let data: any
+          let data: any;
 
-          if (isHead) data = { avatar_head: imageId }
-          if (isBody) data = { avatar_body: imageId }
-          if (isSitting) data = { avatar_sitting: imageId }
-          if (isTail) data = { avatar_tail: imageId }
+          if (isHead) data = { avatar_head: imageId };
+          if (isBody) data = { avatar_body: imageId };
+          if (isSitting) data = { avatar_sitting: imageId };
+          if (isTail) data = { avatar_tail: imageId };
 
           const body = {
             data: data,
@@ -265,9 +264,9 @@ const Component = () => {
           instance.put(`/api/animals/${id}`, body).then(() => {
             instance.get(`/api/animals/${id}`).then((res) => {
               setAnimal(res.data.data);
-            }
-          )});
-        })
+            });
+          });
+        });
 
       return;
     } else {
@@ -280,11 +279,11 @@ const Component = () => {
         .then((res) => {
           const imageId = res.data[0].id;
 
-          let data: any
-          if (isHead) data = { avatar_head: imageId }
-          if (isBody) data = { avatar_body: imageId }
-          if (isSitting) data = { avatar_sitting: imageId }
-          if (isTail) data = { avatar_tail: imageId }
+          let data: any;
+          if (isHead) data = { avatar_head: imageId };
+          if (isBody) data = { avatar_body: imageId };
+          if (isSitting) data = { avatar_sitting: imageId };
+          if (isTail) data = { avatar_tail: imageId };
 
           const body = {
             data: {
