@@ -138,7 +138,7 @@ const Component: FC = () => {
         <div className="w-full flex flex-col gap-2 py-4 px-4">
           <input
             type="text"
-            className="w-full flex gap-2 items-center text-3xl"
+            className="bg-neutral-50 w-full flex gap-2 items-center text-3xl"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -149,7 +149,7 @@ const Component: FC = () => {
             />
             <input
               type="text"
-              className="w-full flex gap-2 items-center"
+              className="bg-neutral-50 w-full flex gap-2 items-center"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -164,7 +164,7 @@ const Component: FC = () => {
             <Icon icon="akar-icons:location" className="w-4 h-4 mr-1" />
             <input
               type="text"
-              className="w-full flex gap-2 items-center"
+              className="bg-neutral-50 w-full flex gap-2 items-center"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
@@ -173,7 +173,7 @@ const Component: FC = () => {
             <Icon icon="akar-icons:phone" className="w-4 h-4 mr-1" />
             <input
               type="text"
-              className="w-full flex gap-2 items-center"
+              className="bg-neutral-50 w-full flex gap-2 items-center"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -182,7 +182,7 @@ const Component: FC = () => {
             <Icon icon="streamline:web" className="w-4 h-4 mr-1" />
             <input
               type="text"
-              className="w-full flex gap-2 items-center"
+              className="bg-neutral-50 w-full flex gap-2 items-center"
               value={website_url}
               onChange={(e) => setWebsiteUrl(e.target.value)}
             />
@@ -191,7 +191,7 @@ const Component: FC = () => {
             <Icon icon="mdi:shopping-outline" className="w-4 h-4 mr-1" />
             <input
               type="text"
-              className="w-full flex gap-2 items-center"
+              className="bg-neutral-50 w-full flex gap-2 items-center"
               value={needs_url}
               onChange={(e) => setNeedsUrl(e.target.value)}
             />

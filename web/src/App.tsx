@@ -13,6 +13,7 @@ import Setting from './components/pages/Setting';
 import AnimalDetail from './components/pages/AnimalDetail';
 import Institution from './components/pages/Institution';
 import Chat from './components/pages/Chat';
+import Send from './components/pages/Send';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/setting" element={<Setting />} />
         <Route path="/institution" element={<Institution />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/send" element={<Send />} />
         <Route path="/*" element={<Notfound />} />
       </Routes>
     </SWRConfig>

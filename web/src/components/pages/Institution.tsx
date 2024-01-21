@@ -25,20 +25,31 @@ const Chat: React.FC = () => {
 
         {/* 情報 */}
         <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
-          <InfoHeader icon="ion:home-outline" title="施設情報" />
+          {/* ポイント */}
+          <InfoHeader icon="bx:bx-coin-stack" title="ポイント" />
+          <Card>
+            {/* 送金 */}
+            <Link to={`/send`}>
+              <div className="w-full flex justify-center items-center">
+                <ul className="flex flex-col gap-2 py-2">
+                  <li className="flex gap-2 items-center">
+                    <Icon icon="bx:bx-transfer" className="w-4 h-4 mr-1" />
+                    <p>送金</p>
+                  </li>
+                </ul>
+              </div>
+            </Link>
+          </Card>
+          <InfoHeader icon="bx:bx-user" title="ユーザー" />
           <Card>
             <Link to={`/chat`}>
               <div className="w-full flex justify-center items-center">
                 <ul className="flex flex-col gap-2 py-2">
                   <li className="flex gap-2 items-center">
-                    <Icon icon="akar-icons:home" className="w-4 h-4 mr-1" />
-                    <p>チャット</p>
+                    <Icon icon="bx:bx-message" className="w-4 h-4 mr-1" />
+                    <p>hogeさん</p>
                   </li>
                 </ul>
-              </div>
-              <div className="absolute bottom-2 right-4 flex justify-end items-end">
-                <p className="text-sm">詳細へ</p>
-                <Icon icon="tdesign:swap-right" className="w-6" />
               </div>
             </Link>
           </Card>

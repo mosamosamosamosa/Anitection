@@ -112,15 +112,17 @@ const Component: FC = () => {
   return (
     <>
       <Card>
-        <Link to={`/register/${id}`}>
-          {animal.attributes.avatar_icon.data && (
-            <img
-              src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-              alt="animal"
-              className="w-full h-full object-cover rounded-md"
-            />
-          )}
-        </Link>
+        <div className="min-h-[200px]">
+          <Link to={`/register/${id}`}>
+            {animal.attributes.avatar_icon.data && (
+              <img
+                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                alt="animal"
+                className="w-full h-full object-cover rounded-md"
+              />
+            )}
+          </Link>
+        </div>
       </Card>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="flex gap-2 py-2 items-center">

@@ -291,6 +291,7 @@ const Component = () => {
           instance.put(`/api/animals/${id}`, body).then(() => {
             instance.get(`/api/animals/${id}`).then((res) => {
               setAnimal(res.data.data);
+              if (isPreview) navigate(`/${id}`);
             });
           });
         });
