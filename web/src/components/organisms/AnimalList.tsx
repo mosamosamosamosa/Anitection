@@ -53,7 +53,7 @@ const Component: React.FC = () => {
         <div className="col-span-6">
           <Card>
             <Link
-              to={'/animal-register'}
+              to={'/register'}
               className="w-full h-40 md:h-52 flex justify-center items-center"
             >
               <Icon icon="ant-design:plus-outlined" className="w-12 h-12" />
@@ -61,7 +61,7 @@ const Component: React.FC = () => {
           </Card>
         </div>
         {animals.map((animal: any, index: number) => (
-          <Link to={`/animal/${animal.id}`} key={index} className="col-span-6">
+          <Link to={`/${animal.id}`} key={index} className="col-span-6">
             <Card>
               <div className="w-full h-40 md:h-52">
                 {animal.attributes.avatar_icon.data && (

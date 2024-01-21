@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import head from '../../assets/animals/cat/head.png';
 import body from '../../assets/animals/cat/body.png';
 import sitting from '../../assets/animals/cat/sitting.png';
@@ -8,17 +8,18 @@ import Layout from '../templates/Layout';
 import Button from '../atoms/Button';
 import Navigation from '../organisms/Navigation';
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
 const Component = () => {
+  const { id } = useParams();
   const { institution } = useSelector((state: RootState) => state.institution);
   const navigate = useNavigate();
-  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = React.useState('#ffffff');
-  const [brushRadius, setBrushRadius] = React.useState(24);
+  const [color, setColor] = useState('#ffffff');
+  const [brushRadius, setBrushRadius] = useState(24);
   const [undo, setUndo] = useState<ImageData[]>([]);
   const [image, setImage] = useState<HTMLImageElement>(new Image());
 
@@ -26,60 +27,81 @@ const Component = () => {
   const [isBody, setIsBody] = useState(false);
   const [isSitting, setIsSitting] = useState(false);
   const [isTail, setIsTail] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
 
-  const drawImage = (image: HTMLImageElement) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  const [animal, setAnimal] = useState<any>({});
 
+  useEffect(() => {
+    if (!id) return;
+    const instance = fetchInstanceWithToken();
+    instance.get(`/api/animals/${id}`).then((res) => {
+      setAnimal(res.data.data);
+    });
+  }, [id]);
+
+  const drawImage = (image: HTMLImageElement, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    image.onload = () => {
-      const imageWidth = image.width * 0.95;
-      const imageHeight = image.height * 0.95;
-      const x = (canvas.width - imageWidth) / 2;
-      const y = (canvas.height - imageHeight) / 2;
+    const imageWidth = image.width * 1;
+    const imageHeight = image.height * 1;
+    const x = (canvas.width - imageWidth) / 2;
+    const y = (canvas.height - imageHeight) / 2;
 
-      ctx.drawImage(image, x, y, imageWidth, imageHeight);
-    };
+    ctx.drawImage(image, x, y, imageWidth, imageHeight);
   };
 
   useEffect(() => {
-    drawImage(image);
-  }, [image]);
+    if (!canvasRef.current) return;
+    setIsDrawing(false);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.globalCompositeOperation = 'source-over';
+
+    drawImage(image, canvas, ctx);
+  }, [image, canvasRef.current]);
 
   useEffect(() => {
-    if (isHead) {
-      const image = new Image();
-      image.src = head;
-      setImage(image);
+    const image = new Image();
+    image.crossOrigin = 'Anonymous';
+
+    if (animal.attributes) {
+      if (isHead && animal.attributes.avatar_head.data) 
+        image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
+      else if (isHead && !animal.attributes.avatar_head.data)
+        image.src = head;
+  
+      if (isBody && animal.attributes.avatar_body.data)
+        image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+      else if (isBody && !animal.attributes.avatar_body.data)
+        image.src = body;
+  
+      if (isSitting && animal.attributes.avatar_sitting.data)
+        image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
+      else if (isSitting && !animal.attributes.avatar_sitting.data)
+        image.src = sitting;
+  
+      if (isTail && animal.attributes.avatar_tail.data)
+        image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
+      else if (isTail && !animal.attributes.avatar_tail.data)
+        image.src = tail;
+    } else {
+      if (isHead) image.src = head;
+      if (isBody) image.src = body;
+      if (isSitting) image.src = sitting;
+      if (isTail) image.src = tail;
     }
 
-    if (isBody) {
-      const image = new Image();
-      image.src = body;
-      setImage(image);
-    }
-
-    if (isSitting) {
-      const image = new Image();
-      image.src = sitting;
-      setImage(image);
-    }
-
-    if (isTail) {
-      const image = new Image();
-      image.src = tail;
-      setImage(image);
-    }
-  }, [isHead, isBody, isSitting, isTail]);
+    setImage(image);
+  }, [isHead, isBody, isSitting, isTail, animal]);
 
   const handleReset = () => {
     setIsHead(false);
     setIsBody(false);
     setIsSitting(false);
     setIsTail(false);
+    setIsPreview(false);
   };
 
   const handleHead = () => {
@@ -101,6 +123,25 @@ const Component = () => {
     handleReset();
     setIsTail(true);
   };
+
+  const handlePreview = () => {
+    handleReset();
+    setIsPreview(true);
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    console.log(animal);
+    // const head_image = new Image();
+    if (!animal.attributes.avatar_head.data) (
+      alert('頭を登録してください')
+    )
+    // head_image.src = animal.attributes.avatar_head.data.attributes.url;
+  }
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     setIsDrawing(true);
@@ -201,29 +242,65 @@ const Component = () => {
 
     const instance = fetchInstanceWithToken();
 
-    instance
-      .post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((res) => {
-        const imageId = res.data[0].id;
-
-        const body = {
-          data: {
-            avatar_icon: imageId,
-            institution: institution.id,
+    if (id) {
+      instance
+        .post('/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        };
+        })
+        .then((res) => {
+          const imageId = res.data[0].id;
+          let data: any
 
-        instance.post('/api/animals', body).then(() => {
-          navigate('/');
+          if (isHead) data = { avatar_head: imageId }
+          if (isBody) data = { avatar_body: imageId }
+          if (isSitting) data = { avatar_sitting: imageId }
+          if (isTail) data = { avatar_tail: imageId }
+
+          const body = {
+            data: data,
+          };
+
+          instance.put(`/api/animals/${id}`, body).then(() => {
+            instance.get(`/api/animals/${id}`).then((res) => {
+              setAnimal(res.data.data);
+            }
+          )});
+        })
+
+      return;
+    } else {
+      instance
+        .post('/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          const imageId = res.data[0].id;
+
+          let data: any
+          if (isHead) data = { avatar_head: imageId }
+          if (isBody) data = { avatar_body: imageId }
+          if (isSitting) data = { avatar_sitting: imageId }
+          if (isTail) data = { avatar_tail: imageId }
+
+          const body = {
+            data: {
+              ...data,
+              institution: institution.id,
+            },
+          };
+
+          instance.post('/api/animals', body).then((res) => {
+            navigate(`/register/${res.data.data.id}`);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }
   };
 
   return (
@@ -236,8 +313,9 @@ const Component = () => {
 
         {/* 動物 */}
         <div className="col-span-12 lg:col-span-8">
-          <div className="bg-white rounded-xl shadow-md flex justify-center items-center px-2 py-4">
+          <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4">
             <canvas
+              id="canvas"
               className="lattice"
               ref={canvasRef}
               onMouseDown={startDrawing}
@@ -303,6 +381,12 @@ const Component = () => {
                 highlight={isTail}
               />
               <hr className="my-2" />
+              <Button
+                text="プレビュー"
+                onClick={handlePreview}
+                icon="mdi:eye"
+                highlight={isPreview}
+              />
               <Button
                 text="登録"
                 onClick={handleSubmit}

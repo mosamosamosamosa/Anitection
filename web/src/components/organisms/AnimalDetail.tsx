@@ -1,14 +1,12 @@
-import React, { useEffect, useState, FC, useRef } from 'react';
-import Card from '../templates/Card';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, FC } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../atoms/Button';
+import Card from '../templates/Card';
 
 import useSWR from 'swr';
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 
 const Component: FC = () => {
-  const avatar_iconRef = useRef<HTMLInputElement>(null);
-  const [avatar_icon, setAvatarIcon] = useState<File | null>(null);
   const [kind, setKind] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [gender, setGender] = useState<string>('');
@@ -55,19 +53,6 @@ const Component: FC = () => {
     if (animal.description) setDescription(animal.description);
   }, [data]);
 
-  const handleClick = () => {
-    if (!avatar_iconRef.current) return;
-    avatar_iconRef.current.click();
-  };
-
-  const handleAvatarIconChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (!event.target.files) return;
-    if (event.target.files.length > 1) return;
-    setAvatarIcon(event.target.files[0]);
-  };
-
   const handleSubmit = () => {
     // const instance = fetchInstanceWithToken();
     // const formData = new FormData();
@@ -87,38 +72,31 @@ const Component: FC = () => {
   return (
     <>
       <Card>
-        {animal.attributes.avatar_icon ? (
-          <>
-            <div
-              className="w-full h-full flex justify-center items-center"
-              onClick={handleClick}
-            >
-              {avatar_icon ? (
-                <img
-                  src={URL.createObjectURL(avatar_icon)}
-                  alt="animal"
-                  className="w-full h-40 md:h-52 object-contain"
-                />
-              ) : (
-                <img
-                  src={`https://anitection-strapi.yumekiti.net${animal.attributes.avatar_icon.data.attributes.url}`}
-                  alt="animal"
-                  className="w-full h-40 md:h-52 object-contain"
-                />
-              )}
-            </div>
-            <input
-              type="file"
-              ref={avatar_iconRef}
-              className="hidden"
-              onChange={handleAvatarIconChange}
-            />
-          </>
-        ) : (
-          <div className="w-full h-40 md:h-52 flex justify-center items-center">
-            <p className="text-gray-400">画像が登録されていません</p>
-          </div>
-        )}
+        <Link to={`/register/${id}`} className="w-full h-40 md:h-52">        
+          <div className="w-36 h-36 md:w-52 md:h-52 flex justify-center items-center relative">
+            {animal.attributes.avatar_head.data && (
+              <img
+                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`}
+                alt="animal"
+                className="w-full h-full object-cover rounded-md absolute"
+              />
+            )}
+            {animal.attributes.avatar_body.data && (
+              <img
+                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`}
+                alt="animal"
+                className="w-full h-full object-cover rounded-md absolute"
+              />
+            )}
+            {animal.attributes.avatar_tail.data && (
+              <img
+                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`}
+                alt="animal"
+                className="w-full h-full object-cover rounded-md absolute"
+              />
+            )}
+          </div>  
+        </Link>
       </Card>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="flex gap-2 py-2 items-center">
