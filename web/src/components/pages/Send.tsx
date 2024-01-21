@@ -45,7 +45,7 @@ const Chat: React.FC = () => {
                   icon="bx:bx-coin-stack"
                   onClick={() => handleDonationButtonClick(amount)}
                   text={amount.toString()}
-                  highlight={donationAmount === amount} 
+                  highlight={donationAmount === amount}
                 />
               ))}
             </div>
