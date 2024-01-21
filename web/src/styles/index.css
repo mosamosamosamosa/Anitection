@@ -24,9 +24,7 @@ html {
 
 /* canvasの背景を格子状にしたい */
 .lattice {
-  /* background-size: 16px 16px;
+  background-size: 16px 16px;
   background-position: 50% 50%;
-  background-image:repeating-linear-gradient( 90deg, rgba(0,0,0,.5) , rgba(0,0,0,.5) 1px, transparent 1px, transparent 16px),repeating-linear-gradient( 0deg, rgba(0,0,0,.5) , rgba(0,0,0,.5) 1px, #fff 1px, #fff 16px); */
-
-  filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.38));
+  background-image:repeating-linear-gradient( 90deg, rgba(0,0,0,.5) , rgba(0,0,0,.5) 1px, transparent 1px, transparent 16px),repeating-linear-gradient( 0deg, rgba(0,0,0,.5) , rgba(0,0,0,.5) 1px, #fff 1px, #fff 16px);
 }

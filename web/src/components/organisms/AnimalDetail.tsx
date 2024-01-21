@@ -16,6 +16,8 @@ const Component: FC = () => {
   const [personality, setPersonality] = useState<string>('');
   const [interest, setInterest] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [pattern, setPattern] = useState<string>('');
+  const [pedigree, setPedigree] = useState<string>('');
 
   const { id } = useParams();
   const { data, error } = useSWR<any>(
@@ -51,11 +53,49 @@ const Component: FC = () => {
     if (animal.personality) setPersonality(animal.personality);
     if (animal.interest) setInterest(animal.interest);
     if (animal.description) setDescription(animal.description);
+    if (animal.pattern.data) setPattern(animal.pattern.data.attributes.name);
+    if (animal.pedigree.data) setPedigree(animal.pedigree.data.attributes.name);
   }, [data]);
 
   const handleSubmit = () => {
-    // const instance = fetchInstanceWithToken();
+    const instance = fetchInstanceWithToken();
     // const formData = new FormData();
+
+    const body = {
+      data: {
+        animal_kind: animal_kinds.find(
+          (item: any) => item.attributes.name === kind,
+        ).id,
+        name: name,
+        gender: gender,
+        age: age,
+        size: size,
+        hair_length: hair_length,
+        personality: personality,
+        interest: interest,
+        description: description,
+        pattern: pattern
+          ? animal_patterns.find(
+              (item: any) => item.attributes.name === pattern,
+            ).id
+          : null,
+        pedigree: pedigree
+          ? animal_pedigrees.find(
+              (item: any) => item.attributes.name === pedigree,
+            ).id
+          : null,
+      },
+    };
+
+    instance
+      .put(`/api/animals/${id}`, body)
+      .then(() => {
+        // reload
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   if (error) return <div>failed to load</div>;
@@ -72,30 +112,14 @@ const Component: FC = () => {
   return (
     <>
       <Card>
-        <Link to={`/register/${id}`} className="w-full h-40 md:h-52">
-          <div className="w-36 h-36 md:w-52 md:h-52 flex justify-center items-center relative">
-            {animal.attributes.avatar_head.data && (
-              <img
-                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`}
-                alt="animal"
-                className="w-full h-full object-cover rounded-md absolute"
-              />
-            )}
-            {animal.attributes.avatar_body.data && (
-              <img
-                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`}
-                alt="animal"
-                className="w-full h-full object-cover rounded-md absolute"
-              />
-            )}
-            {animal.attributes.avatar_tail.data && (
-              <img
-                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`}
-                alt="animal"
-                className="w-full h-full object-cover rounded-md absolute"
-              />
-            )}
-          </div>
+        <Link to={`/register/${id}`}>
+          {animal.attributes.avatar_icon.data && (
+            <img
+              src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+              alt="animal"
+              className="w-full h-full object-cover rounded-md"
+            />
+          )}
         </Link>
       </Card>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -110,21 +134,25 @@ const Component: FC = () => {
         </div>
         <div className="flex gap-2 py-2 items-center">
           <p>種類：</p>
-          <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
-            {animal_kinds.map((item: any) => (
-              <option key={item.id} selected={kind === item.attributes.name}>
-                {item.attributes.name}
-              </option>
+          <select
+            className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+            onChange={(e) => setKind(e.target.value)}
+            value={kind}
+          >
+            {animal_kinds.map((item: any, index: number) => (
+              <option key={index}>{item.attributes.name}</option>
             ))}
           </select>
         </div>
         <div className="flex gap-2 py-2 items-center">
           <p>性別：</p>
-          <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
+          <select
+            className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+            onChange={(e) => setGender(e.target.value)}
+            value={gender}
+          >
             {['オス', 'メス', '不明'].map((item, index) => (
-              <option key={index} selected={gender === item}>
-                {item}
-              </option>
+              <option key={index}>{item}</option>
             ))}
           </select>
         </div>
@@ -136,26 +164,30 @@ const Component: FC = () => {
             min="0"
             max="100"
             value={age}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setAge(Number(e.target.value))}
           />
         </div>
         <div className="flex gap-2 py-2 items-center">
           <p>サイズ：</p>
-          <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
-            {['小型', '中型', '大型'].map((item, index) => (
-              <option key={index} selected={size === item}>
-                {item}
-              </option>
+          <select
+            className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+            onChange={(e) => setSize(e.target.value)}
+            value={size}
+          >
+            {['小さめ', '標準', '大きめ'].map((item, index) => (
+              <option key={index}>{item}</option>
             ))}
           </select>
         </div>
         <div className="flex gap-2 py-2 items-center">
           <p>毛の長さ：</p>
-          <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
+          <select
+            className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+            onChange={(e) => setHairLength(e.target.value)}
+            value={hair_length}
+          >
             {['短め', '長め', '無毛'].map((item, index) => (
-              <option key={index} selected={hair_length === item}>
-                {item}
-              </option>
+              <option key={index}>{item}</option>
             ))}
           </select>
         </div>
@@ -165,7 +197,7 @@ const Component: FC = () => {
             className="w-4/6 rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
             type="text"
             value={personality}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setPersonality(e.target.value)}
           />
         </div>
         <div className="flex gap-2 py-2 items-center">
@@ -174,7 +206,7 @@ const Component: FC = () => {
             className="w-4/6 rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
             type="text"
             value={interest}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setInterest(e.target.value)}
           />
         </div>
         <div className="flex gap-2 py-2 items-center">
@@ -182,20 +214,19 @@ const Component: FC = () => {
           <textarea
             className="w-4/6 rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
             value={description}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
         {kind === '猫' && (
           <div className="flex gap-2 py-2 items-center">
             <p>柄：</p>
-            <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
+            <select
+              className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+              value={pattern}
+              onChange={(e) => setPattern(e.target.value)}
+            >
               {animal_patterns.map((item: any) => (
-                <option
-                  key={item.id}
-                  selected={animal.attributes.pattern.data.id === item.id}
-                >
-                  {item.attributes.name}
-                </option>
+                <option key={item.id}>{item.attributes.name}</option>
               ))}
             </select>
           </div>
@@ -203,14 +234,13 @@ const Component: FC = () => {
         {kind === '犬' && (
           <div className="flex gap-2 py-2 items-center">
             <p>血統書：</p>
-            <select className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none">
+            <select
+              className="rounded-md p-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
+              value={pedigree}
+              onChange={(e) => setPedigree(e.target.value)}
+            >
               {animal_pedigrees.map((item: any) => (
-                <option
-                  key={item.id}
-                  selected={animal.attributes.pedigree.data.id === item.id}
-                >
-                  {item.attributes.name}
-                </option>
+                <option key={item.id}>{item.attributes.name}</option>
               ))}
             </select>
           </div>

@@ -63,6 +63,10 @@ const Component = () => {
 
     ctx.globalCompositeOperation = 'source-over';
 
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.20)';
+    ctx.shadowOffsetY = 12;
+    ctx.shadowBlur = 10;
+
     drawImage(image, canvas, ctx);
   }, [image, canvasRef.current]);
 
@@ -94,7 +98,9 @@ const Component = () => {
       if (isTail) image.src = tail;
     }
 
-    setImage(image);
+    setTimeout(() => {
+      setImage(image);
+    }, 500);
   }, [isHead, isBody, isSitting, isTail, animal]);
 
   const handleReset = () => {
@@ -134,12 +140,30 @@ const Component = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    console.log(animal);
-    // const head_image = new Image();
+    ctx.globalCompositeOperation = 'source-over';
+    const head_image = new Image();
+    head_image.crossOrigin = 'Anonymous';
     if (!animal.attributes.avatar_head.data) alert('頭を登録してください');
-    // head_image.src = animal.attributes.avatar_head.data.attributes.url;
+    head_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
+
+    const body_image = new Image();
+    body_image.crossOrigin = 'Anonymous';
+    if (!animal.attributes.avatar_body.data) alert('体を登録してください');
+    body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+
+    const tail_image = new Image();
+    tail_image.crossOrigin = 'Anonymous';
+    if (!animal.attributes.avatar_tail.data) alert('尻尾を登録してください');
+    tail_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
+
+    setTimeout(() => {
+      ctx.drawImage(tail_image, 280, 20);
+      ctx.drawImage(body_image, 0, 50);
+      ctx.drawImage(head_image, -100, -100);
+    }, 1000);
   };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -169,6 +193,8 @@ const Component = () => {
     if (!ctx) return;
 
     ctx.globalCompositeOperation = 'source-atop';
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 0;
 
     ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     ctx.stroke();
@@ -237,7 +263,7 @@ const Component = () => {
     const file = canvas.toDataURL('image/png');
     const blob = dataURItoBlob(file);
     const formData = new FormData();
-    formData.append('files', blob);
+    formData.append('files', blob, 'animal.png');
 
     const instance = fetchInstanceWithToken();
 
@@ -256,6 +282,7 @@ const Component = () => {
           if (isBody) data = { avatar_body: imageId };
           if (isSitting) data = { avatar_sitting: imageId };
           if (isTail) data = { avatar_tail: imageId };
+          if (isPreview) data = { avatar_icon: imageId };
 
           const body = {
             data: data,
@@ -314,7 +341,7 @@ const Component = () => {
         <div className="col-span-12 lg:col-span-8">
           <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4">
             <canvas
-              id="canvas"
+              id={isPreview ? 'preview' : 'canvas'}
               className="lattice"
               ref={canvasRef}
               onMouseDown={startDrawing}

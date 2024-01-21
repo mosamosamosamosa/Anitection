@@ -39,9 +39,18 @@ const Component: FC<Props> = ({ children }) => {
             .get(`/api/employees?filters[user][id][$eq]=${user.id}`)
             .then((res) => {
               if (res.status === 200) {
-                const institution =
-                  res.data.data[0].attributes.institution.data;
-                dispatch(institutionSlice.actions.setInstitution(institution));
+                const institutionID =
+                  res.data.data[0].attributes.institution.data.id;
+                fetchInstanceWithToken()
+                  .get(`/api/institutions/${institutionID}`)
+                  .then((res) => {
+                    if (res.status === 200) {
+                      const institution = res.data.data;
+                      dispatch(
+                        institutionSlice.actions.setInstitution(institution),
+                      );
+                    }
+                  });
               }
             });
         }

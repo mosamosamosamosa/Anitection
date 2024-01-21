@@ -6,7 +6,7 @@ type Props = {
 
 const Component = ({ children }: Props) => {
   return (
-    <div className="w-full rounded-md px-4 py-2 shadow-md border-2 border-neutral-100 hover:shadow-lg relative hover:border-highlight bg-neutral-100">
+    <div className="w-full rounded-md px-4 py-2 shadow-md border-2 border-neutral-100 hover:shadow-lg relative hover:border-highlight bg-neutral-50">
       {children}
     </div>
   );
