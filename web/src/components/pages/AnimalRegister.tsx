@@ -22,6 +22,7 @@ const Component = () => {
   const [brushRadius, setBrushRadius] = useState(24);
   const [undo, setUndo] = useState<ImageData[]>([]);
   const [image, setImage] = useState<HTMLImageElement>(new Image());
+  const [loading, setLoading] = useState(false);
 
   const [isHead, setIsHead] = useState(true);
   const [isBody, setIsBody] = useState(false);
@@ -257,6 +258,7 @@ const Component = () => {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -291,6 +293,7 @@ const Component = () => {
           instance.put(`/api/animals/${id}`, body).then(() => {
             instance.get(`/api/animals/${id}`).then((res) => {
               setAnimal(res.data.data);
+              setLoading(false);
               if (isPreview) navigate(`/${id}`);
             });
           });
@@ -321,6 +324,7 @@ const Component = () => {
           };
 
           instance.post('/api/animals', body).then((res) => {
+            setLoading(false);
             navigate(`/register/${res.data.data.id}`);
           });
         })
@@ -340,7 +344,7 @@ const Component = () => {
 
         {/* 動物 */}
         <div className="col-span-12 lg:col-span-8">
-          <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4">
+          <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4 relative">
             <canvas
               id={isPreview ? 'preview' : 'canvas'}
               className="lattice"
@@ -352,6 +356,12 @@ const Component = () => {
               width={800}
               height={600}
             />
+            {/* loading */}
+            {loading && (
+              <div className="absolute z-10 bg-white opacity-50 w-full h-full flex justify-center items-center">
+                <p className="text-2xl">Loading...</p>
+              </div>
+            )}
           </div>
         </div>
 
