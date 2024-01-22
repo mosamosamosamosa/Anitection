@@ -345,7 +345,8 @@ class SpeechBubble extends StatelessWidget {
       {super.key,
       required this.avatarHeight,
       required this.avatarWidth,
-      required this.speechState});
+      required this.speechState,
+      });
 
   final double avatarHeight;
   final double avatarWidth;
@@ -487,5 +488,5 @@ final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
 final effectStateProvider = StateProvider((ref) => EffectType.none);
 final selectedFoodProvider = StateProvider((ref) => FoodType.none);
 final speechStateProvider =
-    StateProvider.autoDispose((ref) => SpeechStateType.none);
+    StateProvider((ref) => SpeechStateType.none);
 final toyStateProvider = StateProvider.autoDispose((ref) => ToyType.nekojarashi);

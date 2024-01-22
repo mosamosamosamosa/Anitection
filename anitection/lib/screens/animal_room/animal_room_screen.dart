@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
@@ -12,6 +14,7 @@ import 'package:anitection/screens/animal_room/animal_room_app_bar_curtain.dart'
 import 'package:anitection/screens/animal_room/animal_room_bottom_nav_menu.dart';
 import 'package:anitection/screens/animal_room/animal_room_door_icon.dart';
 import 'package:anitection/screens/animal_room/animal_room_food_selection_pain.dart';
+import 'package:anitection/screens/animal_room/animal_room_omiyage_dialog.dart';
 import 'package:anitection/screens/animal_room/animal_room_profile_dialog.dart';
 import 'package:anitection/screens/animal_room/animal_room_right_nav_menu.dart';
 import 'package:anitection/screens/animal_room/animal_room_stroll_selection_dialog.dart';
@@ -52,7 +55,14 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       });
     });
     isStrolledStreamSubscription = ref.read(strollRepositoryProvider).isStrolledStream(animalId: widget.animalId).listen((event) {
+      final isWhenComeBack = event == false && isStroll == true;
+      if (isWhenComeBack) {
+        ref.read(speechStateProvider.notifier).state = SpeechStateType.present4You;
+      }
       setState(() {
+        if (isWhenComeBack) {
+          selectedTab = SelectedTab.normal;
+        }
         isStroll = event;
       });
     });
@@ -67,6 +77,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   Widget build(BuildContext context) {
     final animalAsyncState = ref.watch(animalFutureProvider(widget.animalId));
     final size = MediaQuery.of(context).size;
+    final speechState = ref.watch(speechStateProvider);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
@@ -128,6 +139,12 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                 onAvatarTap: () async {
                   final data = animalAsyncState.valueOrNull;
                   if (selectedTab == SelectedTab.clean) {
+                    return;
+                  }
+                  if (speechState == SpeechStateType.present4You) {
+                    showDialog(context: context, builder: (BuildContext context) {
+                      return AnimalRoomOmiyageDialog();
+                    });
                     return;
                   }
                   if (data != null && selectedTab != SelectedTab.play) {
