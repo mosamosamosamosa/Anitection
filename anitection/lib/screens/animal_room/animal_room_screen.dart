@@ -90,6 +90,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
           const AnimalRoomBackground(),
           CleanBackground(
             size: size,
+            animalId: widget.animalId,
             lastCleanDateTime: lastCleanDateTime,
             onRoomDirty: () {
               cryAnimal();
@@ -145,6 +146,10 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                       return const AnimalRoomOmiyageDialog();
                     });
                     ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
+                    final level = await ref.read(cleanHistoryRepository).getDirtyLevel(widget.animalId);
+                    if (level == 255) {
+                      cryAnimal();
+                    }
                     return;
                   }
                   if (data != null && selectedTab != SelectedTab.play) {

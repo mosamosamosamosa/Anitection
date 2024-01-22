@@ -18,6 +18,21 @@ class CleanHistoryRepository {
     await preferences.setString('last_clean_date_time-$animalId', dateTime.toIso8601String());
   }
 
+  Stream<int> getDirtyLevelStream(int animalId) async* {
+    while (true) {
+      final lastCleanDateTime = await getLastCleanDateTime(animalId);
+      final now = DateTime.now();
+      yield (lastCleanDateTime == null ? 255 : ((now.difference(lastCleanDateTime).inSeconds / 1).floor())).clamp(0, 255);
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
+
+  Future<int> getDirtyLevel(int animalId) async {
+    final lastCleanDateTime = await getLastCleanDateTime(animalId);
+    final now = DateTime.now();
+    return (lastCleanDateTime == null ? 255 : ((now.difference(lastCleanDateTime).inSeconds / 1).floor())).clamp(0, 255);
+  }
+
 }
 
 final cleanHistoryRepository = Provider((ref) => CleanHistoryRepository());
