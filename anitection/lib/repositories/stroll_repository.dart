@@ -18,7 +18,7 @@ class StrollRepository {
     }
     final lastStrollDateTime = DateTime.parse(lastStroll);
     final diff = now.difference(lastStrollDateTime);
-    return diff.inSeconds < 30;
+    return diff.inSeconds < 5;
   }
 
   Future<void> delete({required int animalId}) async {

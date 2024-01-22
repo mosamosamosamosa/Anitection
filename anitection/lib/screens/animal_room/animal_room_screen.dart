@@ -149,6 +149,8 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     final level = await ref.read(cleanHistoryRepository).getDirtyLevel(widget.animalId);
                     if (level == 255) {
                       cryAnimal();
+                    } else {
+                      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
                     }
                     return;
                   }
