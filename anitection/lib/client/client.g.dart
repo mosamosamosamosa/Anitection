@@ -405,6 +405,46 @@ class _AnitectionClient implements AnitectionClient {
     return value;
   }
 
+  @override
+  Future<PagingData<Model<MessageAttributes>>> getMessages(
+    int? page,
+    int? limit,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pagination[page]': page,
+      r'limit': limit,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PagingData<Model<MessageAttributes>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/messages',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PagingData<Model<MessageAttributes>>.fromJson(
+      _result.data!,
+      (json) => Model<MessageAttributes>.fromJson(
+        json as Map<String, dynamic>,
+        (json) => MessageAttributes.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

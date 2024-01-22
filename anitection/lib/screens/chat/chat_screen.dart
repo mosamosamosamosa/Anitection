@@ -1,6 +1,10 @@
 import 'package:anitection/components/animal_pad_background.dart';
 import 'package:anitection/components/institution_title.dart';
 import 'package:anitection/components/nav_up_button.dart';
+import 'package:anitection/models/base.dart';
+import 'package:anitection/models/message/message.dart';
+import 'package:anitection/providers/auth_controller.dart';
+import 'package:anitection/providers/client.dart';
 import 'package:anitection/screens/chat/chat_bottom_menu.dart';
 import 'package:anitection/screens/chat/messages.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +22,21 @@ class ChatScreen extends ConsumerStatefulWidget {
 class ChatScreenState extends ConsumerState<ChatScreen> {
   bool _isInputMode = false;
   FocusNode chatTextFieldFocusNode = FocusNode();
+  List<Model<MessageAttributes>> messages = [];
 
   @override
   void initState() {
     chatTextFieldFocusNode.addListener(() {
       setState(() {
         _isInputMode = chatTextFieldFocusNode.hasFocus;
+      });
+    });
+    ref.read(anitectionClientProvider).getMessages(
+      1,
+      20,
+    ).then((value) {
+      setState(() {
+        messages = value.data;
       });
     });
     super.initState();
@@ -36,6 +49,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final me = ref.watch(authControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8E0),
       appBar: AppBar(
@@ -68,7 +82,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
                       _isInputMode = false;
                     });
                   },
-                  child: const MessageList(),
+                  child: MessageList(messages: messages, me: me.valueOrNull,),
                 ),
               ),
               if (_isInputMode)

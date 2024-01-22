@@ -5,6 +5,7 @@ import 'package:anitection/models/animal/favorite/favorite.dart';
 import 'package:anitection/models/auth/auth_result.dart';
 import 'package:anitection/models/base.dart';
 import 'package:anitection/models/institution/institution.dart';
+import 'package:anitection/models/message/message.dart';
 import 'package:anitection/models/pattern/pattern.dart';
 import 'package:anitection/models/pedigree/pedigree.dart';
 import 'package:anitection/models/timeline/timeline.dart';
@@ -76,6 +77,12 @@ abstract class AnitectionClient {
 
   @GET("/api/timelines")
   Future<PagingData<Model<TimelineAttributes>>> getTimelines(
+    @Query("pagination[page]") int? page,
+    @Query("limit") int? limit,
+  );
+
+  @GET("api/messages")
+  Future<PagingData<Model<MessageAttributes>>> getMessages(
     @Query("pagination[page]") int? page,
     @Query("limit") int? limit,
   );
