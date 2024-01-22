@@ -2,14 +2,34 @@ import React, { useEffect, useState } from 'react';
 import TalkBubble from '../organisms/TalkBubble';
 import Layout from '../templates/Layout';
 import cat from '../../assets/cat.png';
-import { Icon } from '@iconify/react';
+import Button from '../atoms/Button';
 
+import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import Navigation from '../organisms/Navigation';
 import InstitutionInfo from '../organisms/InstitutionInfo';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [senders, setSenders] = useState<string[]>([]);
+  const [value, setValue] = useState<string>('');
+
+  const handleSubmit = () => {
+    const instance = fetchInstanceWithToken();
+    instance
+      .post('/api/messages', {
+        data: {
+          content: value,
+          institution: 1,
+          sender: 1,
+          recipient: 2,
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => console.error(err));
+    setValue('');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +71,8 @@ const Chat: React.FC = () => {
 
         {/* 動物 */}
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
-          <div className="w-full h-full flex flex-col gap-6 px-0 py-2">
-            <ul>
+          <div className="w-full h-full flex flex-col gap-6 px-0 py-2 h-[80vh]">
+            <ul className="flex flex-col h-5/6 gap-4 overflow-y-scroll py-2">
               {messages.map((content, index) => (
                 <TalkBubble
                   key={index}
@@ -63,16 +83,23 @@ const Chat: React.FC = () => {
               ))}
             </ul>
 
-            <form className="flex justify-center items-center gap-2">
+            <div className="flex justify-center items-center gap-2 h-1/6">
               <input
                 className="w-full h-10 px-3 rounded-full border border-gray-300 focus:outline-none"
                 type="text"
                 placeholder="メッセージを入力"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
               />
-              <button className="w-10 h-10 rounded-full bg-blue-500 hover:bg-blue-600 focus:outline-none flex justify-center items-center">
-                <Icon icon="ant-design:arrow-right-outlined" className="w-6" />
-              </button>
-            </form>
+              <div className="flex justify-center items-center w-2/12">
+                <Button
+                  text="送信"
+                  icon="bx:bx-send"
+                  onClick={handleSubmit}
+                  highlight
+                />
+              </div>
+            </div>
           </div>
         </div>
 

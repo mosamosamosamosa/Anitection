@@ -7,9 +7,11 @@ import InfoHeader from '../atoms/InfoHeader';
 import Card from '../templates/Card';
 import Button from '../atoms/Button';
 import { Icon } from '@iconify/react';
+import Modal from '../templates/Modal';
 
 const Chat: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // Function to handle donation button click
   const handleDonationButtonClick = (amount: number) => {
@@ -20,10 +22,9 @@ const Chat: React.FC = () => {
   const handleDonateButtonClick = () => {
     // Perform the donation or any other action here
     if (donationAmount !== null) {
-      console.log(`Donating ${donationAmount} yen`);
-      // You can perform the actual donation logic here
+      setIsModalOpen(true);
     } else {
-      console.log('Please select a donation amount');
+      alert('Please select a donation amount');
     }
   };
 
@@ -58,7 +59,6 @@ const Chat: React.FC = () => {
               />
             </div>
           </Card>
-
           {/* Donate button */}
         </div>
 
@@ -90,6 +90,26 @@ const Chat: React.FC = () => {
           </Card>
         </div>
       </div>
+
+      {/* Modal */}
+      { isModalOpen &&
+        <Modal text="寄付が完了しました">
+          {/* クラッカー gifでの演出 */}
+          <div className="flex justify-center items-center gap-2 py-8 w-3/6">
+            <img src="https://i.pinimg.com/originals/20/de/9d/20de9d2639969aafd257119fbd3c6f46.gif" />
+          </div>
+          {/* 送金ポイントを表示 */}
+          <div className="flex justify-center items-center gap-2 py-8">
+            <ul className="flex flex-col gap-2 py-2">
+              <li className="flex gap-2 items-center text-2xl">
+                <Icon icon="bx:bx-coin-stack" className="w-8 h-8 mr-1" />
+                <p>{donationAmount} ポイント</p>
+              </li>
+              <li className='text-sm'>寄付ありがとう！</li>
+            </ul>
+          </div>
+        </Modal>
+      }
     </Layout>
   );
 };

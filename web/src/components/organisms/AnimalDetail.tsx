@@ -112,8 +112,8 @@ const Component: FC = () => {
   return (
     <>
       <Card>
-        <div className="min-h-[200px]">
-          <Link to={`/register/${id}`}>
+        <Link to={`/register/${id}`}>
+          <div className="min-h-[200px]">
             {animal.attributes.avatar_icon.data && (
               <img
                 src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
@@ -121,8 +121,8 @@ const Component: FC = () => {
                 className="w-full h-full object-cover rounded-md"
               />
             )}
-          </Link>
-        </div>
+          </div>
+        </Link>
       </Card>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="flex gap-2 py-2 items-center">

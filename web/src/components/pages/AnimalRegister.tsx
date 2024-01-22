@@ -160,9 +160,9 @@ const Component = () => {
     tail_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
 
     setTimeout(() => {
-      ctx.drawImage(tail_image, 280, 20);
+      ctx.drawImage(tail_image, 280, 30);
       ctx.drawImage(body_image, 0, 50);
-      ctx.drawImage(head_image, -100, -100);
+      ctx.drawImage(head_image, -110, -140);
     }, 1000);
   };
 

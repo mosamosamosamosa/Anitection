@@ -63,6 +63,15 @@ const Component: FC = () => {
                 <Icon icon="akar-icons:phone" className="w-4 h-4 mr-1" />
                 {institution.attributes.phone}
               </li>
+              <li className="flex gap-2 items-center">
+                <Icon icon="cil:animal" className="w-4 h-4 mr-1" />
+                総数：{count}匹
+              </li>
+              {kinds_count.map((item: any, index: number) => (
+                <li key={index} className="flex gap-2 items-center">
+                  {item.name}：{item.number}匹
+                </li>
+              ))}
             </ul>
           </div>
           <div className="absolute bottom-2 right-4 flex justify-end items-end">
@@ -70,26 +79,6 @@ const Component: FC = () => {
             <Icon icon="tdesign:swap-right" className="w-6" />
           </div>
         </Link>
-      </Card>
-      {/* 動物情報 */}
-      <InfoHeader icon="cil:animal" title="動物情報" />
-      <Card>
-        <div className="w-full flex justify-center items-center">
-          <ul className="flex flex-col gap-2 py-2">
-            <li className="flex gap-2 items-center">
-              <Icon icon="cil:animal" className="w-4 h-4 mr-1" />
-              総数：{count}匹
-            </li>
-            {kinds_count.map((item: any, index: number) => (
-              <li key={index} className="flex gap-2 items-center">
-                {item.name}：{item.number}匹
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="absolute bottom-2 right-4 flex justify-center items-center">
-          <Icon icon="tdesign:swap-right" className="mt-1 w-6" />
-        </div>
       </Card>
     </>
   );
