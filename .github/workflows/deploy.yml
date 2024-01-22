@@ -16,6 +16,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      # cache
       - name: Cache Docker layers for cms
         uses: actions/cache@v2
         with:
@@ -32,6 +33,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-bff-
 
+      - name: Configure Docker layer web
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache-web
+          key: ${{ runner.os }}-buildx-web-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-web-
+
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
@@ -42,6 +51,7 @@ jobs:
         id: get-commit
         run: echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
 
+      # build and push
       - name: Build and push Docker image for cms
         uses: docker/build-push-action@v2
         with:
@@ -78,12 +88,30 @@ jobs:
         run: |
           sed -i "s/yumekiti\/anitection-bff:.*/yumekiti\/anitection-bff:${{ steps.get-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
 
+      - name: Build and push Docker image for web
+        uses: docker/build-push-action@v2
+        with:
+          context: ./web
+          push: true
+          file: ./web/Dockerfile
+          platforms: linux/arm64
+          cache-from: type=local,src=/tmp/.buildx-cache-web
+          cache-to: type=local,dest=/tmp/.buildx-cache-web-new
+          tags: yumekiti/anitection-web:${{ steps.get-commit.outputs.commit_hash }}
+
+      - name: Update deployment.yaml for web
+        run: |
+          sed -i "s/yumekiti\/anitection-web:.*/yumekiti\/anitection-web:${{ steps.get-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
+
+      # cache move
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache-cms
           mv /tmp/.buildx-cache-cms-new /tmp/.buildx-cache-cms
           rm -rf /tmp/.buildx-cache-bff
           mv /tmp/.buildx-cache-bff-new /tmp/.buildx-cache-bff
+          rm -rf /tmp/.buildx-cache-web
+          mv /tmp/.buildx-cache-web-new /tmp/.buildx-cache-web
 
       - name: Commit and push changes to main branch
         run: |
