@@ -231,8 +231,8 @@ class AnimalView extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: 0,
-            left: avatarWidth * 0.265,
+            top: -(avatarHeight * 0.039),
+            left: avatarWidth * 0.35,
             child: Image.network(
               avatarTailImageUrl,
               width: avatarWidth,
