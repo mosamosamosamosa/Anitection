@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:anitection/components/stroke_text.dart';
 import 'package:anitection/constants.dart';
 import 'package:anitection/models/animal/animal.dart';
 import 'package:anitection/models/base.dart';
@@ -58,6 +56,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       final isWhenComeBack = event == false && isStroll == true;
       if (isWhenComeBack) {
         ref.read(speechStateProvider.notifier).state = SpeechStateType.present4You;
+        ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
       }
       setState(() {
         if (isWhenComeBack) {
@@ -142,9 +141,10 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     return;
                   }
                   if (speechState == SpeechStateType.present4You) {
-                    showDialog(context: context, builder: (BuildContext context) {
-                      return AnimalRoomOmiyageDialog();
+                    await showDialog(context: context, builder: (BuildContext context) {
+                      return const AnimalRoomOmiyageDialog();
                     });
+                    ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
                     return;
                   }
                   if (data != null && selectedTab != SelectedTab.play) {
