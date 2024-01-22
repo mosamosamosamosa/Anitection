@@ -5,7 +5,7 @@ WORKDIR /usr/local/app
 COPY . .
 
 RUN yarn --frozen-lockfile && \
-    yarn build
+    REACT_APP_API_URL=https://anitection-api.yumekiti.net yarn build
 
 FROM nginx:1.21.1-alpine
 
