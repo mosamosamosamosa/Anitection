@@ -29,7 +29,7 @@ const Chat: React.FC = () => {
       })
       .catch((err) => console.error(err));
     setValue('');
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {

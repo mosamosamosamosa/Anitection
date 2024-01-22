@@ -92,7 +92,7 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Modal */}
-      { isModalOpen &&
+      {isModalOpen && (
         <Modal text="寄付が完了しました">
           {/* クラッカー gifでの演出 */}
           <div className="flex justify-center items-center gap-2 py-8 w-3/6">
@@ -105,11 +105,11 @@ const Chat: React.FC = () => {
                 <Icon icon="bx:bx-coin-stack" className="w-8 h-8 mr-1" />
                 <p>{donationAmount} ポイント</p>
               </li>
-              <li className='text-sm'>寄付ありがとう！</li>
+              <li className="text-sm">寄付ありがとう！</li>
             </ul>
           </div>
         </Modal>
-      }
+      )}
     </Layout>
   );
 };
