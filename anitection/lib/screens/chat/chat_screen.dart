@@ -32,8 +32,8 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
       });
     });
     ref.read(anitectionClientProvider).getMessages(
-      1,
-      20,
+      // 1,
+      // 20,
     ).then((value) {
       setState(() {
         messages = value.data;

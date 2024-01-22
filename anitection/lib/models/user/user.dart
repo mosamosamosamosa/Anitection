@@ -30,3 +30,34 @@ class User {
   }
 
 }
+
+
+@JsonSerializable()
+class UserAttributes {
+  UserAttributes({
+    required this.username,
+    required this.email,
+    required this.provider,
+    required this.confirmed,
+    required this.blocked,
+    required this.role,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory UserAttributes.fromJson(Map<String, dynamic> json) {
+    return _$UserAttributesFromJson(json);
+  }
+  final String username;
+  final String email;
+  final String provider;
+  final bool confirmed;
+  final bool blocked;
+  final String role;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Map<String, dynamic> toJson() {
+    return _$UserAttributesToJson(this);
+  }
+}

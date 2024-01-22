@@ -83,8 +83,8 @@ abstract class AnitectionClient {
 
   @GET("api/messages")
   Future<PagingData<Model<MessageAttributes>>> getMessages(
-    @Query("pagination[page]") int? page,
-    @Query("limit") int? limit,
+    // @Query("pagination[page]") int? page,
+    // @Query("limit") int? limit,
   );
 }
 
