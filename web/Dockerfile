@@ -1,4 +1,4 @@
-FROM node:14.21.3-alpine AS builder
+FROM node:18.18.2-alpine AS builder
 
 WORKDIR /usr/local/app
 
