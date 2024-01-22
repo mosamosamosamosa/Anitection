@@ -259,7 +259,7 @@ class AnimalView extends StatelessWidget {
           ),
           Positioned(
             top: -(avatarHeight * 0.057),
-            left: (avatarWidth * 0.115),
+            left: (avatarWidth * 0.124),
             child: Lottie.asset(
               'assets/lottie/${() {
                 switch (faceState) {
