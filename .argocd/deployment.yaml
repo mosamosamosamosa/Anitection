@@ -68,7 +68,7 @@ metadata:
   name: bff
   namespace: anitection
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bff
@@ -82,3 +82,24 @@ spec:
           image: yumekiti/anitection-bff:0e243f0
           ports:
             - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: anitection
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: anitection-web
+          image: yumekiti/anitection-web:60d235a
+          ports:
+            - containerPort: 80

@@ -1,18 +1,17 @@
-import React, { useEffect, memo, FC, ReactNode } from 'react';
+import React, { memo, FC, ReactNode, useEffect } from 'react';
 
 import Header from '../organisms/Header';
-import Navigation from '../organisms/Navigation';
-import UserPanel from '../organisms/UserPanel';
-import Breadcrumbs from '../organisms/Breadcrumbs';
+import Breadcrumbs from '../molecules/Breadcrumbs';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-
-import { useDispatch } from 'react-redux';
-import { viewSlice } from '../../features/view';
+import { userSlice } from '../../features/user';
+import { institutionSlice } from '../../features/institution';
 
 import Login from '../organisms/Login';
 import Register from '../organisms/Register';
+
+import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 
 type Props = {
   children: ReactNode;
@@ -20,68 +19,51 @@ type Props = {
 
 const Component: FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
-  const { mobile, sidebar, loginModal, registerModal } = useSelector(
+  const isLogin = localStorage.getItem('token') ? true : false;
+  const { loginModal, registerModal } = useSelector(
     (state: RootState) => state.view,
   );
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1024) {
-      dispatch(viewSlice.actions.setMobile(false));
-      dispatch(viewSlice.actions.setSidebar(true));
-    } else {
-      dispatch(viewSlice.actions.setMobile(true));
-      dispatch(viewSlice.actions.setSidebar(false));
-    }
-  });
+  const { institution } = useSelector((state: RootState) => state.institution);
+  const { user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (window.innerWidth <= 1024) {
-      dispatch(viewSlice.actions.setMobile(true));
-      dispatch(viewSlice.actions.setSidebar(false));
-    }
-  }, []);
+    if (!isLogin) return;
+    fetchInstanceWithToken()
+      .get('/api/users/me')
+      .then((res) => {
+        if (res.status === 200) {
+          const user = res.data;
+          dispatch(userSlice.actions.setUser(user));
+
+          fetchInstanceWithToken()
+            .get(`/api/employees?filters[user][id][$eq]=${user.id}`)
+            .then((res) => {
+              if (res.status === 200) {
+                const institutionID =
+                  res.data.data[0].attributes.institution.data.id;
+                fetchInstanceWithToken()
+                  .get(`/api/institutions/${institutionID}`)
+                  .then((res) => {
+                    if (res.status === 200) {
+                      const institution = res.data.data;
+                      dispatch(
+                        institutionSlice.actions.setInstitution(institution),
+                      );
+                    }
+                  });
+              }
+            });
+        }
+      });
+  }, [isLogin]);
 
   return (
-    <div className="App h-screen flex flex-col">
-      <div className="flex flex-grow">
-        {mobile && sidebar && (
-          <div
-            className="fixed w-full top-0 left-0 h-screen z-10 bg-opacity-60 bg-gray-400"
-            onClick={() => dispatch(viewSlice.actions.toggleSidebar())}
-          >
-            <div className="animate-slide-in-left w-3/5 bg-main h-full px-2 overflow-y-auto">
-              <div className="sticky top-8">
-                <UserPanel />
-                <Navigation />
-              </div>
-            </div>
-            <div className="fixed top-0 right-0 w-2/5 h-full" />
-          </div>
-        )}
-        {!mobile && (
-          <aside
-            className={`bg-main h-full relative border-r border-gray-300 duration-300 transition-all ${
-              sidebar ? 'w-1/6 p-4' : 'w-0'
-            }`}
-          >
-            {sidebar && (
-              <div className="sticky top-8">
-                <UserPanel />
-                <Navigation />
-              </div>
-            )}
-          </aside>
-        )}
-        <div className="flex-grow">
-          <Header />
-          <Breadcrumbs />
-          <div className="max-w-6xl mx-auto px-4 py-8">
-            <main className="flex-grow">{children}</main>
-          </div>
-        </div>
-        {!registerModal && loginModal && <Login />}
-        {registerModal && <Register />}
-      </div>
+    <div className="App h-screen flex-grow">
+      <Header />
+      <Breadcrumbs path={window.location.pathname} />
+      {user && institution && <main className="flex-grow">{children}</main>}
+      {!registerModal && loginModal && <Login />}
+      {registerModal && <Register />}
     </div>
   );
 };

@@ -1,32 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export type User = {
-  username: string;
-  email: string;
-  token: string;
+  user: any;
 };
 
 export type UserState = User;
 
 const initialState: UserState = {
-  username: '',
-  email: '',
-  token: localStorage.getItem('token') || '',
+  user: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUsername: (state, action) => {
-      state.username = action.payload;
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    setToken: (state, action) => {
-      localStorage.setItem('token', action.payload);
-      state.token = action.payload;
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
 });
