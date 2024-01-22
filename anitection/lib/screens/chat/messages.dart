@@ -35,7 +35,7 @@ class MessageBubble extends ConsumerWidget {
   final User? me;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (me?.id == message.attributes.user?.data.id) {
+    if (me?.id == message.attributes.sender?.data.id) {
       return Padding(
         padding:
         const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

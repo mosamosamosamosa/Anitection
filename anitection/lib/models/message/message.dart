@@ -10,12 +10,12 @@ part 'message.g.dart';
 class MessageAttributes {
   final String content;
   final SingleData<Model<InstitutionAttributes>>? institution;
-  final SingleData<Model<UserAttributes>>? user;
+  final SingleData<Model<UserAttributes>>? sender;
 
   MessageAttributes({
     required this.content,
     required this.institution,
-    required this.user,
+    required this.sender,
   });
 
   factory MessageAttributes.fromJson(Map<String, dynamic> json) {

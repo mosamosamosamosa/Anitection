@@ -122,7 +122,9 @@ class InstitutionScreenState extends ConsumerState<InstitutionScreen> {
       ),
       floatingActionButton: ChatButton(onPressed: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const ChatScreen()),
+          MaterialPageRoute(builder: (context) => ChatScreen(
+            institutionId: widget.institutionId,
+          )),
         );
       },),
     );

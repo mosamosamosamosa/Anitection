@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({super.key, required this.institutionId});
+  final int institutionId;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -23,6 +24,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
   bool _isInputMode = false;
   FocusNode chatTextFieldFocusNode = FocusNode();
   List<Model<MessageAttributes>> messages = [];
+  final textController = TextEditingController();
 
   @override
   void initState() {
@@ -32,6 +34,9 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
       });
     });
     ref.read(anitectionClientProvider).getMessages(
+      widget.institutionId,
+      // ref.read(authControllerProvider).valueOrNull?.id ?? 0,
+      // ref.read(authControllerProvider).valueOrNull?.id ?? 0,
       // 1,
       // 20,
     ).then((value) {
@@ -107,6 +112,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
                             Flexible(
                               flex: 1,
                                 child: TextField(
+                                  controller: textController,
                               focusNode: chatTextFieldFocusNode,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
@@ -115,6 +121,28 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
                               ),
                             )),
                             IconButton(onPressed: () {
+                              ref.read(anitectionClientProvider).createMessage({
+                                "data": {
+                                  "content": textController.text,
+                                  "institution": widget.institutionId,
+                                  "sender": me.valueOrNull?.id,
+                                  "read": false,
+                                }
+                              }).then((value) {
+                                // reload
+                                ref.read(anitectionClientProvider).getMessages(
+                                  widget.institutionId,
+                                  // ref.read(authControllerProvider).valueOrNull?.id ?? 0,
+                                  // ref.read(authControllerProvider).valueOrNull?.id ?? 0,
+                                  // 1,
+                                  // 20,
+                                ).then((value) {
+                                  textController.clear();
+                                  setState(() {
+                                    messages = value.data;
+                                  });
+                                });
+                              });
 
                             }, icon: const Icon(Icons.send)),
                           ],

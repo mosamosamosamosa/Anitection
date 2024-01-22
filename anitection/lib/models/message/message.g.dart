@@ -17,10 +17,10 @@ MessageAttributes _$MessageAttributesFromJson(Map<String, dynamic> json) =>
                   value as Map<String, dynamic>,
                   (value) => InstitutionAttributes.fromJson(
                       value as Map<String, dynamic>))),
-      user: json['user'] == null
+      sender: json['sender'] == null
           ? null
           : SingleData<Model<UserAttributes>>.fromJson(
-              json['user'] as Map<String, dynamic>,
+              json['sender'] as Map<String, dynamic>,
               (value) => Model<UserAttributes>.fromJson(
                   value as Map<String, dynamic>,
                   (value) =>
@@ -35,7 +35,7 @@ Map<String, dynamic> _$MessageAttributesToJson(MessageAttributes instance) =>
           (value) => value,
         ),
       ),
-      'user': instance.user?.toJson(
+      'sender': instance.sender?.toJson(
         (value) => value.toJson(
           (value) => value,
         ),

@@ -85,6 +85,14 @@ abstract class AnitectionClient {
   Future<PagingData<Model<MessageAttributes>>> getMessages(
     // @Query("pagination[page]") int? page,
     // @Query("limit") int? limit,
+      @Query("filters[institution][id][\$eq]") int? institutionId,
+      // @Query("filters[sender][id][\$eq]") int? senderId,
+      // @Query("filters[\$or][recipient][id][\$eq]") int? recipientId,
+  );
+
+  @POST("/api/messages")
+  Future<void> createMessage(
+    @Body() Map<String, dynamic> request,
   );
 }
 

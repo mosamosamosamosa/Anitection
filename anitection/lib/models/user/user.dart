@@ -40,7 +40,6 @@ class UserAttributes {
     required this.provider,
     required this.confirmed,
     required this.blocked,
-    required this.role,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -53,7 +52,6 @@ class UserAttributes {
   final String provider;
   final bool confirmed;
   final bool blocked;
-  final String role;
   final DateTime createdAt;
   final DateTime updatedAt;
 
