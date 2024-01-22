@@ -123,18 +123,16 @@
         "audios"
       ]
     },
-    "avatar_body_sitting": {
+    "avatar_sitting": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
-    },
-    "sitting": {
-      "type": "boolean"
+      ]
     }
   }
 }
