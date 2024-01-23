@@ -170,11 +170,11 @@ class InitialCatPatternState extends ConsumerState<InitialCatPatternScreen> {
                                 size: widget.catSize.map((e) {
                                   switch (e) {
                                     case CatSize.small:
-                                      return "小型";
+                                      return "小さめ";
                                     case CatSize.medium:
-                                      return "中型";
+                                      return "標準";
                                     case CatSize.large:
-                                      return "大型";
+                                      return "大きめ";
                                   }
                                 }).toList(),
                                 patternIds: selectedPatterns.toList(),
