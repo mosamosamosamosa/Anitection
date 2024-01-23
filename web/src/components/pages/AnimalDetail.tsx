@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../templates/Layout';
 import Navigation from '../organisms/Navigation';
-import AnimalList from '../organisms/AnimalList';
+import AnimalDetail from '../organisms/AnimalDetail';
 import InstitutionInfo from '../organisms/InstitutionInfo';
 
 const Component = () => {
@@ -15,7 +15,7 @@ const Component = () => {
 
         {/* 動物 */}
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
-          <AnimalList />
+          <AnimalDetail />
         </div>
 
         {/* 情報 */}

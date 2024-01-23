@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: anitection-cms
-          image: yumekiti/anitection-cms:0696061
+          image: yumekiti/anitection-cms:bf41244
           ports:
             - containerPort: 1337
           volumeMounts:
@@ -68,7 +68,7 @@ metadata:
   name: bff
   namespace: anitection
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bff
@@ -79,6 +79,27 @@ spec:
     spec:
       containers:
         - name: anitection-bff
-          image: yumekiti/anitection-bff:0696061
+          image: yumekiti/anitection-bff:bf41244
           ports:
             - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: anitection
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: anitection-web
+          image: yumekiti/anitection-web:bf41244
+          ports:
+            - containerPort: 80

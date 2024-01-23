@@ -1,11 +1,11 @@
-FROM node:14.21.3-alpine AS builder
+FROM node:18.18.2-alpine AS builder
 
 WORKDIR /usr/local/app
 
 COPY . .
 
 RUN yarn --frozen-lockfile && \
-    yarn build
+    REACT_APP_API_URL=https://anitection-api.yumekiti.net yarn build
 
 FROM nginx:1.21.1-alpine
 

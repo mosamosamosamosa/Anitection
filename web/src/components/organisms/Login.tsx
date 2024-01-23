@@ -2,7 +2,6 @@ import React, { FC, useState, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { viewSlice } from '../../features/view';
-import { userSlice } from '../../features/user';
 import { fetchInstance } from '../../utils/fetchInstance';
 
 import Modal from '../templates/Modal';
@@ -22,8 +21,8 @@ const Component: FC = () => {
   };
 
   const handleRegisterClick = () => {
-    dispatch(viewSlice.actions.resetModal());
-    dispatch(viewSlice.actions.toggleRegisterModal());
+    dispatch(viewSlice.actions.setLoginModal(false));
+    dispatch(viewSlice.actions.setRegisterModal(true));
   };
 
   const handleLoginClick = () => {
@@ -37,14 +36,14 @@ const Component: FC = () => {
     }
 
     fetchInstance()
-      .post('/auth/local', {
+      .post('/api/auth/local', {
         identifier: identifier,
         password: password,
       })
       .then((res) => {
         if (res.status === 200) {
-          dispatch(userSlice.actions.setToken(res.data.token));
-          dispatch(viewSlice.actions.resetModal());
+          localStorage.setItem('token', res.data.jwt);
+          dispatch(viewSlice.actions.setLoginModal(false));
         }
       })
       .catch(() => {
