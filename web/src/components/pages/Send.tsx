@@ -39,6 +39,13 @@ const Chat: React.FC = () => {
         {/* 動物 */}
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
           <Card>
+            <div className="w-full flex justify-center items-center py-8 px-2">
+              <img
+                src="https://jspca.or.jp/common/img/img_mainvisual01.jpg"
+                alt="animal"
+                className="w-full object-cover"
+              />
+            </div>
             <div className="w-full flex justify-center items-center gap-2 py-8">
               {[100, 500, 1000, 3000, 5000, 10000].map((amount) => (
                 <Button
@@ -64,25 +71,21 @@ const Chat: React.FC = () => {
 
         {/* 情報 */}
         <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
-          {/* 現在の保有ポイント */}
-          <InfoHeader icon="bx:bx-coin-stack" title="現在の保有ポイント" />
+          {/* ポイント */}
+          <InfoHeader icon="bx:bx-coin-stack" title="ポイント" />
           <Card>
             <div className="w-full flex justify-center items-center">
-              <ul className="flex flex-col gap-2 py-2">
+              <ul className="flex flex-col gap-2 py-2 w-full">
+                {/* 現在のポイント */}
                 <li className="flex gap-2 items-center">
                   <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
+                  <p className="text-sm">保有ポイント：</p>
                   <p>1000</p>
                 </li>
-              </ul>
-            </div>
-          </Card>
-          {/* 現在の寄付金額 */}
-          <InfoHeader icon="bx:bx-coin-stack" title="現在の寄付金額" />
-          <Card>
-            <div className="w-full flex justify-center items-center">
-              <ul className="flex flex-col gap-2 py-2">
+                {/* いままでの寄付金額 */}
                 <li className="flex gap-2 items-center">
                   <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
+                  <p className="text-sm">寄付金額：</p>
                   <p>3500</p>
                 </li>
               </ul>
@@ -93,19 +96,17 @@ const Chat: React.FC = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <Modal text="寄付が完了しました">
-          {/* クラッカー gifでの演出 */}
-          <div className="flex justify-center items-center gap-2 py-8 w-3/6">
-            <img src="https://i.pinimg.com/originals/20/de/9d/20de9d2639969aafd257119fbd3c6f46.gif" />
-          </div>
+        <Modal text="寄付が完了しました" onClick={() => setIsModalOpen(false)}>
           {/* 送金ポイントを表示 */}
           <div className="flex justify-center items-center gap-2 py-8">
             <ul className="flex flex-col gap-2 py-2">
-              <li className="flex gap-2 items-center text-2xl">
+              <li className="flex gap-2 items-center text-4xl">
                 <Icon icon="bx:bx-coin-stack" className="w-8 h-8 mr-1" />
                 <p>{donationAmount} ポイント</p>
               </li>
-              <li className="text-sm">寄付ありがとう！</li>
+              <li className="text-sm flex justify-end items-center">
+                寄付ありがとう！
+              </li>
             </ul>
           </div>
         </Modal>
