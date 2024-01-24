@@ -1,27 +1,18 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { Icon } from '@iconify/react';
-
-import { viewSlice } from '../../features/view';
 
 type Props = {
   text: string;
   children: React.ReactNode;
+  onClick: () => void;
 };
 
-const Component: FC<Props> = ({ text, children }) => {
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(viewSlice.actions.setLoginModal(false));
-    dispatch(viewSlice.actions.setRegisterModal(false));
-  };
-
+const Component: FC<Props> = ({ text, children, onClick }) => {
   return (
     <div className="fixed inset-0 bg-background bg-opacity-80 flex justify-center items-center z-30">
       <div
         className="absolute inset-0 flex justify-center items-center z-40"
-        onClick={handleClick}
+        onClick={onClick}
       >
         <div className="w-full h-full"></div>
       </div>
@@ -33,7 +24,7 @@ const Component: FC<Props> = ({ text, children }) => {
             </div>
             <button
               className="p-2 text-icons-main rounded-md"
-              onClick={handleClick}
+              onClick={onClick}
             >
               <Icon icon="ant-design:close-outlined" className="w-6 h-6" />
             </button>

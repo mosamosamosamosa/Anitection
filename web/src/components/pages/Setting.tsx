@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../templates/Layout';
 import Navigation from '../organisms/Navigation';
+import Card from '../templates/Card';
 
 const Component = () => {
   return (
@@ -13,16 +14,50 @@ const Component = () => {
 
         <div className="col-span-12 md:col-span-3 lg:col-span-2 space-y-4">
           {/* 設定なび */}
-          <div className="bg-white rounded-xl shadow-md flex justify-center items-center px-2 py-4">
-            <div className="w-full h-40">contents</div>
-          </div>
+          <Card>
+            <ul className="flex flex-col gap-2 py-2 w-full space-y-2">
+              <li className="flex gap-2">
+                <p className="text-sm">プロフィール</p>
+              </li>
+              <li className="flex gap-2">
+                <p className="text-sm">通知</p>
+              </li>
+              <li className="flex gap-2">
+                <p className="text-sm">ログアウト</p>
+              </li>
+            </ul>
+          </Card>
         </div>
 
         {/* 設定 */}
         <div className="col-span-12 md:col-span-9 lg:col-span-8">
-          <div className="bg-white rounded-xl shadow-md flex justify-center items-center px-2 py-4">
-            <div className="w-full h-96">contents</div>
-          </div>
+          <Card>
+            <div className="w-full flex p-4">
+              <ul className="flex flex-col gap-2 py-2 space-y-2">
+                <li className="flex gap-2">
+                  <input
+                    type="text"
+                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                    placeholder="名前"
+                  />
+                </li>
+                <li className="flex gap-2">
+                  <input
+                    type="text"
+                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                    placeholder="メールアドレス"
+                  />
+                </li>
+                <li className="flex gap-2">
+                  <input
+                    type="text"
+                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                    placeholder="パスワード"
+                  />
+                </li>
+              </ul>
+            </div>
+          </Card>
         </div>
       </div>
     </Layout>

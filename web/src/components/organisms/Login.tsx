@@ -12,6 +12,11 @@ const Component: FC = () => {
   const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const handleClick = () => {
+    dispatch(viewSlice.actions.setLoginModal(false));
+    dispatch(viewSlice.actions.setRegisterModal(false));
+  };
+
   const handleIdentifierChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIdentifier(event.target.value);
   };
@@ -54,7 +59,7 @@ const Component: FC = () => {
   const handleResetClick = () => {};
 
   return (
-    <Modal text="ログイン">
+    <Modal text="ログイン" onClick={handleClick}>
       <div className="flex flex-col justify-center items-center gap-4 mb-12">
         <div className="flex flex-col justify-center items-start">
           <p className="font-bold">メールアドレス</p>
