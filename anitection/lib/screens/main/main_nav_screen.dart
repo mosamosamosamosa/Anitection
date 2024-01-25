@@ -3,6 +3,7 @@ import 'package:anitection/providers/auth_controller.dart';
 import 'package:anitection/screens/animal_room/bottom_navigation.dart';
 import 'package:anitection/screens/chat_list/chat_list_screen.dart';
 import 'package:anitection/screens/home/home_screen.dart';
+import 'package:anitection/screens/point/point_screen.dart';
 import 'package:anitection/screens/timeline/timeline_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,18 +28,11 @@ class MainNavScreenState extends ConsumerState<MainNavScreen> {
       child: Scaffold(
         body: IndexedStack(
           index: selectedTab.index,
-          children: [
-            const HomeScreen(),
-            const ChatListScreen(),
-            const TimelineScreen(),
-            Container(
-              color: Colors.yellow,
-              child: SingleChildScrollView(
-                child: Text(
-                  [for(int i = 0; i < 9999; i++) "デザインどこですか？"].join(),
-                ),
-              ),
-            ),
+          children: const [
+            HomeScreen(),
+            ChatListScreen(),
+            TimelineScreen(),
+            PointScreen(),
           ],
         ),
         bottomNavigationBar: BottomNavigationView(
