@@ -165,7 +165,14 @@ class PointScreenState extends ConsumerState<PointScreen> {
                     ),
                     child: ListView(
                       children: [
-
+                        SizedBox(height: 16),
+                        const PointHistoryItem(date: "2023年11月24日", institutionName: "あにまる保護施設", point: "200"),
+                        Divider(),
+                        const PointHistoryItem(date: "2023年5月23日", institutionName: "あにまる保護施設", point: "140"),
+                        Divider(),
+                        const PointHistoryItem(date: "2023年5月23日", institutionName: "あにまる保護施設", point: "240"),
+                        Divider(),
+                        const PointHistoryItem(date: "2023年5月23日", institutionName: "あにまる保護施設", point: "1200"),
                       ],
                     ),
                   ),
@@ -174,6 +181,72 @@ class PointScreenState extends ConsumerState<PointScreen> {
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class PointHistoryItem extends StatelessWidget {
+  const PointHistoryItem({Key? key, required this.date, required this.institutionName, required this.point}) : super(key: key);
+  final String date;
+  final String institutionName;
+  final String point;
+
+  @override
+  Widget build(BuildContext context) {
+    return                         Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text(
+                date,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF573F1B),
+                ),
+              ),
+              Text(
+                institutionName,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF573F1B),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(
+                "assets/svg/ic_point.svg",
+                width: 42,
+                height: 42,
+              ),
+              const SizedBox(width: 8),
+              StrokeText(
+                text: point,
+                strokeColor: Colors.white,
+                textColor: Color(0xFF573F1B),
+                textStyle: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Anek Bangle",
+                ),
+                shadows: const [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(0, 0),
+                    blurRadius: 10,
+                  )
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
