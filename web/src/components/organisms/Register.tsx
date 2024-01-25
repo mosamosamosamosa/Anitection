@@ -15,6 +15,11 @@ const Component: FC = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  const handleClick = () => {
+    dispatch(viewSlice.actions.setLoginModal(false));
+    dispatch(viewSlice.actions.setRegisterModal(false));
+  };
+
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
@@ -57,7 +62,7 @@ const Component: FC = () => {
   };
 
   return (
-    <Modal text="登録">
+    <Modal text="登録" onClick={handleClick}>
       <div className="flex flex-col justify-center items-center gap-4 mb-12">
         <div className="flex flex-col justify-center items-start">
           <p className="text-headline font-bold">ユーザー名</p>

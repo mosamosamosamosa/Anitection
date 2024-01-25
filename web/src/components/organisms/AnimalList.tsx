@@ -8,6 +8,7 @@ import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import Text from '../atoms/Text';
 
 const Component: React.FC = () => {
   const [animals, setAnimals] = React.useState<any[]>([]);
@@ -37,13 +38,7 @@ const Component: React.FC = () => {
   return (
     <>
       <div className="flex items-center gap-4">
-        <input
-          type="text"
-          className="w-3/4 md:w-1/2 h-12 rounded-md px-4 py-2 shadow-md focus:ring-2 focus:ring-highlight focus:outline-none"
-          placeholder="名前を入力"
-          value={search}
-          onChange={handleSearch}
-        />
+        <Text value={search} onChange={handleSearch} placeholder="名前を入力" />
         {/* ソート */}
         <button className="w-10 h-10 rounded-full hover:cursor-pointer hover:bg-white flex justify-center items-center">
           <Icon icon="icon-park:sort-one" className="w-8 h-8 p-1" />
