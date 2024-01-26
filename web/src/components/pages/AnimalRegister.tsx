@@ -486,11 +486,11 @@ const Component = () => {
                 text="登録"
                 onClick={() => {
                   new Promise((resolve: any) => {
-                    handleShadow()
-                    resolve()
+                    handleShadow();
+                    resolve();
                   }).then(() => {
-                    handleSubmit()
-                  })
+                    handleSubmit();
+                  });
                 }}
                 icon="mdi:upload"
                 highlight
