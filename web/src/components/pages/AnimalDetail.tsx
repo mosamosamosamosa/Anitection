@@ -2,7 +2,6 @@ import React from 'react';
 import Layout from '../templates/Layout';
 import Navigation from '../organisms/Navigation';
 import AnimalDetail from '../organisms/AnimalDetail';
-import InstitutionInfo from '../organisms/InstitutionInfo';
 
 const Component = () => {
   return (
@@ -13,15 +12,7 @@ const Component = () => {
           <Navigation />
         </div>
 
-        {/* 動物 */}
-        <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
-          <AnimalDetail />
-        </div>
-
-        {/* 情報 */}
-        <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
-          <InstitutionInfo />
-        </div>
+        <AnimalDetail />
       </div>
     </Layout>
   );
