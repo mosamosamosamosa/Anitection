@@ -59,6 +59,12 @@ const Chat: React.FC = () => {
     };
 
     fetchData();
+
+    setTimeout(() => {
+      const bottomElement = document.getElementById('bottom');
+      if (!bottomElement) return;
+      bottomElement.scrollTo(0, bottomElement.scrollHeight);
+    }, 1000);
   }, []);
 
   return (
@@ -70,9 +76,12 @@ const Chat: React.FC = () => {
         </div>
 
         {/* 動物 */}
-        <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4">
-          <div className="w-full h-full flex flex-col gap-6 px-0 py-2 h-[80vh]">
-            <ul className="flex flex-col h-5/6 gap-4 overflow-y-scroll py-2">
+        <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4 bg-neutral-50 shadow-md rounded-md">
+          <div className="w-full flex flex-col gap-6 px-0 py-2 h-[75vh]">
+            <ul
+              className="flex flex-col h-5/6 gap-4 overflow-y-scroll py-2 scroll-smooth"
+              id="bottom"
+            >
               {messages.map((content, index) => (
                 <TalkBubble
                   key={index}
@@ -82,16 +91,15 @@ const Chat: React.FC = () => {
                 />
               ))}
             </ul>
-
-            <div className="flex justify-center items-center gap-2 h-1/6">
+            <div className="flex justify-center items-center gap-2 h-3%">
               <input
-                className="w-full h-10 px-3 rounded-full border border-gray-300 focus:outline-none"
+                className="w-full h-10 px-3 ml-3 rounded-full border border-gray-300 focus:outline-none"
                 type="text"
                 placeholder="メッセージを入力"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
               />
-              <div className="flex justify-center items-center w-2/12">
+              <div className="flex justify-center mr-3 items-center w-2/12">
                 <Button
                   text="送信"
                   icon="bx:bx-send"

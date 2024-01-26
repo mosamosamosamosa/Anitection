@@ -19,8 +19,8 @@ const TalkBubble: React.FC<TalkBubbleProps> = ({
         }`}
       >
         <div
-          className={`mt-6 mx-10 inline-block relative w-auto h-auto bg-white rounded-xl shadow-md ${
-            userName === 'hoge' ? 'bg-lime-100' : ''
+          className={`mt-6 mx-10 inline-block relative w-auto h-auto rounded-xl shadow-md ${
+            userName === 'hoge' ? 'bg-highlight' : 'bg-white'
           }`}
         >
           <div className="p-4 text-left leading-6 flex">
