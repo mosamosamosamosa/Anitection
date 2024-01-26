@@ -9,6 +9,9 @@ import { viewSlice } from '../../features/view';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
+import title from '../../assets/title.png';
+import { Link } from 'react-router-dom';
+
 const Component: FC = () => {
   const { sidebar } = useSelector((state: RootState) => state.view);
 
@@ -31,7 +34,10 @@ const Component: FC = () => {
         >
           <Icon icon="ant-design:menu-outlined" className="w-8 h-8" />
         </button>
-        <h1 className="py-2 text-2xl font-bold">Anitection</h1>
+        {/* <h1 className="py-2 text-2xl font-bold">Anitection</h1> */}
+        <Link to="/">
+          <img className="h-10" src={title} alt="Anitection" />
+        </Link>
       </div>
       <div className="flex gap-2 items-center">
         <button className="w-10 h-10 p-1 rounded-full hover:cursor-pointer hover:bg-white">

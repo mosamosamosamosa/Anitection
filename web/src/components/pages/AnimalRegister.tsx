@@ -257,6 +257,43 @@ const Component = () => {
     return new Blob([arr]);
   };
 
+  const handleDelete = () => {
+    setLoading(true);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const file = canvas.toDataURL('image/png');
+    const blob = dataURItoBlob(file);
+    const formData = new FormData();
+    formData.append('files', blob, 'animal.png');
+
+    const instance = fetchInstanceWithToken();
+
+    if (id) {
+      let data: any;
+
+      if (isHead) data = { avatar_head: null };
+      if (isBody) data = { avatar_body: null };
+      if (isSitting) data = { avatar_sitting: null };
+      if (isTail) data = { avatar_tail: null };
+      if (isPreview) data = { avatar_icon: null };
+
+      const body = {
+        data: data,
+      };
+
+      instance.put(`/api/animals/${id}`, body).then(() => {
+        instance.get(`/api/animals/${id}`).then((res) => {
+          setAnimal(res.data.data);
+          setLoading(false);
+          if (isPreview) navigate(`/${id}`);
+        });
+      });
+
+      return;
+    }
+  };
+
   const handleSubmit = () => {
     setLoading(true);
     const canvas = canvasRef.current;
@@ -392,6 +429,7 @@ const Component = () => {
                 onClick={handleExport}
                 icon="mdi:download"
               />
+              <Button text="削除" onClick={handleDelete} icon="mdi:delete" />
               <hr className="my-2" />
               <Button
                 text="頭"
