@@ -319,7 +319,10 @@ const Component: FC = () => {
         <div className="grid grid-cols-1 gap-2">
           <Card>
             {animal.attributes.images.data.map((image: any) => (
-              <div key={image.id} className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+              <div
+                key={image.id}
+                className="min-h-[200px] bg-neutral-100 rounded-md relative group"
+              >
                 <img
                   src={`${process.env.REACT_APP_API_URL}${image.attributes.url}`}
                   alt="animal"

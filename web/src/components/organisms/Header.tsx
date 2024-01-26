@@ -36,11 +36,7 @@ const Component: FC = () => {
         </button>
         {/* <h1 className="py-2 text-2xl font-bold">Anitection</h1> */}
         <Link to="/">
-          <img
-            className="h-10"
-            src={title}
-            alt="Anitection"
-          />
+          <img className="h-10" src={title} alt="Anitection" />
         </Link>
       </div>
       <div className="flex gap-2 items-center">

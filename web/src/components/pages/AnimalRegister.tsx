@@ -292,7 +292,7 @@ const Component = () => {
 
       return;
     }
-  }
+  };
 
   const handleSubmit = () => {
     setLoading(true);
@@ -429,11 +429,7 @@ const Component = () => {
                 onClick={handleExport}
                 icon="mdi:download"
               />
-              <Button
-                text="削除"
-                onClick={handleDelete}
-                icon="mdi:delete"
-              />
+              <Button text="削除" onClick={handleDelete} icon="mdi:delete" />
               <hr className="my-2" />
               <Button
                 text="頭"

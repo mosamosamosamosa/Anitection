@@ -57,15 +57,15 @@ const Chat: React.FC = () => {
         console.error('Error fetching data:', error);
       }
     };
-    
-    fetchData()
+
+    fetchData();
 
     setTimeout(() => {
       const bottomElement = document.getElementById('bottom');
-      if (!bottomElement) return
+      if (!bottomElement) return;
       bottomElement.scrollTo(0, bottomElement.scrollHeight);
-    }, 1000)
-  }, [])
+    }, 1000);
+  }, []);
 
   return (
     <Layout>
@@ -78,7 +78,10 @@ const Chat: React.FC = () => {
         {/* 動物 */}
         <div className="col-span-12 md:col-span-8 lg:col-span-7 space-y-4 bg-neutral-50 shadow-md rounded-md">
           <div className="w-full flex flex-col gap-6 px-0 py-2 h-[75vh]">
-            <ul className="flex flex-col h-5/6 gap-4 overflow-y-scroll py-2 scroll-smooth" id='bottom'>
+            <ul
+              className="flex flex-col h-5/6 gap-4 overflow-y-scroll py-2 scroll-smooth"
+              id="bottom"
+            >
               {messages.map((content, index) => (
                 <TalkBubble
                   key={index}
