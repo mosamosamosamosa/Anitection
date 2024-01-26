@@ -484,7 +484,14 @@ const Component = () => {
               />
               <Button
                 text="登録"
-                onClick={handleSubmit}
+                onClick={() => {
+                  new Promise((resolve: any) => {
+                    handleShadow()
+                    resolve()
+                  }).then(() => {
+                    handleSubmit()
+                  })
+                }}
                 icon="mdi:upload"
                 highlight
               />
