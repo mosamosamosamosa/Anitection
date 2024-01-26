@@ -110,12 +110,13 @@ const Component = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // 一度状態を保存し保存した状態を貼り付ける
+    ctx.save();
+
     ctx.shadowColor = 'rgba(0, 0, 0, 0.20)';
     ctx.shadowOffsetY = 12;
     ctx.shadowBlur = 10;
 
-    // 一度状態を保存し保存した状態を貼り付ける
-    ctx.save();
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
   };
@@ -311,8 +312,6 @@ const Component = () => {
   };
 
   const handleSubmit = () => {
-    handleShadow();
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
