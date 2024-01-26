@@ -7,6 +7,8 @@ import useSWR from 'swr';
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import Text from '../atoms/Text';
 import { Icon } from '@iconify/react';
+import Lottie from 'react-lottie';
+import animationData from '../../assets/lottie/blink_cat2.json';
 
 const Component: FC = () => {
   const [kind, setKind] = useState<string>('');
@@ -20,6 +22,24 @@ const Component: FC = () => {
   const [description, setDescription] = useState<string>('');
   const [pattern, setPattern] = useState<string>('');
   const [pedigree, setPedigree] = useState<string>('');
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+
+  const [width, setWidth] = React.useState<number>(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  console.log(width);
 
   const { id } = useParams();
   const { data, error } = useSWR<any>(
@@ -124,11 +144,20 @@ const Component: FC = () => {
         <Link to={`/register/${id}`}>
           <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
             {animal.attributes.avatar_icon.data && (
-              <img
-                src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-                alt="animal"
-                className="w-full h-full object-cover rounded-md"
-              />
+              <div className="relative w-full h-full">
+                <img
+                  src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                  alt="animal"
+                  className="w-full h-full object-cover rounded-md"
+                />
+                <div className="absolute top-5 left-2 md:top-10 md:left-5 w-full h-full flex justify-center items-center">
+                  <Lottie
+                    options={defaultOptions}
+                    height={width > 1024 ? 640 : width > 480 ? 560 : 280}
+                    width={width > 1024 ? 640 : width > 480 ? 560 : 280}
+                  />
+                </div>
+              </div>
             )}
             <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
               <Icon

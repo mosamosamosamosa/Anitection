@@ -9,6 +9,8 @@ import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import Text from '../atoms/Text';
+import Lottie from 'react-lottie';
+import animationData from '../../assets/lottie/blink_cat2.json';
 
 const Component: React.FC = () => {
   const [animals, setAnimals] = React.useState<any[]>([]);
@@ -18,6 +20,23 @@ const Component: React.FC = () => {
     `/api/animals?filters[institution][id][$eq]=${institution.id}`,
     fetchInstanceWithToken(),
   );
+
+  // 画面の幅を取得
+  const [width, setWidth] = React.useState<number>(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
   useEffect(() => {
     if (!data) return;
@@ -60,11 +79,20 @@ const Component: React.FC = () => {
             <Card>
               <div className="w-full h-40 md:h-52">
                 {animal.attributes.avatar_icon.data && (
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-                    alt=""
-                    className="w-full h-5/6 object-contain"
-                  />
+                  <div className="relative h-5/6 w-full">
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                      alt=""
+                      className="w-full h-full object-contain"
+                    />
+                    <div className="absolute top-1 md:top-2 lg:top-3 left-0 md:left-1 w-full h-full flex justify-center items-center">
+                      <Lottie
+                        options={defaultOptions}
+                        height={width > 768 ? 210 : width > 480 ? 140 : 100}
+                        width={width > 768 ? 210 : width > 480 ? 140 : 100}
+                      />
+                    </div>
+                  </div>
                 )}
                 <div className="w-full h-1/6 flex justify-center items-center">
                   <p className="text-center text-lg">
