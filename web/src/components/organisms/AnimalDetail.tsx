@@ -25,11 +25,11 @@ const Component: FC = () => {
 
   const defaultOptions = {
     loop: true,
-    autoplay: true, 
+    autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
+      preserveAspectRatio: 'xMidYMid slice',
+    },
   };
 
   const [width, setWidth] = React.useState<number>(window.innerWidth);
