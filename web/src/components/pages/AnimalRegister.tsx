@@ -118,7 +118,7 @@ const Component = () => {
     ctx.save();
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
-  }
+  };
 
   const handleReset = () => {
     setIsHead(false);
@@ -311,7 +311,7 @@ const Component = () => {
   };
 
   const handleSubmit = () => {
-    handleShadow()
+    handleShadow();
 
     const canvas = canvasRef.current;
     if (!canvas) return;
