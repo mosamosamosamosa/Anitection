@@ -74,7 +74,7 @@ class InitialStartupScreenState extends State<InitialStartupScreen> {
                       ),
                     ],
                   ),
-                  Image.asset("assets/images/anitection_dummy_logo.png"),
+                  Image.asset("assets/images/img_anitection_logo.png"),
                 ],
               ),
 

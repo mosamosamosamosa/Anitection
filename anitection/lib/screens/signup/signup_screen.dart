@@ -60,7 +60,7 @@ class SignUpScreenState extends ConsumerState<SignUpScreen> {
                             ),
                           ],
                         ),
-                        Image.asset("assets/images/anitection_dummy_logo.png"),
+                        Image.asset("assets/images/img_anitection_logo.png"),
                       ],
                     ),
                     AuthInputFormArea(

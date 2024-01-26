@@ -397,6 +397,7 @@ class AnimalDetailDialogLayout extends StatelessWidget {
                         },
                       ),
                     ),
+                    const SizedBox(height: 16,),
                     AddToFavoriteButton(onPressed: addToFavoriteButtonPressed)
                     // NormalButton(onPressed: () {}, child: Row(children: [
                     //   const Icon(Icons.chat_bubble_outline),
