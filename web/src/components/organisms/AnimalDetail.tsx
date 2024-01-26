@@ -298,13 +298,13 @@ const Component: FC = () => {
       <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
         <InfoHeader icon="ion:information-circle-outline" title="アイコン" />
         <Card>
-          {animal.attributes.real_icon.data &&
+          {animal.attributes.real_icon.data && (
             <img
               src={`${process.env.REACT_APP_API_URL}${animal.attributes.real_icon.data.attributes.url}`}
               alt="animal"
               className="w-full h-full object-cover rounded-md"
             />
-          }
+          )}
         </Card>
         {/* 画像 */}
         <InfoHeader icon="ion:images-outline" title="画像" />
