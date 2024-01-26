@@ -8,6 +8,7 @@ import { RootState } from '../../store';
 import useSWR from 'swr';
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import Button from '../atoms/Button';
+import Text from '../atoms/Text';
 
 const Component: FC = () => {
   const { institution } = useSelector((state: RootState) => state.institution);
@@ -136,22 +137,22 @@ const Component: FC = () => {
           }}
         />
         <div className="w-full flex flex-col gap-2 py-4 px-4">
-          <input
-            type="text"
-            className="bg-neutral-50 w-full flex gap-2 items-center text-3xl"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div className="flex gap-2 items-center ml-2">
+          <div className="text-2xl">
+            <Text
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="施設名"
+            />
+          </div>
+          <div className="text-sm w-full flex justify-start items-center gap-2">
             <Icon
               icon="fluent:arrow-enter-left-20-filled"
               className="w-4 h-4 mr-1 -scale-x-100"
             />
-            <input
-              type="text"
-              className="bg-neutral-50 w-full flex gap-2 items-center"
+            <Text
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="施設の説明"
             />
           </div>
           <img
@@ -162,38 +163,34 @@ const Component: FC = () => {
           />
           <div className="flex gap-2 items-center">
             <Icon icon="akar-icons:location" className="w-4 h-4 mr-1" />
-            <input
-              type="text"
-              className="bg-neutral-50 w-full flex gap-2 items-center"
+            <Text
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              placeholder="住所"
             />
           </div>
           <div className="flex gap-2 items-center">
             <Icon icon="akar-icons:phone" className="w-4 h-4 mr-1" />
-            <input
-              type="text"
-              className="bg-neutral-50 w-full flex gap-2 items-center"
+            <Text
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              placeholder="電話番号"
             />
           </div>
           <div className="flex gap-2 items-center">
             <Icon icon="streamline:web" className="w-4 h-4 mr-1" />
-            <input
-              type="text"
-              className="bg-neutral-50 w-full flex gap-2 items-center"
+            <Text
               value={website_url}
               onChange={(e) => setWebsiteUrl(e.target.value)}
+              placeholder="ホームページ"
             />
           </div>
           <div className="flex gap-2 items-center">
             <Icon icon="mdi:shopping-outline" className="w-4 h-4 mr-1" />
-            <input
-              type="text"
-              className="bg-neutral-50 w-full flex gap-2 items-center"
+            <Text
               value={needs_url}
               onChange={(e) => setNeedsUrl(e.target.value)}
+              placeholder="支援物資"
             />
           </div>
           <div className="flex gap-2 items-center">

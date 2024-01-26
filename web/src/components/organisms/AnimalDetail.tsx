@@ -299,27 +299,47 @@ const Component: FC = () => {
         <InfoHeader icon="ion:information-circle-outline" title="アイコン" />
         <Card>
           {animal.attributes.real_icon.data && (
-            <img
-              src={`${process.env.REACT_APP_API_URL}${animal.attributes.real_icon.data.attributes.url}`}
-              alt="animal"
-              className="w-full h-full object-cover rounded-md"
-            />
+            <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+              <img
+                src={`${process.env.REACT_APP_API_URL}${animal.attributes.real_icon.data.attributes.url}`}
+                alt="animal"
+                className="w-full h-full object-cover rounded-md"
+              />
+              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <Icon
+                  icon="ant-design:edit-outlined"
+                  className="w-12 h-12 text-white"
+                />
+              </div>
+            </div>
           )}
         </Card>
         {/* 画像 */}
         <InfoHeader icon="ion:images-outline" title="画像" />
-        <Card>
-          <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2">
+          <Card>
             {animal.attributes.images.data.map((image: any) => (
-              <img
-                key={image.id}
-                src={`${process.env.REACT_APP_API_URL}${image.attributes.url}`}
-                alt="animal"
-                className="w-full h-full object-cover rounded-md"
-              />
+              <div key={image.id} className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+                <img
+                  src={`${process.env.REACT_APP_API_URL}${image.attributes.url}`}
+                  alt="animal"
+                  className="w-full h-full object-cover rounded-md"
+                />
+                <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <Icon
+                    icon="ant-design:edit-outlined"
+                    className="w-12 h-12 text-white"
+                  />
+                </div>
+              </div>
             ))}
-          </div>
-        </Card>
+          </Card>
+          <Card>
+            <button className="w-full h-20 flex justify-center items-center">
+              <Icon icon="ant-design:plus-outlined" className="w-12 h-12" />
+            </button>
+          </Card>
+        </div>
       </div>
     </>
   );
