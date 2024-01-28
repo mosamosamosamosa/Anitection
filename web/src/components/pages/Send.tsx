@@ -12,6 +12,8 @@ import Modal from '../templates/Modal';
 const Chat: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [point, setPoint] = useState<number>(6500);
+  const [donation, setDonation] = useState<number>(100);
 
   // Function to handle donation button click
   const handleDonationButtonClick = (amount: number) => {
@@ -22,7 +24,13 @@ const Chat: React.FC = () => {
   const handleDonateButtonClick = () => {
     // Perform the donation or any other action here
     if (donationAmount !== null) {
+      if (donationAmount > point) {
+        alert('You do not have enough points');
+        return;
+      }
       setIsModalOpen(true);
+      setPoint(point - donationAmount);
+      setDonation(donation + donationAmount);
     } else {
       alert('Please select a donation amount');
     }
@@ -46,6 +54,16 @@ const Chat: React.FC = () => {
                 className="w-full object-cover"
               />
             </div>
+            {/* リンク */}
+            <div className="w-full flex justify-center items-center hover:underline">
+              <a
+                href="https://jspca.or.jp/kihu.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                寄付はこちらから
+              </a>
+            </div>
             <div className="w-full flex justify-center items-center gap-2 py-8">
               {[100, 500, 1000, 3000, 5000, 10000].map((amount) => (
                 <Button
@@ -60,7 +78,7 @@ const Chat: React.FC = () => {
             <div className="flex justify-center items-center py-4">
               <Button
                 text="寄付する"
-                icon="bx:bx-coin-stack"
+                icon="bx:bx-arrow-to-right"
                 onClick={handleDonateButtonClick}
                 highlight
               />
@@ -80,13 +98,13 @@ const Chat: React.FC = () => {
                 <li className="flex gap-2 items-center">
                   <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
                   <p className="text-sm">保有ポイント：</p>
-                  <p>1000</p>
+                  <p>{point}</p>
                 </li>
                 {/* いままでの寄付金額 */}
                 <li className="flex gap-2 items-center">
                   <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
                   <p className="text-sm">寄付金額：</p>
-                  <p>3500</p>
+                  <p>{donation}</p>
                 </li>
               </ul>
             </div>
