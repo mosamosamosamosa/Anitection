@@ -143,10 +143,10 @@ const Component: FC = () => {
                 placeholder="名前を入力"
               />
             </div>
-            <Link to={`/register/${id}`}>
-              <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+            <div className="min-h-[200px] bg-neutral-100 rounded-md relative">
+              <Link to={`/register/${id}`}>
                 {animal.attributes.avatar_icon.data && (
-                  <div className="relative w-full h-full">
+                  <div className="relative w-full h-full group">
                     <img
                       src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
                       alt="animal"
@@ -167,8 +167,10 @@ const Component: FC = () => {
                     className="w-12 h-12 text-white"
                   />
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
+          </Card>
+          <Card>
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="flex gap-2 py-2 items-center">
                 <p>種類：</p>

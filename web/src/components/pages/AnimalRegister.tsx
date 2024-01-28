@@ -62,11 +62,10 @@ const Component = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 0;
 
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.20)';
-    ctx.shadowOffsetY = 12;
-    ctx.shadowBlur = 10;
+    ctx.globalCompositeOperation = 'source-over';
 
     drawImage(image, canvas, ctx);
   }, [image, canvasRef.current]);
@@ -103,6 +102,25 @@ const Component = () => {
       setImage(image);
     }, 500);
   }, [isHead, isBody, isSitting, isTail, animal]);
+
+  // 影をつける
+  const handleShadow = () => {
+    if (isPreview) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 一度状態を保存し保存した状態を貼り付ける
+    ctx.save();
+
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.20)';
+    ctx.shadowOffsetY = 12;
+    ctx.shadowBlur = 10;
+
+    ctx.drawImage(canvas, 0, 0);
+    ctx.restore();
+  };
 
   const handleReset = () => {
     setIsHead(false);
@@ -144,7 +162,6 @@ const Component = () => {
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.globalCompositeOperation = 'source-over';
     const head_image = new Image();
     head_image.crossOrigin = 'Anonymous';
     if (!animal.attributes.avatar_head.data) alert('頭を登録してください');
@@ -193,9 +210,10 @@ const Component = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.globalCompositeOperation = 'source-atop';
     ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 0;
+
+    ctx.globalCompositeOperation = 'source-atop';
 
     ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     ctx.stroke();
@@ -295,9 +313,10 @@ const Component = () => {
   };
 
   const handleSubmit = () => {
-    setLoading(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     const file = canvas.toDataURL('image/png');
     const blob = dataURItoBlob(file);
@@ -306,6 +325,7 @@ const Component = () => {
 
     const instance = fetchInstanceWithToken();
 
+    setLoading(true);
     if (id) {
       instance
         .post('/api/upload', formData, {
@@ -464,7 +484,14 @@ const Component = () => {
               />
               <Button
                 text="登録"
-                onClick={handleSubmit}
+                onClick={() => {
+                  new Promise((resolve: any) => {
+                    handleShadow();
+                    resolve();
+                  }).then(() => {
+                    handleSubmit();
+                  });
+                }}
                 icon="mdi:upload"
                 highlight
               />
