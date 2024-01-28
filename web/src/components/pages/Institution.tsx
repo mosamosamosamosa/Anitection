@@ -36,13 +36,13 @@ const Chat: React.FC = () => {
                   <li className="flex gap-2 items-center">
                     <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
                     <p className="text-sm">保有ポイント：</p>
-                    <p>1000</p>
+                    <p>6500</p>
                   </li>
                   {/* いままでの寄付金額 */}
                   <li className="flex gap-2 items-center">
                     <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
                     <p className="text-sm">寄付金額：</p>
-                    <p>3500</p>
+                    <p>100</p>
                   </li>
                 </ul>
               </div>

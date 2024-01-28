@@ -111,6 +111,8 @@ const Component = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    ctx.globalCompositeOperation = 'source-over';
+
     // 一度状態を保存し保存した状態を貼り付ける
     ctx.save();
 

@@ -300,45 +300,43 @@ const Component: FC = () => {
       <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
         <InfoHeader icon="ion:information-circle-outline" title="アイコン" />
         <Card>
-          {animal.attributes.real_icon.data && (
-            <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+          <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+            {animal.attributes.real_icon.data && (
               <img
                 src={`${process.env.REACT_APP_API_URL}${animal.attributes.real_icon.data.attributes.url}`}
                 alt="animal"
                 className="w-full h-full object-cover rounded-md"
               />
-              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <Icon
-                  icon="ant-design:edit-outlined"
-                  className="w-12 h-12 text-white"
-                />
-              </div>
+            )}
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <Icon
+                icon="ant-design:edit-outlined"
+                className="w-12 h-12 text-white"
+              />
             </div>
-          )}
+          </div>
         </Card>
         {/* 画像 */}
         <InfoHeader icon="ion:images-outline" title="画像" />
         <div className="grid grid-cols-1 gap-2">
-          <Card>
-            {animal.attributes.images.data.map((image: any) => (
-              <div
-                key={image.id}
-                className="min-h-[200px] bg-neutral-100 rounded-md relative group"
-              >
-                <img
-                  src={`${process.env.REACT_APP_API_URL}${image.attributes.url}`}
-                  alt="animal"
-                  className="w-full h-full object-cover rounded-md"
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <Icon
-                    icon="ant-design:edit-outlined"
-                    className="w-12 h-12 text-white"
+          {animal.attributes.images.data &&
+            animal.attributes.images.data.map((image: any) => (
+              <Card key={image.id}>
+                <div className="min-h-[200px] bg-neutral-100 rounded-md relative group">
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}${image.attributes.url}`}
+                    alt="animal"
+                    className="w-full h-full object-cover rounded-md"
                   />
+                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <Icon
+                      icon="ant-design:edit-outlined"
+                      className="w-12 h-12 text-white"
+                    />
+                  </div>
                 </div>
-              </div>
+              </Card>
             ))}
-          </Card>
           <Card>
             <button className="w-full h-20 flex justify-center items-center">
               <Icon icon="ant-design:plus-outlined" className="w-12 h-12" />
