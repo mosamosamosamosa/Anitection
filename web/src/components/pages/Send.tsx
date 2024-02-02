@@ -77,7 +77,7 @@ const Chat: React.FC = () => {
             </div>
             <div className="flex justify-center items-center py-4">
               <Button
-                text="寄付する"
+                text="換金する"
                 icon="bx:bx-arrow-to-right"
                 onClick={handleDonateButtonClick}
                 highlight
