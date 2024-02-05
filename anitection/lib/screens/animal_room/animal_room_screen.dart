@@ -56,7 +56,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
       final isWhenComeBack = event == false && isStroll == true;
       if (isWhenComeBack) {
         ref.read(speechStateProvider.notifier).state = SpeechStateType.present4You;
-        ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+        ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.smile;
       }
       setState(() {
         if (isWhenComeBack) {
@@ -120,6 +120,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               width: size.width,
               alignment: Alignment.center,
               child: AnimalAvatarArea(
+                id: widget.animalId,
                 size: Size(size.width, size.height),
                 avatarImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarIcon?.data?.attributes.url ?? ""),
                 avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data?.attributes.url ?? ""),
@@ -151,7 +152,7 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
                     if (level == 255) {
                       cryAnimal();
                     } else {
-                      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+                      ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.blink;
                     }
                     return;
                   }
@@ -225,9 +226,9 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
 
   void updateTabType(SelectedTab tabType) async {
     if (selectedTab == SelectedTab.play) {
-        ref.read(faceStateProvider.notifier).state = FaceStateType.sleeping;
+        ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.sleeping;
         Future.delayed(const Duration(milliseconds: 5000), () {
-          ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+          ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.blink;
         });
     }
     if (tabType == SelectedTab.stroll) {
@@ -254,20 +255,20 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
     });
   }
   void sleepAnimal() async {
-    final currentState = ref.read(faceStateProvider.notifier).state;
-    ref.read(faceStateProvider.notifier).state = FaceStateType.sleeping;
+    final currentState = ref.read(faceStateProvider(widget.animalId).notifier).state;
+    ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.sleeping;
     Future.delayed(const Duration(milliseconds: 5000), () {
-      ref.read(faceStateProvider.notifier).state = currentState;
+      ref.read(faceStateProvider(widget.animalId).notifier).state = currentState;
     });
   }
 
   void whenCleanCompleted() {
-    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+    ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.kirakira;
+    ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.smile;
     ref.read(speechStateProvider.notifier).state = SpeechStateType.none;
     Future.delayed(const Duration(milliseconds: 1500), () {
-      ref.read(effectStateProvider.notifier).state = EffectType.none;
-      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+      ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.none;
+      ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.blink;
     });
     final now = DateTime.now();
     ref.read(cleanHistoryRepository).setLastCleanDateTime(widget.animalId, now);
@@ -278,30 +279,30 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
   }
 
   void happyAnimal() {
-    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
-    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
+    ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.smile;
+    ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.kirakira;
     Future.delayed(const Duration(milliseconds: 800), () {
-      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
-      ref.read(effectStateProvider.notifier).state = EffectType.none;
+      ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.blink;
+      ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.none;
     });
   }
 
   void cryAnimal() {
-    ref.read(faceStateProvider.notifier).state = FaceStateType.sad;
-    ref.read(effectStateProvider.notifier).state = EffectType.none;
-    ref.read(selectedFoodProvider.notifier).state = FoodType.none;
+    ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.sad;
+    ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.none;
+    ref.read(selectedFoodProvider(widget.animalId).notifier).state = FoodType.none;
   }
 
   void giveFood(FoodType type) {
-    ref.read(selectedFoodProvider.notifier).state = type;
-    ref.read(effectStateProvider.notifier).state = EffectType.kirakira;
-    ref.read(faceStateProvider.notifier).state = FaceStateType.smile;
+    ref.read(selectedFoodProvider(widget.animalId).notifier).state = type;
+    ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.kirakira;
+    ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.smile;
     Future.delayed(const Duration(milliseconds: 1500), () {
-      ref.read(effectStateProvider.notifier).state = EffectType.none;
-      ref.read(faceStateProvider.notifier).state = FaceStateType.blink;
+      ref.read(effectStateProvider(widget.animalId).notifier).state = EffectType.none;
+      ref.read(faceStateProvider(widget.animalId).notifier).state = FaceStateType.blink;
     });
     Future.delayed(const Duration(milliseconds: 1000), () {
-      ref.read(selectedFoodProvider.notifier).state = FoodType.none;
+      ref.read(selectedFoodProvider(widget.animalId).notifier).state = FoodType.none;
     });
   }
 }

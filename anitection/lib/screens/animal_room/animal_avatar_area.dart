@@ -23,6 +23,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
     required this.selectedToyType,
     this.onAnimalMovedListener,
     required this.isCat,
+    required this.id,
   });
 
   final Size size;
@@ -37,6 +38,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
   final ToyType? selectedToyType;
   final OnAnimalMovedListener? onAnimalMovedListener;
   final bool isCat;
+  final int id;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -101,7 +103,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
 
   @override
   Widget build(BuildContext context) {
-    final faceState = ref.watch(faceStateProvider);
+    final faceState = ref.watch(faceStateProvider(widget.id));
     return GestureDetector(
       onTapDown: (details) {
         log("onTapDown, x: ${details.localPosition.dx}, y: ${details.localPosition.dy}");
@@ -165,8 +167,8 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                   avatarBodyImageUrl: widget.avatarBodyImageUrl,
                   avatarHeadImageUrl: widget.avatarHeadImageUrl,
                   faceState: faceState,
-                  effectType: ref.watch(effectStateProvider),
-                  foodType: ref.watch(selectedFoodProvider),
+                  effectType: ref.watch(effectStateProvider(widget.id)),
+                  foodType: ref.watch(selectedFoodProvider(widget.id)),
                   speechState: ref.watch(speechStateProvider),
                   isCat: widget.isCat,
                 ),
@@ -502,9 +504,9 @@ enum ToyType {
   fish,
 }
 
-final faceStateProvider = StateProvider((ref) => FaceStateType.blink);
-final effectStateProvider = StateProvider((ref) => EffectType.none);
-final selectedFoodProvider = StateProvider((ref) => FoodType.none);
+final faceStateProvider = StateProvider.family((ref, int id) => FaceStateType.blink);
+final effectStateProvider = StateProvider.family((ref, int id) => EffectType.none);
+final selectedFoodProvider = StateProvider.family((ref, int id) => FoodType.none);
 final speechStateProvider =
     StateProvider((ref) => SpeechStateType.none);
 final toyStateProvider = StateProvider.autoDispose((ref) => ToyType.nekojarashi);
