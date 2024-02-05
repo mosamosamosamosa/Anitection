@@ -32,6 +32,8 @@ const Component = () => {
 
   const [animal, setAnimal] = useState<any>({});
 
+  const [animal_kind, setAnimalKind] = useState<string>('cat');
+
   useEffect(() => {
     if (!id) return;
     const instance = fetchInstanceWithToken();
@@ -452,6 +454,19 @@ const Component = () => {
                 icon="mdi:download"
               />
               <Button text="削除" onClick={handleDelete} icon="mdi:delete" />
+              <hr className="my-2" />
+              <Button
+                text="犬"
+                onClick={() => setAnimalKind('dog')}
+                icon="mdi:dog"
+                highlight={animal_kind === 'dog'}
+              />
+              <Button
+                text="猫"
+                onClick={() => setAnimalKind('cat')}
+                icon="mdi:cat"
+                highlight={animal_kind === 'cat'}
+              />
               <hr className="my-2" />
               <Button
                 text="頭"
