@@ -181,6 +181,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                           .valueOrNull![index].attributes.animal.data == null) {
                         return const SizedBox.shrink();
                       }
+                      final data = asyncValue
+                          .valueOrNull![index].attributes.animal.data!;
                       return AnimalAvatarCard(
                         animal: asyncValue
                             .valueOrNull![index].attributes.animal.data!,
@@ -188,7 +190,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const AnimalRoomScreen(animalId: 1),
+                                  AnimalRoomScreen(animalId: data.id),
                             ),
                           );
                         },
