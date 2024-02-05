@@ -65,7 +65,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(60),
                 child: Image.network(
                   AppConstants.mediaServerBaseUrl +
-                      (animal.attributes.realIcon?.data.attributes.url ??
+                      (animal.attributes.realIcon?.data?.attributes.url ??
                           ""),
                   fit: BoxFit.cover,
                 ),
@@ -245,7 +245,7 @@ class AnimalRoomProfileDialog extends StatelessWidget {
             right: 8,
             child: InstitutionButton(
               onPressed: () {
-                final id = animal.attributes.institution?.data.id;
+                final id = animal.attributes.institution?.data?.id;
                 if (id != null) {
                   Navigator.of(context).push(
                     MaterialPageRoute(

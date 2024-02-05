@@ -38,25 +38,25 @@ class AnimalAttributes {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  final SingleData<Model<InstitutionAttributes>>? institution;
+  final SingleData<Model<InstitutionAttributes>?>? institution;
 
   final ArrayData<Model<MediaAttributes>>? images;
 
-  @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>>? realIcon;
+  @JsonKey(name: 'real_icon') final SingleData<Model<MediaAttributes>?>? realIcon;
 
   @JsonKey(name: 'animal_kind') final SingleData<Model<AnimalKind>>? animalKind;
 
-  @JsonKey(name: 'avatar_icon') final SingleData<Model<MediaAttributes>>? avatarIcon;
+  @JsonKey(name: 'avatar_icon') final SingleData<Model<MediaAttributes>?>? avatarIcon;
 
   @JsonKey(name: 'hair_length') final String? hairLength;
 
   @JsonKey(name: 'size') final String? size;
 
-  @JsonKey(name: 'avatar_head') final SingleData<Model<MediaAttributes>>? avatarHead;
+  @JsonKey(name: 'avatar_head') final SingleData<Model<MediaAttributes>?>? avatarHead;
 
-  @JsonKey(name: 'avatar_body') final SingleData<Model<MediaAttributes>>? avatarBody;
+  @JsonKey(name: 'avatar_body') final SingleData<Model<MediaAttributes>?>? avatarBody;
 
-  @JsonKey(name: 'avatar_tail') final SingleData<Model<MediaAttributes>>? avatarTail;
+  @JsonKey(name: 'avatar_tail') final SingleData<Model<MediaAttributes>?>? avatarTail;
 
 
   factory AnimalAttributes.fromJson(Map<String, dynamic> json) {

@@ -121,17 +121,18 @@ class AnimalRoomScreenState extends ConsumerState<AnimalRoomScreen> {
               alignment: Alignment.center,
               child: AnimalAvatarArea(
                 size: Size(size.width, size.height),
-                avatarImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarIcon?.data.attributes.url ?? ""),
-                avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data.attributes.url ?? ""),
-                avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data.attributes.url ?? ""),
-                avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data.attributes.url ?? ""),
+                avatarImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarIcon?.data?.attributes.url ?? ""),
+                avatarBodyImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarBody?.data?.attributes.url ?? ""),
+                avatarHeadImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarHead?.data?.attributes.url ?? ""),
+                avatarTailImageUrl: AppConstants.mediaServerBaseUrl + (animalAsyncState.valueOrNull?.data.attributes.avatarTail?.data?.attributes.url ?? ""),
                 isCleanMode: selectedTab == SelectedTab.clean,
                 selectedToyType: selectedToy,
+                isCat: animalAsyncState.valueOrNull?.data.attributes.animalKind?.data.attributes.name == "猫",
                 avatarSize: () {
                   final data = animalAsyncState.valueOrNull;
                   if (data != null) {
-                    final width = data.data.attributes.avatarIcon?.data.attributes.width ?? 0;
-                    final height = data.data.attributes.avatarIcon?.data.attributes.height ?? 0;
+                    final width = data.data.attributes.avatarIcon?.data?.attributes.width ?? 0;
+                    final height = data.data.attributes.avatarIcon?.data?.attributes.height ?? 0;
                     return Size(width.toDouble(), height.toDouble());
                   }
                   return const Size(0, 0);

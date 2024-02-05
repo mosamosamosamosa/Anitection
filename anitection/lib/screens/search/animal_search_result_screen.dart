@@ -259,7 +259,7 @@ class AnimalDetailDialogLayout extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             child: Image.network(
                               AppConstants.mediaServerBaseUrl +
-                                  (animal.attributes.realIcon?.data.attributes
+                                  (animal.attributes.realIcon?.data?.attributes
                                           .url ??
                                       ""),
                               fit: BoxFit.cover,

@@ -272,7 +272,7 @@ class AnimalAvatarCard extends ConsumerWidget {
           children: [
             Image.network(
               AppConstants.mediaServerBaseUrl +
-                  (asyncAnimal.valueOrNull?.data.attributes.avatarIcon?.data.attributes.url ?? ""),
+                  (asyncAnimal.valueOrNull?.data.attributes.avatarIcon?.data?.attributes.url ?? ""),
               width: 60,
               height: 60,
             ),

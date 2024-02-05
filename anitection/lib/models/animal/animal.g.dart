@@ -30,20 +30,24 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
                       MediaAttributes.fromJson(value as Map<String, dynamic>))),
       realIcon: json['real_icon'] == null
           ? null
-          : SingleData<Model<MediaAttributes>>.fromJson(
+          : SingleData<Model<MediaAttributes>?>.fromJson(
               json['real_icon'] as Map<String, dynamic>,
-              (value) => Model<MediaAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) =>
-                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<MediaAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => MediaAttributes.fromJson(
+                          value as Map<String, dynamic>))),
       institution: json['institution'] == null
           ? null
-          : SingleData<Model<InstitutionAttributes>>.fromJson(
+          : SingleData<Model<InstitutionAttributes>?>.fromJson(
               json['institution'] as Map<String, dynamic>,
-              (value) => Model<InstitutionAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) => InstitutionAttributes.fromJson(
-                      value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<InstitutionAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => InstitutionAttributes.fromJson(
+                          value as Map<String, dynamic>))),
       animalKind: json['animal_kind'] == null
           ? null
           : SingleData<Model<AnimalKind>>.fromJson(
@@ -56,36 +60,44 @@ AnimalAttributes _$AnimalAttributesFromJson(Map<String, dynamic> json) =>
       size: json['size'] as String?,
       avatarIcon: json['avatar_icon'] == null
           ? null
-          : SingleData<Model<MediaAttributes>>.fromJson(
+          : SingleData<Model<MediaAttributes>?>.fromJson(
               json['avatar_icon'] as Map<String, dynamic>,
-              (value) => Model<MediaAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) =>
-                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<MediaAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => MediaAttributes.fromJson(
+                          value as Map<String, dynamic>))),
       avatarBody: json['avatar_body'] == null
           ? null
-          : SingleData<Model<MediaAttributes>>.fromJson(
+          : SingleData<Model<MediaAttributes>?>.fromJson(
               json['avatar_body'] as Map<String, dynamic>,
-              (value) => Model<MediaAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) =>
-                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<MediaAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => MediaAttributes.fromJson(
+                          value as Map<String, dynamic>))),
       avatarHead: json['avatar_head'] == null
           ? null
-          : SingleData<Model<MediaAttributes>>.fromJson(
+          : SingleData<Model<MediaAttributes>?>.fromJson(
               json['avatar_head'] as Map<String, dynamic>,
-              (value) => Model<MediaAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) =>
-                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<MediaAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => MediaAttributes.fromJson(
+                          value as Map<String, dynamic>))),
       avatarTail: json['avatar_tail'] == null
           ? null
-          : SingleData<Model<MediaAttributes>>.fromJson(
+          : SingleData<Model<MediaAttributes>?>.fromJson(
               json['avatar_tail'] as Map<String, dynamic>,
-              (value) => Model<MediaAttributes>.fromJson(
-                  value as Map<String, dynamic>,
-                  (value) =>
-                      MediaAttributes.fromJson(value as Map<String, dynamic>))),
+              (value) => value == null
+                  ? null
+                  : Model<MediaAttributes>.fromJson(
+                      value as Map<String, dynamic>,
+                      (value) => MediaAttributes.fromJson(
+                          value as Map<String, dynamic>))),
     );
 
 Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
@@ -99,7 +111,7 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'institution': instance.institution?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),
@@ -109,7 +121,7 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
         ),
       ),
       'real_icon': instance.realIcon?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),
@@ -119,24 +131,24 @@ Map<String, dynamic> _$AnimalAttributesToJson(AnimalAttributes instance) =>
         ),
       ),
       'avatar_icon': instance.avatarIcon?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),
       'hair_length': instance.hairLength,
       'size': instance.size,
       'avatar_head': instance.avatarHead?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),
       'avatar_body': instance.avatarBody?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),
       'avatar_tail': instance.avatarTail?.toJson(
-        (value) => value.toJson(
+        (value) => value?.toJson(
           (value) => value,
         ),
       ),

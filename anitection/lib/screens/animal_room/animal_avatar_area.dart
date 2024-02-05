@@ -22,6 +22,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
     required this.onCleanComplete,
     required this.selectedToyType,
     this.onAnimalMovedListener,
+    required this.isCat,
   });
 
   final Size size;
@@ -35,6 +36,7 @@ class AnimalAvatarArea extends ConsumerStatefulWidget {
   final bool isCleanMode;
   final ToyType? selectedToyType;
   final OnAnimalMovedListener? onAnimalMovedListener;
+  final bool isCat;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -166,6 +168,7 @@ class AnimalAvatarAreaState extends ConsumerState<AnimalAvatarArea> {
                   effectType: ref.watch(effectStateProvider),
                   foodType: ref.watch(selectedFoodProvider),
                   speechState: ref.watch(speechStateProvider),
+                  isCat: widget.isCat,
                 ),
               ),
             ),
@@ -210,6 +213,7 @@ class AnimalView extends StatelessWidget {
     required this.effectType,
     required this.foodType,
     required this.speechState,
+    required this.isCat,
   });
 
   final double avatarWidth;
@@ -221,6 +225,7 @@ class AnimalView extends StatelessWidget {
   final EffectType effectType;
   final FoodType foodType;
   final SpeechStateType speechState;
+  final bool isCat;
 
   @override
   Widget build(BuildContext context) {
@@ -262,15 +267,28 @@ class AnimalView extends StatelessWidget {
             left: (avatarWidth * 0.124),
             child: Lottie.asset(
               'assets/lottie/${() {
-                switch (faceState) {
-                  case FaceStateType.blink:
-                    return 'blink_cat1';
-                  case FaceStateType.sad:
-                    return 'sad_cat';
-                  case FaceStateType.smile:
-                    return 'smile_cat';
-                  case FaceStateType.sleeping:
-                    return 'sleep_cat';
+                if (isCat) {
+                  switch (faceState) {
+                    case FaceStateType.blink:
+                      return 'blink_cat1';
+                    case FaceStateType.sad:
+                      return 'sad_cat';
+                    case FaceStateType.smile:
+                      return 'smile_cat';
+                    case FaceStateType.sleeping:
+                      return 'sleep_cat';
+                  }
+                } else {
+                  switch (faceState) {
+                    case FaceStateType.blink:
+                      return 'blink_dog';
+                    case FaceStateType.sad:
+                      return 'sad_dog';
+                    case FaceStateType.smile:
+                      return 'smile_dog';
+                    case FaceStateType.sleeping:
+                      return 'sleep_dog';
+                  }
                 }
               }()}.json',
               width: avatarWidth * 0.85,
