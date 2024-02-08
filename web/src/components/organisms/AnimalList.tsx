@@ -78,41 +78,45 @@ const Component: React.FC = () => {
           <Link to={`/${animal.id}`} key={index} className="col-span-6">
             <Card>
               <div className="w-full h-40 md:h-52">
-                {animal.attributes.sitting ? (
-                  animal.attributes.avatar_icon.data && (
-                    <div className="relative h-5/6 w-full">
-                      <img
-                        src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-                        alt=""
-                        className="w-full h-full object-contain"
-                      />
-                      <div className="absolute -top-4 md:-top-6 lg:-top-8 -left-1 md:-left-2 w-full h-full flex justify-center items-center">
-                        <Lottie
-                          options={{...defaultOptions, animationData: blinkDog}}
-                          height={width > 768 ? 180 : width > 480 ? 120 : 100}
-                          width={width > 768 ? 180 : width > 480 ? 120 : 100}
+                {animal.attributes.sitting
+                  ? animal.attributes.avatar_icon.data && (
+                      <div className="relative h-5/6 w-full">
+                        <img
+                          src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                          alt=""
+                          className="w-full h-full object-contain"
                         />
+                        <div className="absolute -top-4 md:-top-6 lg:-top-8 -left-1 md:-left-2 w-full h-full flex justify-center items-center">
+                          <Lottie
+                            options={{
+                              ...defaultOptions,
+                              animationData: blinkDog,
+                            }}
+                            height={width > 768 ? 180 : width > 480 ? 120 : 100}
+                            width={width > 768 ? 180 : width > 480 ? 120 : 100}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  )
-                ) : (
-                  animal.attributes.avatar_icon.data && (
-                    <div className="relative h-5/6 w-full">
-                      <img
-                        src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
-                        alt=""
-                        className="w-full h-full object-contain"
-                      />
-                      <div className="absolute top-1 md:top-2 lg:top-3 left-0 md:left-1 w-full h-full flex justify-center items-center">
-                        <Lottie
-                          options={{...defaultOptions, animationData: blinkCat}}
-                          height={width > 768 ? 210 : width > 480 ? 140 : 100}
-                          width={width > 768 ? 210 : width > 480 ? 140 : 100}
+                    )
+                  : animal.attributes.avatar_icon.data && (
+                      <div className="relative h-5/6 w-full">
+                        <img
+                          src={`${process.env.REACT_APP_API_URL}${animal.attributes.avatar_icon.data.attributes.url}`}
+                          alt=""
+                          className="w-full h-full object-contain"
                         />
+                        <div className="absolute top-1 md:top-2 lg:top-3 left-0 md:left-1 w-full h-full flex justify-center items-center">
+                          <Lottie
+                            options={{
+                              ...defaultOptions,
+                              animationData: blinkCat,
+                            }}
+                            height={width > 768 ? 210 : width > 480 ? 140 : 100}
+                            width={width > 768 ? 210 : width > 480 ? 140 : 100}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  )
-                )}
+                    )}
                 <div className="w-full h-1/6 flex justify-center items-center">
                   <p className="text-center text-lg">
                     {animal.attributes.name}

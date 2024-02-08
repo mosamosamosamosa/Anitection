@@ -155,7 +155,10 @@ const Component: FC = () => {
                     {animal.attributes.sitting ? (
                       <div className="absolute -top-12 -left-3 md:-top-24 md:-left-6 lg:-top-24 lg:-left-7 w-full h-full flex justify-center items-center">
                         <Lottie
-                          options={{...defaultOptions, animationData: blinkDog}}
+                          options={{
+                            ...defaultOptions,
+                            animationData: blinkDog,
+                          }}
                           height={width > 1024 ? 540 : width > 480 ? 500 : 240}
                           width={width > 1024 ? 540 : width > 480 ? 500 : 240}
                         />
@@ -163,7 +166,10 @@ const Component: FC = () => {
                     ) : (
                       <div className="absolute top-5 left-2 md:top-10 md:left-5 w-full h-full flex justify-center items-center">
                         <Lottie
-                          options={{...defaultOptions, animationData: blinkCat}}
+                          options={{
+                            ...defaultOptions,
+                            animationData: blinkCat,
+                          }}
                           height={width > 1024 ? 640 : width > 480 ? 560 : 280}
                           width={width > 1024 ? 640 : width > 480 ? 560 : 280}
                         />
