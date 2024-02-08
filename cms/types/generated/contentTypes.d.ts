@@ -728,6 +728,7 @@ export interface ApiAnimalAnimal extends Schema.CollectionType {
     avatar_sitting: Attribute.Media;
     disappear: Attribute.Date;
     sitting: Attribute.Boolean & Attribute.DefaultTo<false>;
+    cowlick: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

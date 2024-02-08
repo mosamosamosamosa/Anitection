@@ -140,6 +140,10 @@
     "sitting": {
       "type": "boolean",
       "default": false
+    },
+    "cowlick": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
