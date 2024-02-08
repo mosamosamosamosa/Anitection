@@ -133,6 +133,12 @@
         "videos",
         "audios"
       ]
+    },
+    "disappear": {
+      "type": "date"
+    },
+    "sitting": {
+      "type": "boolean"
     }
   }
 }
