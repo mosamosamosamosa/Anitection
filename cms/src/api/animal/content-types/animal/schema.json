@@ -138,7 +138,8 @@
       "type": "date"
     },
     "sitting": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     }
   }
 }
