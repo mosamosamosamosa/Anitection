@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import head from '../../assets/animals/cat/head.png';
-import body from '../../assets/animals/cat/body.png';
-import sitting from '../../assets/animals/cat/sitting.png';
-import tail from '../../assets/animals/cat/tail.png';
 import Card from '../templates/Card';
 import Layout from '../templates/Layout';
 import Button from '../atoms/Button';
@@ -11,6 +7,9 @@ import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+
+import { getAnimalImg } from '../../utils/img';
+import useSWR from 'swr';
 
 const Component = () => {
   const { id } = useParams();
@@ -23,16 +22,27 @@ const Component = () => {
   const [undo, setUndo] = useState<ImageData[]>([]);
   const [image, setImage] = useState<HTMLImageElement>(new Image());
   const [loading, setLoading] = useState(false);
-
+  
   const [isHead, setIsHead] = useState(true);
   const [isBody, setIsBody] = useState(false);
   const [isSitting, setIsSitting] = useState(false);
   const [isTail, setIsTail] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
-
+  
   const [animal, setAnimal] = useState<any>({});
+  
+  const [pedigree, setPedigree] = useState('ネコ');
+  const [pattern, setPattern] = useState('ミケ');
 
-  const [animal_kind, setAnimalKind] = useState<string>('cat');
+  const { data: patterns } = useSWR<any>(
+    '/api/patterns',
+    fetchInstanceWithToken(),
+  );
+
+  const { data: pedigrees } = useSWR<any>(
+    '/api/pedigrees',
+    fetchInstanceWithToken(),
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -79,31 +89,31 @@ const Component = () => {
     if (animal.attributes) {
       if (isHead && animal.attributes.avatar_head.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
-      else if (isHead && !animal.attributes.avatar_head.data) image.src = head;
+      else if (isHead && !animal.attributes.avatar_head.data) image.src = getAnimalImg(pedigree, pattern).head;
 
       if (isBody && animal.attributes.avatar_body.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
-      else if (isBody && !animal.attributes.avatar_body.data) image.src = body;
+      else if (isBody && !animal.attributes.avatar_body.data) image.src = getAnimalImg(pedigree, pattern).body;
 
       if (isSitting && animal.attributes.avatar_sitting.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
       else if (isSitting && !animal.attributes.avatar_sitting.data)
-        image.src = sitting;
+        image.src = getAnimalImg(pedigree, pattern).sitting;
 
       if (isTail && animal.attributes.avatar_tail.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
-      else if (isTail && !animal.attributes.avatar_tail.data) image.src = tail;
+      else if (isTail && !animal.attributes.avatar_tail.data) image.src = getAnimalImg(pedigree, pattern).tail;
     } else {
-      if (isHead) image.src = head;
-      if (isBody) image.src = body;
-      if (isSitting) image.src = sitting;
-      if (isTail) image.src = tail;
+      if (isHead) image.src = getAnimalImg(pedigree, pattern).head;
+      if (isBody) image.src = getAnimalImg(pedigree, pattern).body;
+      if (isSitting) image.src = getAnimalImg(pedigree, pattern).sitting;
+      if (isTail) image.src = getAnimalImg(pedigree, pattern).tail;
     }
 
     setTimeout(() => {
       setImage(image);
     }, 500);
-  }, [isHead, isBody, isSitting, isTail, animal]);
+  }, [isHead, isBody, isSitting, isTail, animal, pedigree, pattern]);
 
   // 影をつける
   const handleShadow = () => {
@@ -172,9 +182,19 @@ const Component = () => {
     head_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
 
     const body_image = new Image();
-    body_image.crossOrigin = 'Anonymous';
-    if (!animal.attributes.avatar_body.data) alert('体を登録してください');
-    body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+    const sitting_image = new Image();
+    let sitting = false;
+
+    if (animal.attributes.avatar_body.data) {
+      body_image.crossOrigin = 'Anonymous';
+      body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+    }
+
+    if (animal.attributes.avatar_sitting.data) {
+      sitting_image.crossOrigin = 'Anonymous';
+      sitting_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
+      sitting = true;
+    }
 
     const tail_image = new Image();
     tail_image.crossOrigin = 'Anonymous';
@@ -182,9 +202,15 @@ const Component = () => {
     tail_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
 
     setTimeout(() => {
-      ctx.drawImage(tail_image, 280, 30);
-      ctx.drawImage(body_image, 0, 50);
-      ctx.drawImage(head_image, -110, -140);
+      if (!sitting) {
+        ctx.drawImage(tail_image, 280, 30);
+        ctx.drawImage(body_image, 0, 50);
+        ctx.drawImage(head_image, -110, -140);
+      } else {
+        ctx.drawImage(tail_image, 190, 100);
+        ctx.drawImage(sitting_image, -20, 60);
+        ctx.drawImage(head_image, -30, -140);
+      }
     }, 1000);
   };
 
@@ -395,6 +421,13 @@ const Component = () => {
     }
   };
 
+  if (!patterns) return <p>Loading...</p>;
+  if (!pedigrees) return <p>Loading...</p>;
+
+  
+  const animal_patterns = patterns.data.data;
+  const animal_pedigrees = pedigrees.data.data;
+
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-12 gap-4">
@@ -406,6 +439,35 @@ const Component = () => {
         {/* 動物 */}
         <div className="col-span-12 lg:col-span-8">
           <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4 relative">
+            {/* 左上にselect */}
+            <div className="absolute top-3 left-3 z-10 bg-white p-2 rounded-md shadow-md border border-neutral-200">
+              {pedigree !== 'ネコ' &&
+                <select
+                  value={pedigree}
+                  onChange={(e) => setPedigree(e.target.value)}
+                >
+                  {animal_pedigrees &&
+                    animal_pedigrees.map((pedigree: any) => (
+                      <option key={pedigree.id} value={pedigree.attributes.name} selected={pedigree.attributes.name === pedigree}>
+                        {pedigree.attributes.name}
+                      </option>
+                    ))}
+                </select>
+              }
+              {pedigree === 'ネコ' &&
+                <select
+                  value={pattern}
+                  onChange={(e) => setPattern(e.target.value)}
+                >
+                  {animal_patterns &&
+                    animal_patterns.map((pattern: any) => (
+                      <option key={pattern.id} value={pattern.attributes.name} selected={pattern.attributes.name === pattern}>
+                        {pattern.attributes.name}
+                      </option>
+                    ))}
+                </select>
+              }
+            </div>
             <canvas
               id={isPreview ? 'preview' : 'canvas'}
               className="lattice"
@@ -457,15 +519,15 @@ const Component = () => {
               <hr className="my-2" />
               <Button
                 text="犬"
-                onClick={() => setAnimalKind('dog')}
+                onClick={() => setPedigree('いぬ')}
                 icon="mdi:dog"
-                highlight={animal_kind === 'dog'}
+                highlight={pedigree !== 'ネコ'}
               />
               <Button
                 text="猫"
-                onClick={() => setAnimalKind('cat')}
+                onClick={() => setPedigree('ネコ')}
                 icon="mdi:cat"
-                highlight={animal_kind === 'cat'}
+                highlight={pedigree === 'ネコ'}
               />
               <hr className="my-2" />
               <Button
