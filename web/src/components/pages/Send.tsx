@@ -114,16 +114,13 @@ const Chat: React.FC = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <Modal text="寄付が完了しました" onClick={() => setIsModalOpen(false)}>
+        <Modal text="換金が完了しました" onClick={() => setIsModalOpen(false)}>
           {/* 送金ポイントを表示 */}
           <div className="flex justify-center items-center gap-2 py-8">
             <ul className="flex flex-col gap-2 py-2">
               <li className="flex gap-2 items-center text-4xl">
                 <Icon icon="bx:bx-coin-stack" className="w-8 h-8 mr-1" />
                 <p>{donationAmount} ポイント</p>
-              </li>
-              <li className="text-sm flex justify-end items-center">
-                寄付ありがとう！
               </li>
             </ul>
           </div>

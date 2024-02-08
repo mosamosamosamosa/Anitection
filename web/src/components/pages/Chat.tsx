@@ -6,7 +6,9 @@ import Button from '../atoms/Button';
 
 import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import Navigation from '../organisms/Navigation';
-import InstitutionInfo from '../organisms/InstitutionInfo';
+import InfoHeader from '../atoms/InfoHeader';
+import Card from '../templates/Card';
+import { Icon } from '@iconify/react';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -113,7 +115,30 @@ const Chat: React.FC = () => {
 
         {/* 情報 */}
         <div className="hidden md:block col-span-12 md:col-span-4 lg:col-span-3 space-y-4">
-          <InstitutionInfo />
+          <InfoHeader icon="ion:home-outline" title="ユーザー情報" />
+          <Card>
+            <div className="w-full flex justify-center items-center">
+              <ul className="flex flex-col gap-2 py-2">
+                <li className="flex gap-2 items-center">
+                  <Icon icon="bx:bx-user" className="w-4 h-4 mr-1" />
+                  hogeさん
+                </li>
+                <li className="flex gap-2 items-center">
+                  <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
+                  保有ポイント：5000
+                </li>
+                <li className="flex gap-2 items-center">
+                  <Icon icon="bx:bx-coin-stack" className="w-4 h-4 mr-1" />
+                  寄付金額：3000
+                </li>
+                {/* プレイ時間 */}
+                <li className="flex gap-2 items-center">
+                  <Icon icon="bx:bx-time" className="w-4 h-4 mr-1" />
+                  プレイ時間：10時間
+                </li>
+              </ul>
+            </div>
+          </Card>
         </div>
       </div>
     </Layout>
