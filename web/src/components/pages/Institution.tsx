@@ -47,19 +47,18 @@ const Chat: React.FC = () => {
                 </ul>
               </div>
               <div className="absolute bottom-2 right-4 flex justify-end items-end">
-                <p className="text-sm">送金する</p>
+                <p className="text-sm">換金する</p>
                 <Icon icon="tdesign:swap-right" className="w-6" />
               </div>
             </Link>
           </Card>
-          <InfoHeader icon="bx:bx-chat" title="チャット" />
+          <InfoHeader icon="bx:bx-user" title="ユーザー" />
           <Card>
             <Link to={`/chat`}>
               <div className="w-full flex justify-center items-center">
                 <ul className="flex flex-col gap-2 py-2 w-full">
                   <li className="flex gap-2 items-center justify-around">
                     <div className="flex gap-2 items-center justify-center">
-                      <Icon icon="bx:bx-user" className="w-4 h-4 mr-1" />
                       <p>hogeさん</p>
                     </div>
                     <div className="flex gap-2 items-center justify-center">

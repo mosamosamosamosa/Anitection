@@ -8,7 +8,8 @@ import { fetchInstanceWithToken } from '../../utils/fetchInstance';
 import Text from '../atoms/Text';
 import { Icon } from '@iconify/react';
 import Lottie from 'react-lottie';
-import animationData from '../../assets/lottie/blink_cat2.json';
+import blinkCat from '../../assets/lottie/blink_cat2.json';
+import blinkDog from '../../assets/lottie/blink_dog.json';
 import InfoHeader from '../atoms/InfoHeader';
 
 const Component: FC = () => {
@@ -27,7 +28,6 @@ const Component: FC = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
@@ -152,13 +152,23 @@ const Component: FC = () => {
                       alt="animal"
                       className="w-full h-full object-cover rounded-md"
                     />
-                    <div className="absolute top-5 left-2 md:top-10 md:left-5 w-full h-full flex justify-center items-center">
-                      <Lottie
-                        options={defaultOptions}
-                        height={width > 1024 ? 640 : width > 480 ? 560 : 280}
-                        width={width > 1024 ? 640 : width > 480 ? 560 : 280}
-                      />
-                    </div>
+                    {animal.attributes.sitting ? (
+                      <div className="absolute -top-12 -left-3 md:-top-24 md:-left-6 lg:-top-24 lg:-left-7 w-full h-full flex justify-center items-center">
+                        <Lottie
+                          options={{...defaultOptions, animationData: blinkDog}}
+                          height={width > 1024 ? 540 : width > 480 ? 500 : 240}
+                          width={width > 1024 ? 540 : width > 480 ? 500 : 240}
+                        />
+                      </div>
+                    ) : (
+                      <div className="absolute top-5 left-2 md:top-10 md:left-5 w-full h-full flex justify-center items-center">
+                        <Lottie
+                          options={{...defaultOptions, animationData: blinkCat}}
+                          height={width > 1024 ? 640 : width > 480 ? 560 : 280}
+                          width={width > 1024 ? 640 : width > 480 ? 560 : 280}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
                 <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-md flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
