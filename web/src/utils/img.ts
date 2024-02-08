@@ -81,4 +81,4 @@ export const getAnimalImg = (pedigree: string, pattern: string): AnimalImg => {
       return default_img;
   }
   return default_img;
-}
+};

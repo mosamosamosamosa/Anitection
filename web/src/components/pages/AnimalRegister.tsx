@@ -22,15 +22,15 @@ const Component = () => {
   const [undo, setUndo] = useState<ImageData[]>([]);
   const [image, setImage] = useState<HTMLImageElement>(new Image());
   const [loading, setLoading] = useState(false);
-  
+
   const [isHead, setIsHead] = useState(true);
   const [isBody, setIsBody] = useState(false);
   const [isSitting, setIsSitting] = useState(false);
   const [isTail, setIsTail] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
-  
+
   const [animal, setAnimal] = useState<any>({});
-  
+
   const [pedigree, setPedigree] = useState('ネコ');
   const [pattern, setPattern] = useState('ミケ');
 
@@ -89,11 +89,13 @@ const Component = () => {
     if (animal.attributes) {
       if (isHead && animal.attributes.avatar_head.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
-      else if (isHead && !animal.attributes.avatar_head.data) image.src = getAnimalImg(pedigree, pattern).head;
+      else if (isHead && !animal.attributes.avatar_head.data)
+        image.src = getAnimalImg(pedigree, pattern).head;
 
       if (isBody && animal.attributes.avatar_body.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
-      else if (isBody && !animal.attributes.avatar_body.data) image.src = getAnimalImg(pedigree, pattern).body;
+      else if (isBody && !animal.attributes.avatar_body.data)
+        image.src = getAnimalImg(pedigree, pattern).body;
 
       if (isSitting && animal.attributes.avatar_sitting.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
@@ -102,7 +104,8 @@ const Component = () => {
 
       if (isTail && animal.attributes.avatar_tail.data)
         image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
-      else if (isTail && !animal.attributes.avatar_tail.data) image.src = getAnimalImg(pedigree, pattern).tail;
+      else if (isTail && !animal.attributes.avatar_tail.data)
+        image.src = getAnimalImg(pedigree, pattern).tail;
     } else {
       if (isHead) image.src = getAnimalImg(pedigree, pattern).head;
       if (isBody) image.src = getAnimalImg(pedigree, pattern).body;
@@ -424,7 +427,6 @@ const Component = () => {
   if (!patterns) return <p>Loading...</p>;
   if (!pedigrees) return <p>Loading...</p>;
 
-  
   const animal_patterns = patterns.data.data;
   const animal_pedigrees = pedigrees.data.data;
 
@@ -441,32 +443,40 @@ const Component = () => {
           <div className="bg-neutral-100 rounded-xl shadow-md flex justify-center items-center px-2 py-4 relative">
             {/* 左上にselect */}
             <div className="absolute top-3 left-3 z-10 bg-white p-2 rounded-md shadow-md border border-neutral-200">
-              {pedigree !== 'ネコ' &&
+              {pedigree !== 'ネコ' && (
                 <select
                   value={pedigree}
                   onChange={(e) => setPedigree(e.target.value)}
                 >
                   {animal_pedigrees &&
                     animal_pedigrees.map((pedigree: any) => (
-                      <option key={pedigree.id} value={pedigree.attributes.name} selected={pedigree.attributes.name === pedigree}>
+                      <option
+                        key={pedigree.id}
+                        value={pedigree.attributes.name}
+                        selected={pedigree.attributes.name === pedigree}
+                      >
                         {pedigree.attributes.name}
                       </option>
                     ))}
                 </select>
-              }
-              {pedigree === 'ネコ' &&
+              )}
+              {pedigree === 'ネコ' && (
                 <select
                   value={pattern}
                   onChange={(e) => setPattern(e.target.value)}
                 >
                   {animal_patterns &&
                     animal_patterns.map((pattern: any) => (
-                      <option key={pattern.id} value={pattern.attributes.name} selected={pattern.attributes.name === pattern}>
+                      <option
+                        key={pattern.id}
+                        value={pattern.attributes.name}
+                        selected={pattern.attributes.name === pattern}
+                      >
                         {pattern.attributes.name}
                       </option>
                     ))}
                 </select>
-              }
+              )}
             </div>
             <canvas
               id={isPreview ? 'preview' : 'canvas'}
