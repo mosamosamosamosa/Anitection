@@ -28,6 +28,7 @@ const Component = () => {
   const [isSitting, setIsSitting] = useState(false);
   const [isTail, setIsTail] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const [sitting, setSitting] = useState(false);
 
   const [animal, setAnimal] = useState<any>({});
 
@@ -186,17 +187,17 @@ const Component = () => {
 
     const body_image = new Image();
     const sitting_image = new Image();
-    let sitting = false;
 
     if (animal.attributes.avatar_body.data) {
       body_image.crossOrigin = 'Anonymous';
       body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+      setSitting(false)
     }
 
     if (animal.attributes.avatar_sitting.data) {
       sitting_image.crossOrigin = 'Anonymous';
       sitting_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
-      sitting = true;
+      setSitting(true);
     }
 
     const tail_image = new Image();
@@ -377,7 +378,7 @@ const Component = () => {
           if (isPreview) data = { avatar_icon: imageId };
 
           const body = {
-            data: data,
+            data: {...data, sitting: sitting},
           };
 
           instance.put(`/api/animals/${id}`, body).then(() => {
@@ -546,18 +547,22 @@ const Component = () => {
                 icon="mdi:cat"
                 highlight={isHead}
               />
-              <Button
-                text="体"
-                onClick={handleBody}
-                icon="solar:body-line-duotone"
-                highlight={isBody}
-              />
-              <Button
-                text="座り"
-                onClick={handleSitting}
-                icon="game-icons:sitting-dog"
-                highlight={isSitting}
-              />
+              {pedigree == "ネコ" && // 応急処置
+                <Button
+                  text="体"
+                  onClick={handleBody}
+                  icon="solar:body-line-duotone"
+                  highlight={isBody}
+                />
+              }
+              {pedigree != "ネコ" && // 応急処置
+                <Button
+                  text="座り"
+                  onClick={handleSitting}
+                  icon="game-icons:sitting-dog"
+                  highlight={isSitting}
+                />
+              }
               <Button
                 text="尻尾"
                 onClick={handleTail}
