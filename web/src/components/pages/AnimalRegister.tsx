@@ -30,6 +30,12 @@ const Component = () => {
   const [isPreview, setIsPreview] = useState(false);
   const [sitting, setSitting] = useState(false);
 
+  // 登録したかどうか
+  const [isRegisteredHead, setIsRegisteredHead] = useState(false);
+  const [isRegisteredBody, setIsRegisteredBody] = useState(false);
+  const [isRegisteredSitting, setIsRegisteredSitting] = useState(false);
+  const [isRegisteredTail, setIsRegisteredTail] = useState(false);
+
   const [animal, setAnimal] = useState<any>({});
 
   const [pedigree, setPedigree] = useState('ネコ');
@@ -388,6 +394,11 @@ const Component = () => {
               if (isPreview) navigate(`/${id}`);
             });
           });
+
+          if (isHead) setIsRegisteredHead(true);
+          if (isBody) setIsRegisteredBody(true);
+          if (isSitting) setIsRegisteredSitting(true);
+          if (isTail) setIsRegisteredTail(true);
         });
 
       return;
@@ -413,6 +424,11 @@ const Component = () => {
               institution: institution.id,
             },
           };
+
+          if (isHead) setIsRegisteredHead(true);
+          if (isBody) setIsRegisteredBody(true);
+          if (isSitting) setIsRegisteredSitting(true);
+          if (isTail) setIsRegisteredTail(true);
 
           instance.post('/api/animals', body).then((res) => {
             setLoading(false);
@@ -454,7 +470,6 @@ const Component = () => {
                       <option
                         key={pedigree.id}
                         value={pedigree.attributes.name}
-                        selected={pedigree.attributes.name === pedigree}
                       >
                         {pedigree.attributes.name}
                       </option>
@@ -471,7 +486,6 @@ const Component = () => {
                       <option
                         key={pattern.id}
                         value={pattern.attributes.name}
-                        selected={pattern.attributes.name === pattern}
                       >
                         {pattern.attributes.name}
                       </option>
@@ -545,14 +559,14 @@ const Component = () => {
                 text="頭"
                 onClick={handleHead}
                 icon="mdi:cat"
-                highlight={isHead}
+                highlight={isHead || isRegisteredHead}
               />
               {pedigree == "ネコ" && // 応急処置
                 <Button
                   text="体"
                   onClick={handleBody}
                   icon="solar:body-line-duotone"
-                  highlight={isBody}
+                  highlight={isBody || isRegisteredBody}
                 />
               }
               {pedigree != "ネコ" && // 応急処置
@@ -560,14 +574,14 @@ const Component = () => {
                   text="座り"
                   onClick={handleSitting}
                   icon="game-icons:sitting-dog"
-                  highlight={isSitting}
+                  highlight={isSitting || isRegisteredSitting}
                 />
               }
               <Button
                 text="尻尾"
                 onClick={handleTail}
                 icon="game-icons:fox-tail"
-                highlight={isTail}
+                highlight={isTail || isRegisteredTail}
               />
               <hr className="my-2" />
               <Button
