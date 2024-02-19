@@ -197,7 +197,7 @@ const Component = () => {
     if (animal.attributes.avatar_body.data) {
       body_image.crossOrigin = 'Anonymous';
       body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
-      setSitting(false)
+      setSitting(false);
     }
 
     if (animal.attributes.avatar_sitting.data) {
@@ -384,7 +384,7 @@ const Component = () => {
           if (isPreview) data = { avatar_icon: imageId };
 
           const body = {
-            data: {...data, sitting: sitting},
+            data: { ...data, sitting: sitting },
           };
 
           instance.put(`/api/animals/${id}`, body).then(() => {
@@ -483,10 +483,7 @@ const Component = () => {
                 >
                   {animal_patterns &&
                     animal_patterns.map((pattern: any) => (
-                      <option
-                        key={pattern.id}
-                        value={pattern.attributes.name}
-                      >
+                      <option key={pattern.id} value={pattern.attributes.name}>
                         {pattern.attributes.name}
                       </option>
                     ))}
@@ -561,22 +558,22 @@ const Component = () => {
                 icon="mdi:cat"
                 highlight={isHead || isRegisteredHead}
               />
-              {pedigree == "ネコ" && // 応急処置
+              {pedigree == 'ネコ' && ( // 応急処置
                 <Button
                   text="体"
                   onClick={handleBody}
                   icon="solar:body-line-duotone"
                   highlight={isBody || isRegisteredBody}
                 />
-              }
-              {pedigree != "ネコ" && // 応急処置
+              )}
+              {pedigree != 'ネコ' && ( // 応急処置
                 <Button
                   text="座り"
                   onClick={handleSitting}
                   icon="game-icons:sitting-dog"
                   highlight={isSitting || isRegisteredSitting}
                 />
-              }
+              )}
               <Button
                 text="尻尾"
                 onClick={handleTail}
