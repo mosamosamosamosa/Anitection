@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"bff/config"
 )
@@ -31,7 +32,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 
 	req, err := http.Get(StrapiURL + c.Request().URL.Path + "?" + c.Request().URL.RawQuery)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	defer req.Body.Close()
@@ -46,7 +47,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 func (h *strapiHandler) PostHandler(c echo.Context) error {
 	req, err := http.Post(StrapiURL+c.Request().URL.Path, "application/json", c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	defer req.Body.Close()
@@ -61,7 +62,7 @@ func (h *strapiHandler) PostHandler(c echo.Context) error {
 func (h *strapiHandler) PutHandler(c echo.Context) error {
 	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	client := &http.Client{}
@@ -82,7 +83,7 @@ func (h *strapiHandler) PutHandler(c echo.Context) error {
 func (h *strapiHandler) DeleteHandler(c echo.Context) error {
 	req, err := http.NewRequest(http.MethodDelete, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	client := &http.Client{}
