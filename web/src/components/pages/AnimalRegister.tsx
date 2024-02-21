@@ -368,7 +368,7 @@ const Component = () => {
     if (isBody) handleTail();
     if (isSitting) handleTail();
     if (isTail) handlePreview();
-  }
+  };
 
   const handleSubmit = () => {
     const canvas = canvasRef.current;
