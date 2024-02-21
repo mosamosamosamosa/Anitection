@@ -438,6 +438,7 @@ const Component = () => {
           };
 
           instance.post('/api/animals', body).then((res) => {
+            handleProgress();
             setLoading(false);
             navigate(`/register/${res.data.data.id}`);
           });
