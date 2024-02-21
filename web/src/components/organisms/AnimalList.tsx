@@ -40,7 +40,8 @@ const Component: React.FC = () => {
 
   useEffect(() => {
     if (!data) return;
-    setAnimals(data.data.data);
+    // sort id asc
+    setAnimals(data.data.data.sort((a: any, b: any) => a.id - b.id));
   }, [data]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,6 +10,7 @@ import { RootState } from '../../store';
 
 import { getAnimalImg } from '../../utils/img';
 import useSWR from 'swr';
+import { Icon } from '@iconify/react';
 
 const Component = () => {
   const { id } = useParams();
@@ -30,16 +31,13 @@ const Component = () => {
   const [isPreview, setIsPreview] = useState(false);
   const [sitting, setSitting] = useState(false);
 
-  // 登録したかどうか
-  const [isRegisteredHead, setIsRegisteredHead] = useState(false);
-  const [isRegisteredBody, setIsRegisteredBody] = useState(false);
-  const [isRegisteredSitting, setIsRegisteredSitting] = useState(false);
-  const [isRegisteredTail, setIsRegisteredTail] = useState(false);
-
   const [animal, setAnimal] = useState<any>({});
 
   const [pedigree, setPedigree] = useState('ネコ');
   const [pattern, setPattern] = useState('ミケ');
+
+  // 現在の進捗数
+  const [progress, setProgress] = useState(1);
 
   const { data: patterns } = useSWR<any>(
     '/api/patterns',
@@ -157,27 +155,33 @@ const Component = () => {
   const handleHead = () => {
     handleReset();
     setIsHead(true);
+    setProgress(1);
   };
 
   const handleBody = () => {
     handleReset();
     setIsBody(true);
+    setProgress(2);
   };
 
   const handleSitting = () => {
     handleReset();
     setIsSitting(true);
+    setProgress(2);
   };
 
   const handleTail = () => {
     handleReset();
     setIsTail(true);
+    setProgress(3);
   };
 
   const handlePreview = () => {
     handleReset();
+    setProgress(4);
     setIsPreview(true);
 
+    const instance = fetchInstanceWithToken();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -186,42 +190,46 @@ const Component = () => {
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const head_image = new Image();
-    head_image.crossOrigin = 'Anonymous';
-    if (!animal.attributes.avatar_head.data) alert('頭を登録してください');
-    head_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
+    instance.get(`/api/animals/${id}`).then((res) => {
+      const animal = res.data.data;
 
-    const body_image = new Image();
-    const sitting_image = new Image();
+      const head_image = new Image();
+      head_image.crossOrigin = 'Anonymous';
+      if (!animal.attributes.avatar_head.data) alert('頭を登録してください');
+      head_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_head.data.attributes.url}`;
 
-    if (animal.attributes.avatar_body.data) {
-      body_image.crossOrigin = 'Anonymous';
-      body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
-      setSitting(false);
-    }
+      const body_image = new Image();
+      const sitting_image = new Image();
 
-    if (animal.attributes.avatar_sitting.data) {
-      sitting_image.crossOrigin = 'Anonymous';
-      sitting_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
-      setSitting(true);
-    }
-
-    const tail_image = new Image();
-    tail_image.crossOrigin = 'Anonymous';
-    if (!animal.attributes.avatar_tail.data) alert('尻尾を登録してください');
-    tail_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
-
-    setTimeout(() => {
-      if (!sitting) {
-        ctx.drawImage(tail_image, 280, 30);
-        ctx.drawImage(body_image, 0, 50);
-        ctx.drawImage(head_image, -110, -140);
-      } else {
-        ctx.drawImage(tail_image, 190, 100);
-        ctx.drawImage(sitting_image, -20, 60);
-        ctx.drawImage(head_image, -30, -140);
+      if (animal.attributes.avatar_body.data) {
+        body_image.crossOrigin = 'Anonymous';
+        body_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_body.data.attributes.url}`;
+        setSitting(false);
       }
-    }, 1000);
+
+      if (animal.attributes.avatar_sitting.data) {
+        sitting_image.crossOrigin = 'Anonymous';
+        sitting_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_sitting.data.attributes.url}`;
+        setSitting(true);
+      }
+
+      const tail_image = new Image();
+      tail_image.crossOrigin = 'Anonymous';
+      if (!animal.attributes.avatar_tail.data) alert('尻尾を登録してください');
+      tail_image.src = `${process.env.REACT_APP_API_URL}${animal.attributes.avatar_tail.data.attributes.url}`;
+
+      setTimeout(() => {
+        if (!sitting) {
+          ctx.drawImage(tail_image, 280, 30);
+          ctx.drawImage(body_image, 0, 50);
+          ctx.drawImage(head_image, -110, -140);
+        } else {
+          ctx.drawImage(tail_image, 190, 100);
+          ctx.drawImage(sitting_image, -20, 60);
+          ctx.drawImage(head_image, -30, -140);
+        }
+      }, 1000);
+    });
   };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -352,6 +360,16 @@ const Component = () => {
     }
   };
 
+  const handleProgress = () => {
+    if (isHead) {
+      if (pedigree == 'ネコ') handleBody();
+      else handleSitting();
+    }
+    if (isBody) handleTail();
+    if (isSitting) handleTail();
+    if (isTail) handlePreview();
+  }
+
   const handleSubmit = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -390,18 +408,12 @@ const Component = () => {
           instance.put(`/api/animals/${id}`, body).then(() => {
             instance.get(`/api/animals/${id}`).then((res) => {
               setAnimal(res.data.data);
+              handleProgress();
               setLoading(false);
               if (isPreview) navigate(`/${id}`);
             });
           });
-
-          if (isHead) setIsRegisteredHead(true);
-          if (isBody) setIsRegisteredBody(true);
-          if (isSitting) setIsRegisteredSitting(true);
-          if (isTail) setIsRegisteredTail(true);
         });
-
-      return;
     } else {
       instance
         .post('/api/upload', formData, {
@@ -424,11 +436,6 @@ const Component = () => {
               institution: institution.id,
             },
           };
-
-          if (isHead) setIsRegisteredHead(true);
-          if (isBody) setIsRegisteredBody(true);
-          if (isSitting) setIsRegisteredSitting(true);
-          if (isTail) setIsRegisteredTail(true);
 
           instance.post('/api/animals', body).then((res) => {
             setLoading(false);
@@ -508,6 +515,51 @@ const Component = () => {
               </div>
             )}
           </div>
+          <div className="flex gap-4 mb-4 justify-center pt-4">
+            <Button
+              text="頭"
+              onClick={handleHead}
+              icon="mdi:cat"
+              highlight={isHead || progress > 1}
+            />
+            {/* 右に進めろってアイコン */}
+            <div className="flex justify-center items-center">
+              <Icon icon="bi:arrow-right" />
+            </div>
+            {pedigree == 'ネコ' ? ( // 応急処置
+              <Button
+                text="体"
+                onClick={handleBody}
+                icon="solar:body-line-duotone"
+                highlight={isBody || progress > 2}
+              />
+            ) : (
+              <Button
+                text="座り"
+                onClick={handleSitting}
+                icon="game-icons:sitting-dog"
+                highlight={isSitting || progress > 2}
+              />
+            )}
+            <div className="flex justify-center items-center">
+              <Icon icon="bi:arrow-right" />
+            </div>
+            <Button
+              text="尻尾"
+              onClick={handleTail}
+              icon="game-icons:fox-tail"
+              highlight={isTail || progress > 3}
+            />
+            <div className="flex justify-center items-center">
+              <Icon icon="bi:arrow-right" />
+            </div>
+            <Button
+              text="プレビュー"
+              onClick={handlePreview}
+              icon="mdi:eye"
+              highlight={isPreview || progress > 4}
+            />
+          </div>
         </div>
 
         <div className="col-span-12 lg:col-span-2">
@@ -552,41 +604,6 @@ const Component = () => {
                 highlight={pedigree === 'ネコ'}
               />
               <hr className="my-2" />
-              <Button
-                text="頭"
-                onClick={handleHead}
-                icon="mdi:cat"
-                highlight={isHead || isRegisteredHead}
-              />
-              {pedigree == 'ネコ' && ( // 応急処置
-                <Button
-                  text="体"
-                  onClick={handleBody}
-                  icon="solar:body-line-duotone"
-                  highlight={isBody || isRegisteredBody}
-                />
-              )}
-              {pedigree != 'ネコ' && ( // 応急処置
-                <Button
-                  text="座り"
-                  onClick={handleSitting}
-                  icon="game-icons:sitting-dog"
-                  highlight={isSitting || isRegisteredSitting}
-                />
-              )}
-              <Button
-                text="尻尾"
-                onClick={handleTail}
-                icon="game-icons:fox-tail"
-                highlight={isTail || isRegisteredTail}
-              />
-              <hr className="my-2" />
-              <Button
-                text="プレビュー"
-                onClick={handlePreview}
-                icon="mdi:eye"
-                highlight={isPreview}
-              />
               <Button
                 text="登録"
                 onClick={() => {

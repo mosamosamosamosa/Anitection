@@ -11,5 +11,5 @@ EXPOSE 8080
 # Install libraries for testing
 RUN apk add --no-cache gcc musl-dev
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/cosmtrek/air@v1.49.0
 CMD ["air"]
