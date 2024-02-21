@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"bff/config"
 )
@@ -35,7 +36,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 	// 新しいGETリクエストを作成
 	req, err := http.NewRequest(http.MethodGet, StrapiURL+c.Request().URL.Path+"?"+c.Request().URL.RawQuery, nil)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	// ヘッダーを設定
@@ -66,7 +67,7 @@ func (h *strapiHandler) GetHandler(c echo.Context) error {
 func (h *strapiHandler) PostHandler(c echo.Context) error {
 	req, err := http.NewRequest(http.MethodPost, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 	defer req.Body.Close()
 
@@ -95,7 +96,7 @@ func (h *strapiHandler) PostHandler(c echo.Context) error {
 func (h *strapiHandler) PutHandler(c echo.Context) error {
 	req, err := http.NewRequest(http.MethodPut, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	originalReq := c.Request()
@@ -123,7 +124,7 @@ func (h *strapiHandler) PutHandler(c echo.Context) error {
 func (h *strapiHandler) DeleteHandler(c echo.Context) error {
 	req, err := http.NewRequest(http.MethodDelete, StrapiURL+c.Request().URL.Path, c.Request().Body)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	originalReq := c.Request()
